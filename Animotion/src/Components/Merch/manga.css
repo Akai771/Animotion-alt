@@ -1,0 +1,235 @@
+.mangaContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 6rem;
+    min-height: 80vh;
+    height: auto;
+    background-color: var(--bgColor2);
+}
+
+.mangaTitle{
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--textColor);
+    padding-bottom: 1rem;
+}
+
+.manga2Section{
+    padding-top: 8rem;
+}
+
+.verticalDivisionLine{
+    border-left: 1px solid var(--textColor);
+    height: auto;
+    width: 0;
+}
+
+.genreBtnGrp{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+
+.GenreBtn{
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: transparent;
+    color: var(--textColor);
+    padding: 1rem 1rem;
+    border: 1px solid var(--textColor);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.GenreBtn:hover{
+    transition: all 0.2s ease-in-out;
+    background-color: var(--primary-color);
+    border: 1px solid transparent;
+    color: var(--secondary-color);
+}
+
+.genreTitle{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--textColor);
+    padding-bottom: 1rem;
+}
+
+.BrowseMangaContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alignBrowseManga{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.browseMangaTitle{
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--textColor);
+    padding-bottom: 1rem;
+}
+
+.browseMangaTitle2{
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.searchSection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bgColor2);
+}
+
+.browseSearchBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    margin-bottom: 5rem;
+  }
+
+  .dropdownSearch{
+    background-color: var(--bgColor3);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    z-index: 1;
+    margin-top: 1rem;
+  }
+
+  .dropdownSearch:empty{
+    background-color: transparent;
+    border: none;
+  }
+
+  .dropdownSearchContent{
+    cursor: pointer;
+    text-align: start;
+    margin: 2px 0;
+    color: #f7f7f8;
+  }
+  
+  .SearchInput {
+    width: 30rem;
+    height: 100%;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #53535f;
+    caret-color: #f7f7f8;
+    color: #fff;
+    padding: 7px 10px;
+    border: 2px solid transparent;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    margin-right: 1px;
+    transition: all .2s ease;
+  }
+  
+  .SearchInput:hover {
+    border: 2px solid rgba(255, 255, 255, 0.16);
+  }
+  
+  .SearchInput:focus {
+    background-color: var(--bgColor3);
+    outline: none;
+  }
+  
+  .search__btn {
+    border: none;
+    cursor: pointer;
+    background-color: rgba(42, 42, 45, 1);
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    height: 100%;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .search__btn:hover {
+    background-color: rgba(54, 54, 56, 1);
+  }
+
+  .pageBtnGrp{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 2rem;
+  }
+
+  .pageBtn{
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: transparent;
+    color: var(--textColor);
+    padding: 0.5rem 0.5rem;
+    border: 1px solid var(--textColor);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+    .pageBtn:hover{
+        transition: all 0.3s ease-in-out;
+        background-color: var(--primary-color);
+        border: 1px solid transparent;
+        color: var(--secondary-color);
+    }
+
+
+@media only screen and (max-width: 768px) {
+  .mangaContent{
+    overflow: hidden;
+  }
+  .mangaTitle{
+    font-size: 1.5rem;
+  }
+
+  .SearchInput{
+    width: 18rem;
+    height: 80%;
+  }
+
+  .search__btn{
+    height: 80%;
+  }
+
+  .browseMangaTitle{
+    font-size: 1.5rem;
+  }
+
+  .browseMangaTitle2{
+    font-size: 1.5rem;
+  }
+
+  .alignBrowseManga{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

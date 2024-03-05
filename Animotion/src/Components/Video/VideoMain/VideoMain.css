@@ -1,0 +1,422 @@
+.video-main-container{
+    display: flex;
+    flex-direction: column;
+    padding: 8rem 0 0 3rem;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bgColor2);
+    overflow: hidden;
+}
+
+.AnimeVideoPlayer{
+    position:relative; 
+    border:none; 
+    overflow:hidden; 
+    background-color: #232323;
+    width: 1280px;
+    height: 720px;
+}
+
+.AnimeVideoPlayer:focus {
+    outline: none;
+  }
+  
+.AnimeVideoPlayer[seamless] {
+    display: block;
+  }
+
+.ServerBox{
+    width: 1280px;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary-color);
+    padding-bottom: 1rem;
+}
+
+.serveBoxCont1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.serveBoxCont2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    margin-left: 50rem;
+}
+
+
+.ServerInfoTitle{
+    padding-left: 2rem;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.ServerInfo{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--textColor2);
+}
+
+.video-info-cover-image{
+    width: 15%;
+    height: 45%;
+}
+
+.alignVidMain{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.alignVidInfoContent{
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem;
+}
+
+.horizontalLine2{
+    width: 100%;
+    height: 1px;
+    background-color: var(--textColor3);
+    margin-top: 1rem;
+}
+
+.VidDescSection{
+    background-color: #232323;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 50rem;
+}
+
+.VidEpisodes{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 1rem 0 1rem 0;
+}
+
+.episodeBox{
+    overflow-y: scroll;
+    background-color: var(--bgColor2);
+    padding: 1rem;
+    border-radius: 1rem;
+    max-width: 85rem;
+    max-height: 8rem;
+    margin: 0;
+    box-sizing: border-box;
+    --sb-track-color: var(--bgColor);
+    --sb-thumb-color: #86ff84;
+    --sb-size: 14px;
+
+    scrollbar-color: var(--sb-thumb-color) 
+                     var(--sb-track-color);
+}
+
+.episodeBox::-webkit-scrollbar {
+    width: var(--sb-size) 
+  }
+  
+  .episodeBox::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+  }
+  
+  .episodeBox::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 10px;
+    
+    }
+
+.episodeMainBtnGrp{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    margin-right: 40rem;
+}
+
+.episodeRadioBtnGrp{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: var(--bgColor);
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    width: 4rem;
+    height: 3rem;
+    font-size: 14px;
+}
+
+.episodeRadioBtnGrp .episodeBtnLabel {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.episodeRadioBtnGrp .episodeBtnLabel  input{
+    display: none;
+}
+
+.episodeRadioBtnGrp .episodeBtnLabel .episodeRadioSpan{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    border: none;
+    padding: .5rem;
+    color: var(--primary-color);
+    transition: all .15s ease-in-out;
+}
+
+.episodeBtnLabel .episodeRadioBtnGrp .episodeRadioSpan:hover{
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.episodeRadioBtnGrp .episodeBtnLabel input:checked + .episodeRadioSpan{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    width: 4rem;
+    height: 3rem;
+}
+
+.episodeRadioBtnGrp .episodeBtnLabel input:hover + .episodeRadioSpan{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.characterSection{
+    margin-top: 3rem;
+    margin-bottom: 15rem;
+}
+
+.characterCardAlign{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.characterCard{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #232323;
+    border-radius: 10rem 10rem 10rem 10rem;
+    height: 6rem;
+    width: 20rem;
+    cursor: pointer;
+    transition: all .15s ease-in-out
+}
+
+.characterCard:hover{
+    transform: scale(1.1);
+    background-color: #313131;
+}
+
+.characterCardImgDiv{
+    width: 20%;
+    height: 65%;
+    border-radius: 50%;
+    margin-left: 1rem;
+    overflow: hidden;
+}
+
+.characterCardImgDiv img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.characterCardName{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--textColor2);
+    text-align: center;
+    margin-left: 2rem;
+}
+
+.characterTitle{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.epChangeButton{
+    background-color: transparent;
+    color: var(--secondary-color);
+    border-radius: .5rem;
+    border: none;
+    width: 5rem;
+    height: 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    margin-right: 1rem;
+}
+
+@media only screen and (max-width:1366px){
+    .AnimeVideoPlayer{
+        width: 1024px;
+        height: 576px;
+    }
+
+    .ServerBox{
+        width: 1024px;
+    }
+
+    .serveBoxCont1{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+    }
+    
+    .serveBoxCont2{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        margin-left: 35rem;
+    }
+
+    .VidEpisodes{
+        margin: 1rem 0 1rem 10rem;
+    }
+
+    .characterSection{
+        margin-left: 10rem;
+    }
+
+    .characterCardAlign{
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .characterCard{
+        width: 18rem;
+        height: 5rem;
+    }
+
+    .characterCardName{
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width:768px){
+
+    .video-main-container{
+        padding: 8rem 0 0 0;
+    }
+
+    .AnimeVideoPlayer{
+        width: 350px;
+        height: 240px;
+        object-fit: cover;
+
+    }
+
+    .ServerBox{
+        width: 350px;
+    }
+
+    .serveBoxCont1{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+    }
+    
+    .serveBoxCont2{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        margin-left: 1rem;
+    }
+
+    .ServerInfoTitle{
+        font-size: 0.6rem;
+    }
+
+    .ServerInfo{
+        font-size: 0.6rem;
+    }
+
+    .epChangeButton{
+        width: 4rem;
+        height: 1rem;
+        font-size: .9rem;
+    }
+
+    .VidEpisodes{
+        width: 23rem;
+        margin: 1rem 0 1rem 0;
+    }
+
+    .episodeBox{
+        max-width: 26rem;
+        max-height: 15rem;
+        overflow: auto;
+    }
+
+    .episodeMainBtnGrp{
+        grid-template-columns: repeat(5, 1fr);
+        margin-right: 0;
+    }
+
+    .episodeRadioBtnGrp{
+        width: 3rem;
+        height: 2rem;
+    }
+    .episodeRadioBtnGrp .episodeBtnLabel .episodeRadioSpan{
+        font-size: 0.8rem;
+    }
+
+    .episodeRadioBtnGrp .episodeBtnLabel input:checked + .episodeRadioSpan{
+        font-size: 0.8rem;
+        width: 3rem;
+        height: 2rem;
+    }
+
+    .alignVidMain{
+        flex-direction: column;
+    }
+
+    .alignVidMain img{
+        display: none;
+    }
+
+    .VidDescSection{
+        margin: 2rem;
+    }
+
+    .characterSection{
+       display: none;
+    }
+}
