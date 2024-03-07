@@ -8,25 +8,9 @@
     overflow: hidden;
 }
 
-.AnimeVideoPlayer{
-    position:relative; 
-    border:none; 
-    overflow:hidden; 
-    background-color: #232323;
-    width: 1280px;
-    height: 720px;
-}
-
-.AnimeVideoPlayer:focus {
-    outline: none;
-  }
-  
-.AnimeVideoPlayer[seamless] {
-    display: block;
-  }
-
 .ServerBox{
     width: 1280px;
+    height: auto;
     display: flex;
     flex-direction: row;
     background-color: var(--primary-color);
@@ -36,7 +20,7 @@
 .serveBoxCont1{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-top: 1rem;
 }
@@ -44,24 +28,69 @@
 .serveBoxCont2{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     margin-top: 1rem;
-    margin-left: 50rem;
+    margin-left: 30rem;
 }
 
+.serverChangeBox{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+    margin-left: 5rem;
+    width: 25rem;
+    height: auto;
+    background-color: var(--bgColor3);
+    border-radius: 1rem;
+}
+
+.serverTags{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    margin: 1rem 0 1rem 2rem;
+    height: auto;
+    border-radius: 1rem;
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+}
+
+.serverBtnGrp{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.serverChangeBtn{
+    background-color:#313131;
+    color: var(--secondary-color);
+    border-radius: .5rem;
+    border: none;
+    width: 5rem;
+    height: 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.serverChangeBtn:hover{
+    background-color: var(--primary-color);
+}
 
 .ServerInfoTitle{
-    padding-left: 2rem;
+    padding-left: 4rem;
     font-family: "Montserrat", sans-serif;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: var(--secondary-color);
 }
 
 .ServerInfo{
     font-family: "Montserrat", sans-serif;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: var(--textColor2);
 }
@@ -268,13 +297,18 @@
     color: var(--secondary-color);
     border-radius: .5rem;
     border: none;
-    width: 5rem;
+    width: 6rem;
     height: 3rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: all .2s ease-in-out;
     margin-right: 1rem;
 }
+
+/* #epChangeIcon{
+    font-size: 2rem;
+    padding-bottom: .2rem;
+} */
 
 @media only screen and (max-width:1366px){
     .AnimeVideoPlayer{
@@ -326,27 +360,27 @@
     }
 }
 
-@media only screen and (max-width:768px){
+@media only screen and (max-width:950px){
 
     .video-main-container{
         padding: 8rem 0 0 0;
     }
 
-    .AnimeVideoPlayer{
+    /* .AnimeVideoPlayer{
         width: 350px;
         height: 240px;
         object-fit: cover;
 
-    }
+    } */
 
     .ServerBox{
-        width: 350px;
+        width: 290px;
     }
 
     .serveBoxCont1{
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         margin-top: 1rem;
     }
@@ -354,13 +388,46 @@
     .serveBoxCont2{
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         margin-top: 1rem;
         margin-left: 1rem;
     }
 
+    .serverChangeBox{
+        width: 12rem;
+        margin-left: 1rem;
+        flex-direction: row;
+        padding: 1rem;
+    }
+    
+    .serverTags{
+        margin: 0rem 0 0rem 1rem;
+        font-size: 0.6rem;
+        gap: .5rem;
+        
+    }
+    
+    .serverChangeBtn{
+        width: 2.5rem;
+        height: 2rem;
+        font-size: .6rem;
+    }
+    
+    .serverChangeBtn:hover{
+        background-color: var(--primary-color);
+    }
+
+    #subIcon{
+        font-size: .8rem;
+    }
+
+    #dubIcon{
+        font-size: .8rem;
+    }
+
     .ServerInfoTitle{
+        padding-left: 1rem;
         font-size: 0.6rem;
     }
 
@@ -369,9 +436,15 @@
     }
 
     .epChangeButton{
-        width: 4rem;
+        display: none;
+        width: 2.3rem;
         height: 1rem;
-        font-size: .9rem;
+        font-size: .6rem;
+    }
+
+    #epChangeIcon{
+        font-size: 1rem;
+        padding-bottom: .2rem;
     }
 
     .VidEpisodes{
@@ -419,4 +492,5 @@
     .characterSection{
        display: none;
     }
+    
 }

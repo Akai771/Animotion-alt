@@ -17,9 +17,10 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
 const Home = ({token}) =>{
     const [recentEp, setRecentEp] = useState([]);
-    const [popular, setPopular] = useState([]);
+    const [upcoming,setUpcoming] = useState([]);
     const [trending, setTrending] = useState([]);
-    const [movies, setMovies] = useState([]);
+    const [top, setTop] = useState([]);
+    const [topAiring, setTopAiring] = useState([]);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     var settings = {}
 
@@ -37,18 +38,14 @@ const Home = ({token}) =>{
     let dataBasedOnScreenSize;
 
     useEffect(()=>{
-        axios.get("https://animotion-consumet-api-2.vercel.app/anime/gogoanime/recent-episodes")
-        .then((res) => setRecentEp(res.data.results.slice(0, 16)))
-
-        axios.get("https://animotion-consumet-api-2.vercel.app/anime/gogoanime/popular")
-        .then((res) => setPopular(res.data.results))
-
-
-        axios.get("https://animotion-consumet-api-2.vercel.app/anime/gogoanime/top-airing")
-        .then((res) => setTrending(res.data.results))
-
-        axios.get("https://animotion-consumet-api-2.vercel.app/anime/gogoanime/movies")
-        .then((res) => setMovies(res.data.results))
+        axios.get("https://animotion-aniwatch-api.vercel.app/anime/home")
+        .then((res) => {
+            setRecentEp(res.data.latestEpisodeAnimes)
+            setTrending(res.data.trendingAnimes)
+            setTopAiring(res.data.topAiringAnimes)
+            setUpcoming(res.data.topUpcomingAnimes)
+            setTop(res.data.top10Animes.month)
+        })
     },[])
 
     if (screenWidth < 768) {
@@ -92,8 +89,8 @@ const Home = ({token}) =>{
         <br/>
         <div className="alignCardMargin"> 
             <Slider {...settings}>
-                {popular.map((popular) => (
-                    <VidCard2 key={popular.id} id={popular.id} title={popular.title} coverImage={popular.image} />
+                {trending.map((trend) => (
+                    <VidCard2 key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} />
                     ))
                 }
             </Slider>
@@ -101,19 +98,19 @@ const Home = ({token}) =>{
         <br/><br/> 
         <div className="latest-episode-section">
             <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Latest Episodes</h3></div>
-            <Link exact to={`/latest-episodes`} ><button className="view-more-btn">View More<ChevronRightRoundedIcon id="arrow-Icon"/></button></Link>
+            {/* <Link exact to={`/latest-episodes`} ><button className="view-more-btn">View More<ChevronRightRoundedIcon id="arrow-Icon"/></button></Link> */}
         </div>
         
         <br/>
         <div className="alignCardMargin2">
             {recentEp.map((recentEp) => (
-                <VidCard key={recentEp.id} id={recentEp.id} title={recentEp.title} coverImage={recentEp.image} currentEpisode={recentEp.episodeNumber}/>
+                <VidCard key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes.sub} type={recentEp.type} duration={recentEp.duration}/>
                 ))
             }
         </div>
         <br/><br/>
         <div className="AnimePromotion">
-            <Link to="/details/ore-dake-level-up-na-ken">
+            <Link to="/details/solo-leveling-18718">
                 <img
                     src="https://i.postimg.cc/HkyBJQp2/Solo-Leveling-Watch-Now-AD.png"
                     alt="Anime Promotion"
@@ -122,25 +119,46 @@ const Home = ({token}) =>{
             </Link>
         </div>
         <br/><br/>
-        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>New on Animotion</h3></div>
+        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Top Airing</h3></div>
         <br/>
         <div className="alignCardMargin">
-        <Slider {...settings}>
-            {trending.map((seasonal) => (
-                        <VidCard2 key={seasonal.id} id={seasonal.id} title={seasonal.title} coverImage={seasonal.image}/>
+            <Slider {...settings}>
+            {topAiring.map((movie) => (
+                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} />
                     ))
                 }
-        </Slider>
+            </Slider>
         </div>
         <br/><br/>
-        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Movies</h3></div>
+        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Popular Anime This Month</h3></div>
+        <br/>
+        <div className="alignCardMargin">
+            <Slider {...settings}>
+            {top.map((movie) => (
+                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} />
+                    ))
+                }
+            </Slider>
+        </div>
+        <br/><br/>
+        <div className="AnimePromotion">
+            <Link to="/details/solo-leveling-18718">
+                <img
+                    src="https://i.postimg.cc/HkyBJQp2/Solo-Leveling-Watch-Now-AD.png"
+                    alt="Anime Promotion"
+                    className="AnimePromotionImg"
+                />
+            </Link>
+        </div>
+        <br/><br/>
+        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Upcoming Anime</h3></div>
         <br/>
         <div className="alignCardMargin">
         <Slider {...settings}>
-        {movies.map((movie) => (
-                <VidCard2 key={movie.id} id={movie.id} title={movie.title} coverImage={movie.image} />
-                ))
-            }
+            {upcoming.map((seasonal) => (
+                        <VidCard2 key={seasonal.id} id={seasonal.id} title={seasonal.name} coverImage={seasonal.poster}/>
+                    ))
+                }
         </Slider>
         </div>
         <br/><br/>

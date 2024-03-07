@@ -76,7 +76,7 @@
     }
 }
 
-@media only screen and (max-width:768px){
+@media only screen and (max-width:950px){
     .newsCardAlign{
         grid-template-columns: repeat(1, 1fr);
         padding: 1rem;

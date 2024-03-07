@@ -315,6 +315,10 @@
     flex-direction: row;
 }
 
+.noSectionDisp{
+    display: none;
+}
+
 @media only screen and (max-width: 1366px){
     .alignRecommendAnime{
         width: 85rem;
@@ -330,7 +334,7 @@
     }
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 950px){
     .videoInfoPage{
         overflow: hidden;
     }

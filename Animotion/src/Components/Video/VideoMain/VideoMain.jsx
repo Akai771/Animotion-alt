@@ -10,6 +10,9 @@ import Preloader from "../../Preloader/Preloader";
 import CharacterCard from "./characterCard";
 import FastRewindIcon from '@mui/icons-material/FastRewind';
 import FastForwardIcon from '@mui/icons-material/FastForward';
+import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
+import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
+import VideoPlayer from "./VideoPlayer";
 
 const VideoMain = () => {
     const {id} = useParams();
@@ -19,21 +22,23 @@ const VideoMain = () => {
     const histEpisodeNumber = histEpisodeId?parseInt(histEpisodeId.split("-").pop()):1
 
     const [animeData, setAnimeData] = useState([]);
-    const [server, setServer] = useState([])
+    const [serverInfo, setServerInfo] = useState([])
+    const [serverLink, setServerLink] = useState([])
     const [episode, setEpisode] = useState([])
-    const [selectedOption, setSelectedOption] = useState(histEpisodeNumber);
+    const [format, setFormat] = useState("sub");
+    const [epNo, setEpNo] = useState(0);
+    const [selectedOption, setSelectedOption] = useState(1);
     const [episodeId, setEpisodeId] = useState(histEpisodeId);
     const [episodeNumber, setEpisodeNumber] = useState(histEpisodeNumber);
     const [addData, setAddData] = useState([]);
-    const [epNo, setEpNo] = useState(histEpisodeNumber);
 
     const navigate = useNavigate();
     
     const handleOptionChange = (e) => {
-        setEpisodeNumber(e.target.value);
-        setSelectedOption(e.target.value);
-        navigate(`/watch/${id}?epId=${e.target.id}`)
-        window.location.reload();
+        setEpisodeId(e.target.value);
+        setEpNo(e.target.name);
+        setSelectedOption(e.target.name);
+        navigate(`/watch/${id}?epId=${e.target.value}`)
       };
 
       const handleNextEp = () => {
@@ -59,25 +64,34 @@ const VideoMain = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-consumet-api-2.vercel.app/anime/gogoanime/info/${id}`)
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
         .then((res) => {
-            setAnimeData(res.data),
             setEpisode(res.data.episodes)
+        });
+
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
+        .then((res) => {
+            setAnimeData(res.data.anime.info)
         });
 
         axios.get(`https://api.anify.tv/search/anime/${id}`)
         .then((res) => setAddData(res.data.results[0]));
 
     },[id])
-
+    
     useEffect(()=>{
-        axios.get(`https://animotion-consumet-api-2.vercel.app/anime/gogoanime/servers/${episodeId}`)
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/servers?episodeId=${episodeId}`)
         .then((res) => {
-            setServer(res.data[0])})
+            setServerInfo(res.data)
+            setEpisodeNumber(serverInfo.episodeNo)
+            setEpNo(serverInfo.episodeNo)
+        })     
         .catch((err) => console.error("Error fetching server data:", err))
-    },[episodeId, id])
 
-    console.log("Server Data:", server)
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
+        .then((res) => {
+            setServerLink(res.data)})
+    },[episodeId, id, format])
 
     var specificAnimeID = JSON.parse(localStorage.getItem('history'))
     if (Array.isArray(specificAnimeID)) {
@@ -95,20 +109,30 @@ const VideoMain = () => {
     else {
         console.error("Invalid data format in 'history'");
     }
-
     return(<>
         <Preloader/>
         <NavBar />
         <div className="video-main-container">
-            <iframe className="AnimeVideoPlayer" src={server.url} title="Animotion video player" id="videoPlayer" allowfullscreen="allowfullscreen"/>
+            {/* <ReactPlayer className="AnimeVideoPlayer" url={serverUrl} title="Animotion video player" id="videoPlayer" allowfullscreen="allowfullscreen"/> */}
+            <VideoPlayer 
+                mal={serverLink?serverLink.malID:null}
+                serverLink={serverLink.sources?serverLink.sources[0].url:null} 
+                trackSrc={serverLink.tracks} 
+            />
             <div className="ServerBox">
                 <div className="serveBoxCont1">
-                    <span className="ServerInfoTitle">Episode: <span className="ServerInfo">{episodeNumber}</span></span>
-                    <span className="ServerInfoTitle">Server: <span className="ServerInfo">{server.name}</span></span>
+                    <span className="ServerInfoTitle">Episode: <span className="ServerInfo">{serverInfo.episodeNo}</span></span>
+                </div>
+                <div className="serverChangeBox">
+                    <span className="serverTags">Format : </span>
+                    <span className="serverTags">
+                        <button className="serverChangeBtn" onClick={()=> setFormat("sub")}><ClosedCaptionOutlinedIcon id="subIcon"/> Sub</button>
+                        <button className="serverChangeBtn" onClick={()=> setFormat("dub")}><KeyboardVoiceOutlinedIcon id="dubIcon"/> Dub</button>
+                    </span>
                 </div>
                 <div className="serveBoxCont2">
-                    <button className="epChangeButton" onClick={handlePrevEp}><FastRewindIcon style={{paddingBottom:"1px"}} />Prev</button>
-                    <button className="epChangeButton" onClick={handleNextEp}>Next<FastForwardIcon style={{paddingBottom:"1px"}}/></button>
+                    <button className="epChangeButton" onClick={handlePrevEp}><FastRewindIcon id="epChangeIcon" />Prev</button>
+                    <button className="epChangeButton" onClick={handleNextEp}>Next<FastForwardIcon id="epChangeIcon"/></button>
                 </div>
             </div>
             <br/>
@@ -121,8 +145,8 @@ const VideoMain = () => {
                             {episode.map((anime) => {       
                                 return(<>
                                     <div className="episodeRadioBtnGrp">
-                                        <label className="episodeBtnLabel" key={anime.id} htmlFor={anime.id}>
-                                            <input  className="episodeRadioBtn" type="radio" name={anime.number} id={anime.id} value={anime.number} checked={selectedOption == anime.number} onChange={handleOptionChange}/>
+                                        <label className="episodeBtnLabel" key={anime.episodeId} htmlFor={anime.episodeId}>
+                                            <input  className="episodeRadioBtn" type="radio" name={anime.number} id={anime.episodeId} value={anime.episodeId} checked={selectedOption == anime.number} onChange={handleOptionChange}/>
                                             <span className="episodeRadioSpan">{anime.number}</span>
                                         </label>
                                     </div>
@@ -135,9 +159,9 @@ const VideoMain = () => {
             </div>
             <br/>
             <div className="alignVidMain">
-                <img src={animeData.image} alt="Anime Cover Image" className="video-info-cover-image"/>
+                <img src={animeData.poster} alt="Anime Cover Image" className="video-info-cover-image"/>
                 <div className="VidDescSection">
-                    <span className="AnimeTitle">{animeData.title}</span>
+                    <span className="AnimeTitle">{animeData.name}</span>
                     <br/>
                     <span className="AnimeInfo">Episode {episodeNumber}</span>
                     <div className="horizontalLine2"/>
@@ -147,17 +171,7 @@ const VideoMain = () => {
                     </div>
                 </div>
             </div>
-            <div className="characterSection">
-                <span className="characterTitle">Characters:</span>
-                <div className="characterCardAlign">
-                    <CharacterCard image={addData.characters?addData.characters[0].image:"https://via.placeholder.com/150x190"} c_name={addData.characters?addData.characters[0].name:"No Data"}/>
-                    <CharacterCard image={addData.characters?addData.characters[1].image:"https://via.placeholder.com/150x190"} c_name={addData.characters?addData.characters[1].name:"No Data"}/>
-                    <CharacterCard image={addData.characters?addData.characters[2].image:"https://via.placeholder.com/150x190"} c_name={addData.characters?addData.characters[2].name:"No Data"}/>
-                    <CharacterCard image={addData.characters?addData.characters[3].image:"https://via.placeholder.com/150x190"} c_name={addData.characters?addData.characters[3].name:"No Data"}/>
-                    <CharacterCard image={addData.characters?addData.characters[4].image:"https://via.placeholder.com/150x190"} c_name={addData.characters?addData.characters[4].name:"No Data"}/>
-                    <CharacterCard image={addData.characters?addData.characters[5].image:"https://via.placeholder.com/150x190"} c_name={addData.characters?addData.characters[5].name:"No Data"}/>
-                </div>
-            </div>
+            <br /><br /><br />
         </div>
         <Footer />
         <ChatbotButton />

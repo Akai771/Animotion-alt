@@ -28,7 +28,7 @@ function WatchNowButton({animeId, animeTitle, animeImage}) {
       setHistory(updatedHistory);
       localStorage.setItem("history", JSON.stringify(updatedHistory));
     }
-    navigate(`/watch/${animeId}?epId=${animeId}-episode-1`);
+    navigate(`/watch/${animeId}?epId=${animeId}`);
 }
 
     return(

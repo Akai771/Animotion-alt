@@ -40,7 +40,6 @@ function History() {
                         <div className="BrowseAnimeContainer">
                             <div className="alignBrowseAnime">
                                 {history?history.map((anime) => (
-                                    console.log(anime.animeEpisodeId),
                                     <HistoryCard
                                         key={anime.animeId}
                                         id={anime.animeId}

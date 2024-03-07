@@ -97,6 +97,7 @@
   font-family: "montserrat", sans-serif;
   font-weight: 400;
   color: var(--secondary-color);
+  padding-right: 1rem;
 }
 
 .playIcon{
@@ -143,7 +144,7 @@
   transition: 0.5s ease-in-out;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 950px){
   .VidCard1 {
     width: 8.5rem;
     height: 18rem;

@@ -16,7 +16,7 @@ import "./Browse.css";
 const Browse = () => {
     const [browse, setBrowse] = useState([]);
     const [search, setSearch] = useState("");
-    const [searchTerm, setSearchTerm] = useState("anime-list");
+    const [searchTerm, setSearchTerm] = useState("anime");
     const [displaySearch, setDisplaySearch] = useState("No Search Yet!");
     const [genres, setGenres] = useState([]);
     const [page, setPage] = useState(1);
@@ -56,15 +56,14 @@ const Browse = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-consumet-api-2.vercel.app/anime/gogoanime/${searchTerm}?page=${page}`)
-        .then((res) => setBrowse(res.data.results))
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/search?q=${searchTerm}&page=${page}`)
+        .then((res) => setBrowse(res.data.animes))
     },[searchTerm, page])
 
     useEffect(()=>{
-        axios.get(`https://animotion-consumet-api-2.vercel.app/anime/gogoanime/genre/list`)
-        .then((res) => setGenres(res.data))
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/home`)
+        .then((res) => setGenres(res.data.genres))
     },[])
-
     return(<>
         <div>
             <Preloader/>
@@ -84,9 +83,10 @@ const Browse = () => {
                                 <div className="BrowseAnimeContainer">
                                     <span className="browseAnimeTitle">Search results for : <span className="browseAnimeTitle2">{displaySearch}</span></span>
                                     <div className="alignBrowseAnime">
-                                        {browse.map((seasonal) => (
-                                                <BrowseCard key={seasonal.id} id={seasonal.id} title={seasonal.title} coverImage={seasonal.image}/>
-                                            ))
+                                        {browse?browse.map((seasonal) => (
+                                                <BrowseCard key={seasonal.id} id={seasonal.id} title={seasonal.name} coverImage={seasonal.poster}/>
+                                            )):
+                                            <span className="browseAnimeTitle2">No Results Found</span>
                                         }
                                     </div>
                                     <div className="pageBtnGrp">
@@ -102,13 +102,13 @@ const Browse = () => {
                         <span className="browseTitle">Genres</span>
                         {genreState==true?
                         <div className="genreButtonGrp">
-                            {genres.slice(0,20).map((genre) => (
-                                <GenresBtn key={genre.id} id={genre.id} title={genre.title}/>
+                            {genres.slice(0,21).map((genre) => (
+                                <GenresBtn key={genre} id={genre} title={genre}/>
                             ))}
                         </div>:
                         <div className="genreButtonGrp">
                             {genres.map((genre) => (
-                                <GenresBtn key={genre.id} id={genre.id} title={genre.title}/>
+                                <GenresBtn key={genre} id={genre} title={genre}/>
                             ))}
                         </div>}
                         <button className="genreDisplayBtn" onClick={handleGenre}>{genreState==true?"Show More":"Show Less"}</button>

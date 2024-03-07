@@ -12,7 +12,9 @@ const GenresBtn = ({id, title}) => {
     }
     return(<>
         <div>
-            <button className="genresBtn" id={id} onClick={handleClick}>{title}</button>
+            <button className="genresBtn" id={id} onClick={handleClick}>
+                {title}
+            </button>
         </div>
     </>)
 }
