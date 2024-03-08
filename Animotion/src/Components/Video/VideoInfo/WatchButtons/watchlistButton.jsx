@@ -38,7 +38,7 @@ function WatchlistButton({animeId, animeTitle, animeImage}) {
 
     let userData;
     async function getWatchlist2() {
-      const { data } = await supabase.from("watchlistAnimotion").select();
+      const { data } = await supabase.from("watchlistAnimotion_alt").select();
       var userData = data.filter((data) => data.userID === userId);
       setWatchlist2(userData);
     }
@@ -81,7 +81,7 @@ function WatchlistButton({animeId, animeTitle, animeImage}) {
 
       // Adds or removes the anime from the watchlist in the database
       const handleAddToWatchlist2 = async (animeId, animeTitle, animeImage) => {
-        const { data } = await supabase.from("watchlistAnimotion").select();
+        const { data } = await supabase.from("watchlistAnimotion_alt").select();
         const userData = data.filter((data) => data.userID === userId);
 
         const existingAnimeIndex = userData.findIndex(
@@ -89,13 +89,13 @@ function WatchlistButton({animeId, animeTitle, animeImage}) {
           );
 
           if (existingAnimeIndex !== -1) {
-            await supabase.from("watchlistAnimotion")
+            await supabase.from("watchlistAnimotion_alt")
             .delete()
             .match({animeId: animeId, userID: userId});
             getWatchlist2();
           } 
           else {
-            await supabase.from("watchlistAnimotion")
+            await supabase.from("watchlistAnimotion_alt")
             .insert([
                 {animeId: animeId, animeTitle: animeTitle, animeImage: animeImage, userID: userId}
             ]);

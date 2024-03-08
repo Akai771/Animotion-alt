@@ -22,7 +22,7 @@ function Watchlist() {
     }, []);
 
     async function getWatchlist2() {
-      const { data } = await supabase.from("watchlistAnimotion").select();
+      const { data } = await supabase.from("watchlistAnimotion_alt").select();
       const userData = data.filter((data) => data.userID === userId);
       setWatchlist2(userData);
     }

@@ -5,17 +5,11 @@ import "../../Video/VideoInfo/RecommendCard/recommendCard.css"
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const VidCard = ({id, title, coverImage, currentEpisode, type, duration}) => {
-    const redirectEpisodeId = `${id}-episode-${currentEpisode}`
-    const navigate = useNavigate();
-    const handleClick = () =>{
-        navigate(`/details/${id}`)
-        window.location.reload();
-    }
     return (
       <>
         <div class="recentEpCard">
             <div className="recentEpCardImage">
-              <Link exact to={`/watch/${id}?epId=${redirectEpisodeId}`}>
+              <Link exact to={`/details/${id}`}>
                   <img className="recentEpImage" src={coverImage} alt={title} />
                   <div className="playIcon">
                     <PlayArrowIcon id="playIcon-home"/>

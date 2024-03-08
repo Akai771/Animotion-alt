@@ -45,6 +45,7 @@ const Home = ({token}) =>{
             setTopAiring(res.data.topAiringAnimes)
             setUpcoming(res.data.topUpcomingAnimes)
             setTop(res.data.top10Animes.month)
+            console.log(recentEp)
         })
     },[])
 

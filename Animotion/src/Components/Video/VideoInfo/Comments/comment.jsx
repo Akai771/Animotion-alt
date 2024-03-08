@@ -26,7 +26,7 @@ function Comment({animeId}) {
 
     //Post comment to the database
     async function postComment(comment){
-        const { data, error } = await supabase.from('comments').insert([
+        const { data, error } = await supabase.from('comments_alt').insert([
             { animeID: animeId, userId: userId, userName: userName, comment: comment, created_date: formattedDate}
         ]);
         if (error) {
@@ -43,7 +43,7 @@ function Comment({animeId}) {
     }, []);
 
     async function getComments() {
-      const { data } = await supabase.from("comments").select();
+      const { data } = await supabase.from("comments_alt").select();
       const userData = data.filter((data) => data.animeID === animeId);
       setComments(userData);
     }
