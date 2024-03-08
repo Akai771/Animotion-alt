@@ -23,6 +23,7 @@ const VideoInfo = () => {
     const [addData2, setAddData2] = useState([])
     const [recommendPop, setRecommendPop] = useState([]);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [episode, setEpisode] = useState([]);
 
     const {id} = useParams();
     const navigate = useNavigate();
@@ -54,8 +55,12 @@ const VideoInfo = () => {
                 setAnimeData(res.data.anime.info)
                 setAddData(res.data.anime.moreInfo)
                 setRecommendPop(res.data.seasons)
-                console.log(res.data)
             })
+
+            axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
+            .then((res) => {
+                setEpisode(res.data.episodes[0].episodeId)
+            });
 
             axios.get(`https://api.anify.tv/search/anime/${id}`)
             .then((res) => setAddData2(res.data.results[0]))
@@ -109,7 +114,7 @@ const VideoInfo = () => {
                     <span className="AnimeInfoTitle">MAL Score: <span className="AnimeInfo">{addData?addData.malscore:"No Data"}</span></span>
                     <span className="AnimeInfoTitle">Studio: <span className="AnimeInfo">{addData?addData.studios:"No Data"}</span></span>
                     <div className="episodeBtnGrp2">
-                        <WatchNowButton animeId={animeData.id} animeTitle={animeData.name} animeImage={animeData.poster}/>
+                        <WatchNowButton animeId={animeData.id} animeTitle={animeData.name} animeImage={animeData.poster} animeEpisode={episode}/>
                         <WatchlistButton animeId={animeData.id} animeTitle={animeData.name} animeImage={animeData.poster}/>
                     </div>
                     <br/>
@@ -138,7 +143,7 @@ const VideoInfo = () => {
                     </div>
                 </div>
             </div>
-            <div className={recommendPop === null || []?"recommendedSection":"noSectionDisp"}>
+            <div className={recommendPop.length === 0?"noSectionDisp":"recommendedSection"}>
                 <span className="AnimeTitle">Seasons:</span>
                     <div className="alignRecommendAnime">
                     {/* <Slider {...settings}> */}

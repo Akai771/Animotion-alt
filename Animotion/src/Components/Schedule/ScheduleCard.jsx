@@ -1,20 +1,24 @@
 import "./Schedule.css"
 import React from "react";
+import { Link } from "react-router-dom";
 
-function ScheduleCard({ title, airingEpisode, coverImage }) {
+function ScheduleCard({ title, jtitle, time, id }) {
     return (
+        
         <div>
             <div class="ScheduleCard">
-                <div className="ScheduleCardAlign">
-                    <img src={coverImage?coverImage:"https://via.placeholder.com/150x190"} class="ScheduleCardImg" alt="..."/>
-                    <div className="ScheduleCardCont">
-                        <span class="scheduleTitleTxt">{title?title.english:title.native}</span>
-                        <span class="scheduleTimeTxt">EP {airingEpisode}</span>
+                <Link to={`/details/${id}`}>
+                    <div className="ScheduleCardAlign">
+                        <div className="ScheduleCardCont">
+                            <span class="scheduleTitleTxt">{title}</span>
+                            <span class="scheduleTitleTxt2">{jtitle}</span>
+                            <span class="scheduleTimeTxt">{time}</span>
+                        </div>
                     </div>
-
-                </div>
+                </Link>
             </div>
         </div>
+        
     );
 }
 

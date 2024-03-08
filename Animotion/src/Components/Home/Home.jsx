@@ -98,7 +98,7 @@ const Home = ({token}) =>{
         <br/><br/> 
         <div className="latest-episode-section">
             <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Latest Episodes</h3></div>
-            {/* <Link exact to={`/latest-episodes`} ><button className="view-more-btn">View More<ChevronRightRoundedIcon id="arrow-Icon"/></button></Link> */}
+            <Link exact to={`/latest-episodes`} ><button className="view-more-btn">View More<ChevronRightRoundedIcon id="arrow-Icon"/></button></Link>
         </div>
         
         <br/>
@@ -142,9 +142,9 @@ const Home = ({token}) =>{
         </div>
         <br/><br/>
         <div className="AnimePromotion">
-            <Link to="/details/solo-leveling-18718">
+            <Link to="/details/one-piece-100">
                 <img
-                    src="https://i.postimg.cc/HkyBJQp2/Solo-Leveling-Watch-Now-AD.png"
+                    src="https://i.postimg.cc/9fMs7Zvk/One-Piece-Ad.png"
                     alt="Anime Promotion"
                     className="AnimePromotionImg"
                 />

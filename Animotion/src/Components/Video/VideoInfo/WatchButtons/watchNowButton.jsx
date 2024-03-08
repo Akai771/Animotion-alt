@@ -2,9 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../VideoInfo.css";
+import axios from "axios";
 
 
-function WatchNowButton({animeId, animeTitle, animeImage}) {
+function WatchNowButton({animeId, animeTitle, animeImage, animeEpisode}) {
     const navigate = useNavigate();
     const [history, setHistory] = useState([]);
   useEffect(() => {
@@ -28,7 +29,7 @@ function WatchNowButton({animeId, animeTitle, animeImage}) {
       setHistory(updatedHistory);
       localStorage.setItem("history", JSON.stringify(updatedHistory));
     }
-    navigate(`/watch/${animeId}?epId=${animeId}`);
+    navigate(`/watch/${animeId}?epId=${animeEpisode}`);
 }
 
     return(

@@ -45,8 +45,8 @@ const RecentEpisodes = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-consumet-api-2.vercel.app/anime/gogoanime/recent-episodes?page=${page}`)
-        .then((res) => setRecentEp(res.data.results))
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/recently-updated?page=${page}`)
+        .then((res) => setRecentEp(res.data.animes))
     },[page])
 
     return(<>
@@ -61,7 +61,7 @@ const RecentEpisodes = () => {
                             <div className="BrowseAnimeContainer">
                                 <div className="alignBrowseAnime">
                                     {recentEp.map((seasonal) => (
-                                            <VidCard id={seasonal.id} title={seasonal.title.slice(0,40)} coverImage={seasonal.image?seasonal.image:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}/>
+                                            <VidCard id={seasonal.id} title={seasonal.name.slice(0,40)} coverImage={seasonal.poster?seasonal.poster:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"} currentEpisode={seasonal.episodes.sub} type={seasonal.type} duration={seasonal.duration} />
                                         ))
                                     }
                                 </div>

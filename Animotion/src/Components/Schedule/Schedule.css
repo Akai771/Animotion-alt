@@ -88,6 +88,10 @@
     background-color: #232323;
 }
 
+.ScheduleCard a{
+    text-decoration: none;
+}
+
 .ScheduleCardCont{
     display: flex;
     flex-direction: column;
@@ -106,12 +110,20 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    padding-left: 3rem;
 }
 
 .scheduleTitleTxt{
     font-family: "Montserrat", sans-serif;
     color: var(--textColor);
     font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.scheduleTitleTxt2{
+    font-family: "Montserrat", sans-serif;
+    color: var(--textColor3);
+    font-size: .9rem;
     font-weight: 600;
 }
 
@@ -149,6 +161,13 @@
     width: 82rem;
     font-size: 14px;
   }
+
+.date{
+    font-family: "Montserrat", sans-serif;
+    color: var(--textColor3);
+    font-size: .65rem;
+    font-weight: 600;
+  }
   
   .radio-inputs .radio {
     flex: 1 1 auto;
@@ -161,6 +180,7 @@
   
   .radio-inputs .radio .name {
     display: flex;
+    flex-direction: column;
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -188,6 +208,10 @@
         padding: 0.25rem;
         width: 25rem;
         font-size: 1rem;
+      }
+
+      .date{
+        font-size: .4rem;
       }
       
       .radio-inputs .radio .name {
@@ -232,6 +256,10 @@
 
     .scheduleTitleTxt{
         font-size: .9rem;
+    }
+
+    .scheduleTitleTxt2{
+        font-size: .7rem;
     }
 
     .scheduleTimeTxt{

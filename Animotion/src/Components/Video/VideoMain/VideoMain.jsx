@@ -19,7 +19,6 @@ const VideoMain = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const defaultEpisodeId = `${id}-episode-1`
     const histEpisodeId = searchParams?searchParams.get('epId'): defaultEpisodeId;
-    const histEpisodeNumber = histEpisodeId?parseInt(histEpisodeId.split("-").pop()):1
 
     const [animeData, setAnimeData] = useState([]);
     const [serverInfo, setServerInfo] = useState([])
@@ -27,9 +26,9 @@ const VideoMain = () => {
     const [episode, setEpisode] = useState([])
     const [format, setFormat] = useState("sub");
     const [epNo, setEpNo] = useState(0);
-    const [selectedOption, setSelectedOption] = useState(1);
+    const [selectedOption, setSelectedOption] = useState(serverInfo.episodeNo);
     const [episodeId, setEpisodeId] = useState(histEpisodeId);
-    const [episodeNumber, setEpisodeNumber] = useState(histEpisodeNumber);
+    const [episodeNumber, setEpisodeNumber] = useState(serverInfo.episodeNo);
     const [addData, setAddData] = useState([]);
 
     const navigate = useNavigate();
@@ -87,6 +86,8 @@ const VideoMain = () => {
             setEpNo(serverInfo.episodeNo)
         })     
         .catch((err) => console.error("Error fetching server data:", err))
+
+        console.log("Episode ID: ", episodeId)
 
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
         .then((res) => {
