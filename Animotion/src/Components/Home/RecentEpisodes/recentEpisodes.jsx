@@ -1,18 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import {Link, useParams} from "react-router-dom";
 import "./recentEpisodes.css";
 import NavBar from "../../Navbar/Navbar";
 import Footer from "../../Footer/Footer";
 import ChatbotButton from "../../Chatbot/ChatbotButton/ChatbotButton";
 import TopRedirect from "../../TopRedirectButton/TopRedirect";
 import axios from "axios";
-import VidCard from "../VideoCard/VidCard";
-import SearchIcon from '@mui/icons-material/Search';
+import VidCard3 from "../VideoCard/VidCard3";
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import Preloader from "../../Preloader/Preloader";
 
 const RecentEpisodes = () => {
@@ -61,7 +57,7 @@ const RecentEpisodes = () => {
                             <div className="BrowseAnimeContainer">
                                 <div className="alignBrowseAnime">
                                     {recentEp.map((seasonal) => (
-                                            <VidCard id={seasonal.id} title={seasonal.name.slice(0,40)} coverImage={seasonal.poster?seasonal.poster:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"} currentEpisode={seasonal.episodes.sub} type={seasonal.type} duration={seasonal.duration} />
+                                            <VidCard3 id={seasonal.id} title={seasonal.name} coverImage={seasonal.poster?seasonal.poster:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"} currentEpisode={seasonal.episodes.sub} type={seasonal.type} duration={seasonal.duration} />
                                         ))
                                     }
                                 </div>

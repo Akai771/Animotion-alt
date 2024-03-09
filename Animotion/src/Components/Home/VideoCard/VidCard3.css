@@ -1,0 +1,266 @@
+.trialCard {
+    display: flex;
+    flex-direction: column;
+    width: 14rem;
+    height: 24rem;
+    padding: .8em;
+    background: var(--bgColor2);
+    color: #ffffff  ;
+    position: relative;
+    overflow: visible;
+  }
+  
+  .trialCard:hover {
+    transform: scale(1.1);
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .trial-info {
+    padding-top: 5px;
+    height: auto;
+  }
+  
+  .trialTitle{
+    font-family: "montserrat", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .trialTitleAlign{
+    height: 2rem;
+    /* border: 1px solid red; */
+  }
+
+  .trialCardImage{
+    width: 12rem;
+    height: 18rem;
+    object-fit: cover;
+  }
+  
+  .trialImage{
+    width: 13rem;
+    height: 18rem;
+    object-fit: cover;
+  }
+    
+  .trialInfo{
+    display: flex;
+    flex-direction: row;
+    gap: 0.4rem;
+  }
+  
+  .trialInfoCont{
+    font-size: 0.6rem;
+    font-family: "montserrat", sans-serif;
+    font-weight: 400;
+    color: var(--secondary-color);
+    padding-right: 1rem;
+  }
+  
+  .playIcon{
+    color: var(--textColor);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -1rem;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+  }
+  
+  #playIcon-home{
+    font-size: 2.8rem;
+  }
+  
+  .trialCard:hover .playIcon{
+    opacity: 1;
+    transition: 0.5s ease-in-out;
+  }
+  
+  .trialCard:hover .trialImage{
+    text-align: center;
+    opacity: 0.5;
+    filter: blur(2px);
+    transition: 0.5s ease-in-out;
+  }
+
+  .trialCardOverlay{   
+    color: var(--textColor);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -9.5rem;
+    bottom: 0;
+    left: -3rem;
+    opacity: 0;
+    z-index: 1;
+}
+
+.trialCardOverlay2{   
+    color: var(--textColor);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -9.5rem;
+    bottom: 0;
+    left: -4rem;
+    opacity: 0;
+    z-index: 1;
+}
+
+.trialCard .trialCardOverlay{
+    opacity: 1;
+    transition: 0.5s ease-in-out;
+}
+
+.trialCard:hover .trialCardOverlay{
+    opacity: 0.5;
+    filter: blur(2px);
+}
+
+.trialCard .trialCardOverlay2{
+    opacity: 1;
+    transition: 0.5s ease-in-out;
+}
+
+.trialCard:hover .trialCardOverlay2{
+    opacity: 0.5;
+    filter: blur(2px);
+}
+
+.trialCardOverlayCont{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.trialInfoBtn1 ,.trialInfoBtn2{
+    background-color: var(--primary-color);
+    padding: 0.3rem .5rem 0.3rem .5rem;
+    border-radius: 0.3rem;
+    font-size: 0.65rem;
+    font-family: "montserrat", sans-serif;
+    font-weight: 600;
+    
+}
+
+.trialInfoBtn1{
+    background-color: var(--primary-color);
+    color: var(--TextColor);
+}
+
+.trialInfoBtn2{
+    background-color: #fc4a4a;
+    color: var(--TextColor);
+}
+
+@media screen and (max-width: 950px){
+    .trialCard {
+      width: 8.5rem;
+      height: 20rem;
+      padding: .4em;
+    }
+    
+    .trialCard:hover {
+      transform: scale(1.05);
+      transition: 0.5s ease-in-out;
+      cursor: pointer;
+    }
+    
+    .trial-info {
+      padding-top: 1px;
+      height: auto;
+    }
+      
+    .trialInfo{
+      display: flex;
+      flex-direction: row;
+      gap: 0.4rem;
+    }
+    
+    .trialInfoCont{
+      font-size: 0.4rem;
+      font-family: "montserrat", sans-serif;
+      font-weight: 400;
+      color: var(--secondary-color);
+    }
+    
+    .trialTitle{
+      font-family: "montserrat", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    
+    .trialImage{
+      width: 10rem;
+      height: 14rem;
+      object-fit: cover;
+    }
+
+    .trialCardImage{
+      width: 10rem;
+      height: 14rem;
+      object-fit: cover;
+    }
+
+    .trialTitleAlign{
+      height: 1.5rem;
+      /* border: 1px solid red; */
+    }
+
+    .trialInfoBtn1 ,.trialInfoBtn2{
+      padding: 0.3rem .5rem 0.3rem .5rem;
+      border-radius: 0.3rem;
+      font-size: 0.4rem;
+      font-family: "montserrat", sans-serif;
+      font-weight: 600;
+    }
+
+    .trialCardOverlay{   
+      top: -8rem;
+      bottom: 0;
+      left: -1rem;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .trialCardOverlay2{   
+      top: -8rem;
+      bottom: 0;
+      left: -2.5rem;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .trialCard .trialCardOverlay{
+      opacity: 1;
+      transition: 0.5s ease-in-out;
+    }
+
+    .trialCard:hover .trialCardOverlay{
+      opacity: 0.5;
+      filter: blur(2px);
+    }
+
+    .trialCard .trialCardOverlay2{
+      opacity: 1;
+      transition: 0.5s ease-in-out;
+    }
+
+    .trialCard:hover .trialCardOverlay2{
+      opacity: 0.5;
+      filter: blur(2px);
+    }
+  }
+      

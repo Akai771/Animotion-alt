@@ -1,7 +1,7 @@
 import {useEffect, useState, React} from "react";
 import CarouselHome from "./Carousel/Carousel.jsx";
-import VidCard from "./VideoCard/VidCard.jsx";
 import VidCard2 from "./VideoCard/VidCard2.jsx";
+import VidCard3 from "./VideoCard/VidCard3.jsx";
 import "./Home.css";
 import TopRedirect from "../TopRedirectButton/TopRedirect";
 import ChatbotButton from "../Chatbot/ChatbotButton/ChatbotButton";
@@ -45,7 +45,7 @@ const Home = ({token}) =>{
             setTopAiring(res.data.topAiringAnimes)
             setUpcoming(res.data.topUpcomingAnimes)
             setTop(res.data.top10Animes.month)
-            console.log(recentEp)
+            console.log(top)
         })
     },[])
 
@@ -91,7 +91,7 @@ const Home = ({token}) =>{
         <div className="alignCardMargin"> 
             <Slider {...settings}>
                 {trending.map((trend) => (
-                    <VidCard2 key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} />
+                    <VidCard2 key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={trend.rank} />
                     ))
                 }
             </Slider>
@@ -105,7 +105,7 @@ const Home = ({token}) =>{
         <br/>
         <div className="alignCardMargin2">
             {recentEp.map((recentEp) => (
-                <VidCard key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes.sub} type={recentEp.type} duration={recentEp.duration}/>
+                <VidCard3 key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes.sub} type={recentEp.type} duration={recentEp.duration}/>
                 ))
             }
         </div>
@@ -125,7 +125,7 @@ const Home = ({token}) =>{
         <div className="alignCardMargin">
             <Slider {...settings}>
             {topAiring.map((movie) => (
-                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} />
+                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} type={movie.otherInfo[0]} />
                     ))
                 }
             </Slider>
@@ -136,7 +136,7 @@ const Home = ({token}) =>{
         <div className="alignCardMargin">
             <Slider {...settings}>
             {top.map((movie) => (
-                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} />
+                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} type={movie.rank} />
                     ))
                 }
             </Slider>
@@ -157,7 +157,7 @@ const Home = ({token}) =>{
         <div className="alignCardMargin">
         <Slider {...settings}>
             {upcoming.map((seasonal) => (
-                        <VidCard2 key={seasonal.id} id={seasonal.id} title={seasonal.name} coverImage={seasonal.poster}/>
+                        <VidCard2 key={seasonal.id} id={seasonal.id} title={seasonal.name} coverImage={seasonal.poster} type={seasonal.type}/>
                     ))
                 }
         </Slider>

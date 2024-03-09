@@ -9,10 +9,13 @@ function ScheduleCard({ title, jtitle, time, id }) {
             <div class="ScheduleCard">
                 <Link to={`/details/${id}`}>
                     <div className="ScheduleCardAlign">
+                        <div className="timeDiv">
+                            <span class="scheduleTimeTxt">{time}</span>
+                        </div>
+                        <span className="ver-line"/>
                         <div className="ScheduleCardCont">
                             <span class="scheduleTitleTxt">{title}</span>
                             <span class="scheduleTitleTxt2">{jtitle}</span>
-                            <span class="scheduleTimeTxt">{time}</span>
                         </div>
                     </div>
                 </Link>
