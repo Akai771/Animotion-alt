@@ -44,7 +44,7 @@ Animotion is a culmination of my final year college project, leveraging a stack 
 
 - **Anime News Network API**: Fetches the latest anime news for users to stay informed.
 - **OpenAI API**: Powers Hiro, the AI Chatbot, offers personalized recommendations and information.
-- **[Consumet API](https://github.com/consumet) & [Anify API](https://docs.anify.tv/)**: Provides a seamless catalog of anime and manga titles.
+- **[Aniwatch API](https://github.com/ghoshRitesh12/aniwatch-api) & [Anify API](https://docs.anify.tv/)**: Provides a seamless catalog of anime and manga titles.
 
 **Note**: The platform is a work in progress, and ongoing efforts are dedicated to resolving any existing bugs for an optimized user experience.
 
@@ -81,7 +81,7 @@ To set up and run the project locally:
 
 Access the live website to experience Animotion:
 
-- [Animotion Website](https://animotion-two.vercel.app)
+- [Animotion Website](https://animotion-alt.vercel.app)
 
 Browse through the extensive collection of anime titles and enjoy watching your favorite shows or delve into captivating manga reads effortlessly.
 
@@ -91,4 +91,4 @@ Please be aware that self-hosting this application is strictly limited to person
 
 ## Bug Report
 
-If you encounter any issues or bug on the site please head to [issues](https://github.com/Akai771/AniMotion/issues) and create a bug report there.
+If you encounter any issues or bug on the site please head to [issues](https://github.com/Akai771/AniMotion-alt/issues) and create a bug report there.
