@@ -23,6 +23,7 @@ const VideoMain = () => {
     const [animeData, setAnimeData] = useState([]);
     const [serverInfo, setServerInfo] = useState([])
     const [serverLink, setServerLink] = useState([])
+    const [serverLink2, setServerLink2] = useState([])
     const [episode, setEpisode] = useState([])
     const [format, setFormat] = useState("sub");
     const [epNo, setEpNo] = useState(0);
@@ -30,7 +31,7 @@ const VideoMain = () => {
     const [episodeId, setEpisodeId] = useState(histEpisodeId);
     const [episodeNumber, setEpisodeNumber] = useState(serverInfo.episodeNo);
     const [addData, setAddData] = useState([]);
-
+    const [serverChangeBtn, setServerChangeBtn] = useState("serverChangeBtn");
     const navigate = useNavigate();
     
     const handleOptionChange = (e) => {
@@ -38,29 +39,8 @@ const VideoMain = () => {
         setEpNo(e.target.name);
         setSelectedOption(e.target.name);
         navigate(`/watch/${id}?epId=${e.target.value}`)
+        window.location.reload();
       };
-
-      const handleNextEp = () => {
-        if (epNo >= 1 && epNo < episode.length) {
-            const newEpNo = epNo + 1;
-            setEpNo(newEpNo);
-            const newEpId = `${id}-episode-${newEpNo}`
-            setEpisodeId(newEpId);
-            navigate(`/watch/${id}?epId=${newEpId}`);
-            window.location.reload();
-        }
-    }
-    
-    const handlePrevEp = () => {
-        if (epNo > 1) {
-            const newEpNo = epNo - 1;
-            setEpNo(newEpNo);
-            const newEpId = `${id}-episode-${newEpNo}`
-            setEpisodeId(newEpId);
-            navigate(`/watch/${id}?epId=${newEpId}`);
-            window.location.reload();
-        } 
-    }
 
     useEffect(()=>{
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
@@ -87,12 +67,49 @@ const VideoMain = () => {
         })     
         .catch((err) => console.error("Error fetching server data:", err))
 
-        console.log("Episode ID: ", episodeId)
 
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
         .then((res) => {
             setServerLink(res.data)})
+
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=dub`)
+        .then((res) => {
+            setServerLink2(res.data)})
     },[episodeId, id, format])
+
+    useEffect(()=>{
+        if (serverLink2.length == 0) {
+            setServerChangeBtn("serverChangeBtnDisabled")
+        }
+        else {
+            setServerChangeBtn("serverChangeBtn")
+        }
+    },[serverLink2])
+
+
+    //   const handleNextEp = () => {
+    //     if (epNo >= 1 && epNo < episode.length) {
+    //         const newEpNo = epNo + 1;
+    //         setEpNo(newEpNo);
+    //         const newEpId = `${id}-episode-${newEpNo}`
+    //         setEpisodeId(newEpId);
+    //         navigate(`/watch/${id}?epId=${newEpId}`);
+    //         window.location.reload();
+    //     }
+    // }
+    
+    // const handlePrevEp = () => {
+    //     if (epNo > 1) {
+    //         const newEpNo = epNo - 1;
+    //         setEpNo(newEpNo);
+    //         const newEpId = `${id}-episode-${newEpNo}`
+    //         setEpisodeId(newEpId);
+    //         navigate(`/watch/${id}?epId=${newEpId}`);
+    //         window.location.reload();
+    //     } 
+    // }
+
+
 
     var specificAnimeID = JSON.parse(localStorage.getItem('history'))
     if (Array.isArray(specificAnimeID)) {
@@ -114,7 +131,6 @@ const VideoMain = () => {
         <Preloader/>
         <NavBar />
         <div className="video-main-container">
-            {/* <ReactPlayer className="AnimeVideoPlayer" url={serverUrl} title="Animotion video player" id="videoPlayer" allowfullscreen="allowfullscreen"/> */}
             <VideoPlayer 
                 mal={serverLink?serverLink.malID:null}
                 serverLink={serverLink.sources?serverLink.sources[0].url:null} 
@@ -128,13 +144,13 @@ const VideoMain = () => {
                     <span className="serverTags">Format : </span>
                     <span className="serverTags">
                         <button className="serverChangeBtn" onClick={()=> setFormat("sub")}><ClosedCaptionOutlinedIcon id="subIcon"/> Sub</button>
-                        <button className="serverChangeBtn" onClick={()=> setFormat("dub")}><KeyboardVoiceOutlinedIcon id="dubIcon"/> Dub</button>
+                        <button className={serverChangeBtn} onClick={()=> setFormat("dub")}><KeyboardVoiceOutlinedIcon id="dubIcon"/> Dub</button>
                     </span>
                 </div>
-                <div className="serveBoxCont2">
+                {/* <div className="serveBoxCont2">
                     <button className="epChangeButton" onClick={handlePrevEp}><FastRewindIcon id="epChangeIcon" />Prev</button>
                     <button className="epChangeButton" onClick={handleNextEp}>Next<FastForwardIcon id="epChangeIcon"/></button>
-                </div>
+                </div> */}
             </div>
             <br/>
             <div className="VidEpisodes">
