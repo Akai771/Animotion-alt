@@ -218,7 +218,7 @@
 
 }
 
-@media only screen and (max-width: 1368px) {
+@media only screen and (max-width: 1600px) {
   .browsePageDivide{
     display: flex;
     flex-direction: column;

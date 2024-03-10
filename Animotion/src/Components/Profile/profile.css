@@ -297,7 +297,7 @@
     color: var(--textColor);
 }
 
-@media only screen and (max-width:1366px) {
+@media only screen and (max-width:1600px) {
     .optionsBox{
         width: 20rem;
         max-width: 20rem;

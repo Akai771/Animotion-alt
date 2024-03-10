@@ -49,7 +49,7 @@ const Home = ({token}) =>{
         })
     },[])
 
-    if (screenWidth < 768) {
+    if (screenWidth < 960) {
         settings = {
             dots: true,
             infinite: true,
@@ -58,7 +58,7 @@ const Home = ({token}) =>{
             slidesToScroll: 2
         };
     }
-    else if (screenWidth < 1520) {
+    else if (screenWidth < 1600) {
         settings = {
             dots: true,
             infinite: true,

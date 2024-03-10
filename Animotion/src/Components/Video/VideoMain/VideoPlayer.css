@@ -1,4 +1,5 @@
 .VideoPlayer{
     width: 70%;
     z-index: 1;
+    flex: 1;
 }
