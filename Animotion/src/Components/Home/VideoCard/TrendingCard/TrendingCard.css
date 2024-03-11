@@ -93,3 +93,32 @@
     filter: saturate(.5);
     transition: 0.5s ease-in-out;
   }
+
+@media only screen and (max-width: 950px){
+    .trendingCard{
+        width: 15rem;
+        height: 20rem;
+    }
+
+    .trendingCard-Info{
+        width: 3rem;
+    }
+
+    .trendingCardImage{
+        width: 11rem;
+    }
+
+    .trendingTitle{
+        font-size: 1.2rem;
+    }
+
+    .trendingCardRank{
+        font-size: 2.5rem;
+    }
+
+    .trendingImage{
+        width: 15rem;
+        height: 20rem;
+    }
+    
+}

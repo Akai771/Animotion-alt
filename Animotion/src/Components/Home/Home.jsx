@@ -46,7 +46,6 @@ const Home = ({token}) =>{
             setTopAiring(res.data.topAiringAnimes)
             setUpcoming(res.data.topUpcomingAnimes)
             setTop(res.data.top10Animes.month)
-            console.log(top)
         })
     },[])
 
@@ -56,7 +55,8 @@ const Home = ({token}) =>{
             infinite: true,
             speed: 400,
             slidesToShow: 2,
-            slidesToScroll: 2
+            slidesToScroll: 2,
+            swipeToSlide: true,
         };
     }
     else if (screenWidth < 1600) {
@@ -65,7 +65,8 @@ const Home = ({token}) =>{
             infinite: true,
             speed: 400,
             slidesToShow: 6,
-            slidesToScroll: 2
+            slidesToScroll: 2,
+            swipeToSlide: true,
         };
     } 
     else {
@@ -74,17 +75,42 @@ const Home = ({token}) =>{
             infinite: true,
             speed: 400,
             slidesToShow: 8,
-            slidesToScroll: 2
+            slidesToScroll: 2,
+            swipeToSlide: true,
         };
     }
 
-    let settings2 = {
-        dots: true,
-        infinite: true,
-        speed: 400,
-        slidesToShow: 5,
-        slidesToScroll: 1
-    };
+    let settings2
+    if (screenWidth < 960) {
+        settings2 = {
+            dots: true,
+            infinite: false,
+            speed: 400,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            swipeToSlide: true,
+        };
+    }
+    else if (screenWidth < 1600) {
+        settings2 = {
+            dots: true,
+            infinite: false,
+            speed: 400,
+            slidesToShow: 4,
+            slidesToScroll: 2,
+            swipeToSlide: true,
+        };
+    } 
+    else {
+        settings2 = {
+            dots: false,
+            infinite: false,
+            speed: 400,
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            swipeToSlide: true,
+        };
+    }
     
     return(<>
 

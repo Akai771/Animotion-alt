@@ -232,9 +232,9 @@
     }
 
     .trialCardOverlay{   
-      top: -8rem;
+      top: .5rem;
       bottom: 0;
-      left: -1rem;
+      left: .8rem;
       opacity: 0;
       z-index: 1;
     }
