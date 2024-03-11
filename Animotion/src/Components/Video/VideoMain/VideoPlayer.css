@@ -3,3 +3,52 @@
     z-index: 1;
     flex: 1;
 }
+
+/* .vds-video-layout {
+    --video-brand: var(--primary-color);
+    --video-controls-color: var(--secondary-color);
+    --video-focus-ring-color: var(--secondary-color);
+    --video-focus-ring: 0 0 0 3px var(--media-focus-ring-color);
+    --video-font-family: 'Montserrat', sans-serif;
+  
+    --video-bg: black;
+    --video-border-radius: 6px;
+    --video-border: 1px solid rgb(255 255 255 / 0.1);
+  
+    --video-fullscreen-chapter-title-font-size: 16px;
+    --video-gesture-seek-width: 20%;
+
+    --video-load-button-size: 56px;
+    --video-load-button-border: var(--color);
+    --video-load-button-bg: var(--media-brand);
+    --video-load-button-border-radius: 100%;
+  
+    --video-sm-load-button-size: 48px;
+    --video-time-bg: unset;
+    --video-fullscreen-time-font-size: 16px;
+  
+    --video-sm-time-font-size: 14px;
+    --video-sm-start-duration-bg: rgba(0 0 0 / 0.64);
+    --video-sm-start-duration-padding: 3px 6px;
+    --video-sm-start-duration-color: var(--video: controls-color);
+} */
+
+.vds-audio-layout,
+.vds-video-layout {
+  /* Shared. */
+  --media-brand: var(--secondary-color);
+  --media-controls-color: var(--secondary-color);
+  --media-font-family: sans-serif;
+
+  /* Buffering. */
+  --media-buffering-animation: vds-buffering-spin 1s linear infinite;
+  --media-buffering-size: 96px;
+  --media-buffering-track-color: #f5f5f5;
+  --media-buffering-track-fill-color: var(--secondary-color);
+  --media-buffering-track-fill-offset: 50;
+  --media-buffering-track-fill-opacity: 0.75;
+  --media-buffering-track-fill-width: 9;
+  --media-buffering-track-opacity: 0.25;
+  --media-buffering-track-width: 8;
+  --media-buffering-transition: opacity 200ms ease;
+}
