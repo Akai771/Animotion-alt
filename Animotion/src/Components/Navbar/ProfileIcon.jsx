@@ -70,8 +70,8 @@ function ProfileIcon() {
   const randomIndex = Math.floor(Math.random()*randomAnime.length);
 
   React.useEffect(()=>{
-    axios.get(`https://animotion-consumet-api-2.vercel.app/anime/gogoanime/anime-list?page=${randomPage}`)
-    .then((res) => setRandomAnime(res.data.results))
+    axios.get(`https://animotion-aniwatch-api.vercel.app/anime/recently-updated?page=${randomPage}`)
+    .then((res) => setRandomAnime(res.data.animes))
   },[])
 
   const randomAnimeData = randomAnime[randomIndex];
