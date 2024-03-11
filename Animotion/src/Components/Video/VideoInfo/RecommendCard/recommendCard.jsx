@@ -15,7 +15,7 @@ const RecommendCard = ({id, title, image}) => {
           <div className="RecommendImage">
             <button className="recommendCardBtn" onClick={handleClick}>
                 <img className="RecommendCardImage" src={image} alt={id} />
-                <div className="playIcon2">
+                <div className="playIcon3">
                   <PlayArrowIcon style={{fontSize:"2.8rem"}}/>
                 </div>
             </button>
