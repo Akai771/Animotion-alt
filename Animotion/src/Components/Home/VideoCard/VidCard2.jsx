@@ -22,7 +22,7 @@ const VidCard2 = ({id, title, coverImage, type, duration}) => {
           </div>
           <div class="trial-info">
               <div className="trialTitleAlign">
-                  <span class="trialTitle">{title.slice(0,20)}...</span>
+                  <span class="trialTitle">{title}</span>
               </div>
           </div>
       </div>

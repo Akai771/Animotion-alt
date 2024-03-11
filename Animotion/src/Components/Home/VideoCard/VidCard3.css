@@ -30,6 +30,9 @@
   .trialTitleAlign{
     height: 2rem;
     /* border: 1px solid red; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .trialCardImage{
@@ -92,17 +95,18 @@
   .trialCardOverlay{   
     color: var(--textColor);
     position: absolute;
-    height: 100%;
-    width: 100%;
+    height: 10%;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: -9.5rem;
+    top: 1rem;
     bottom: 0;
-    left: -3rem;
+    left: .5rem;
     opacity: 0;
     z-index: 1;
 }
+
 
 .trialCardOverlay2{   
     color: var(--textColor);

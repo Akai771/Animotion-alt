@@ -12,6 +12,15 @@ body{
     background-color: #f1f1f1;
 }
 
+.SectionTitle{
+    font-size: 1.7rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--textColor);
+    padding-left: 1rem;
+    padding-top: .1rem;
+}
+
 .alignHomeItems1{
     padding-left: 60px;
 }
@@ -36,6 +45,7 @@ body{
 .vl {
   border-left: 6px solid var(--primary-color);
   height: 35px;
+  margin-bottom: 1rem;
 }
 
 .txtCard{
@@ -103,6 +113,21 @@ body{
 
 .latest-episode-section a{
     text-decoration: none;
+}
+
+.horizontal-Line1{
+    border-bottom: 2px solid var(--bgColor3);
+    width: 97%;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+
+}
+
+.horizontal-Line2{
+    border-bottom: 2px solid var(--bgColor3);
+    width: 97%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 

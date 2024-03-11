@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Preloader from "../Preloader/Preloader.jsx";
 import { Link } from "react-router-dom";
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import TrendingCard from "./VideoCard/TrendingCard/TrendingCard.jsx";
 
 const Home = ({token}) =>{
     const [recentEp, setRecentEp] = useState([]);
@@ -76,6 +77,14 @@ const Home = ({token}) =>{
             slidesToScroll: 2
         };
     }
+
+    let settings2 = {
+        dots: true,
+        infinite: true,
+        speed: 400,
+        slidesToShow: 5,
+        slidesToScroll: 1
+    };
     
     return(<>
 
@@ -86,30 +95,34 @@ const Home = ({token}) =>{
     </div>
     <section className="alignHomeItems1 popSect">
         <br/>
-        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Trending</h3></div>
-        <br/>
+        {/* Trending Section */}
+        <div class="vl"><h3 className="SectionTitle">Trending</h3></div>
         <div className="alignCardMargin"> 
-            <Slider {...settings}>
+            <Slider {...settings2}>
                 {trending.map((trend) => (
-                    <VidCard2 key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={trend.rank} />
+                    <TrendingCard key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={trend.rank} />
                     ))
                 }
             </Slider>
         </div>
-        <br/><br/> 
+
+        <div className="horizontal-Line1" />
+
+        {/* Latest Episodes Section */}
         <div className="latest-episode-section">
-            <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Latest Episodes</h3></div>
+            <div class="vl"><h3 className="SectionTitle">Latest Episodes</h3></div>
             <Link exact to={`/latest-episodes`} ><button className="view-more-btn">View More<ChevronRightRoundedIcon id="arrow-Icon"/></button></Link>
         </div>
-        
-        <br/>
         <div className="alignCardMargin2">
             {recentEp.map((recentEp) => (
                 <VidCard3 key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes.sub} type={recentEp.type} duration={recentEp.duration}/>
                 ))
             }
         </div>
-        <br/><br/>
+
+        <div className="horizontal-Line2" />
+
+        {/* Advertisement Section */}
         <div className="AnimePromotion">
             <Link to="/details/solo-leveling-18718">
                 <img
@@ -119,9 +132,11 @@ const Home = ({token}) =>{
                 />
             </Link>
         </div>
-        <br/><br/>
-        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Top Airing</h3></div>
-        <br/>
+
+        <div className="horizontal-Line2" />
+
+        {/* Top Airing Section */}
+        <div class="vl"><h3 className="SectionTitle">Top Airing</h3></div>
         <div className="alignCardMargin">
             <Slider {...settings}>
             {topAiring.map((movie) => (
@@ -130,9 +145,11 @@ const Home = ({token}) =>{
                 }
             </Slider>
         </div>
-        <br/><br/>
-        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Popular Anime This Month</h3></div>
-        <br/>
+
+        <div className="horizontal-Line2" />
+
+        {/* Popular Anime Section */}
+        <div class="vl"><h3 className="SectionTitle">Popular Anime This Month</h3></div>
         <div className="alignCardMargin">
             <Slider {...settings}>
             {top.map((movie) => (
@@ -141,7 +158,10 @@ const Home = ({token}) =>{
                 }
             </Slider>
         </div>
-        <br/><br/>
+
+        <div className="horizontal-Line2" />
+
+        {/* Advertisement Section */}
         <div className="AnimePromotion">
             <Link to="/details/one-piece-100">
                 <img
@@ -151,9 +171,11 @@ const Home = ({token}) =>{
                 />
             </Link>
         </div>
-        <br/><br/>
-        <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Upcoming Anime</h3></div>
-        <br/>
+
+        <div className="horizontal-Line2" />
+
+        {/* Upcoming Anime Section */}
+        <div class="vl"><h3 className="SectionTitle">Upcoming Anime</h3></div>
         <div className="alignCardMargin">
         <Slider {...settings}>
             {upcoming.map((seasonal) => (
@@ -162,7 +184,7 @@ const Home = ({token}) =>{
                 }
         </Slider>
         </div>
-        <br/><br/>
+        <br/><br/> 
     </section>
     <Footer/>
     <TopRedirect/>
