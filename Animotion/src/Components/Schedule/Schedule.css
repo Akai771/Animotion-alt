@@ -247,12 +247,12 @@
     }
 
     .scheduleDayTxt{
-        font-size: 1.5rem;
+        font-size: 1rem;
         margin-top: 1rem;
     }
 
     .scheduleDayTxt2{
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
 
     .scheduleDayBtnGrp{
@@ -274,14 +274,23 @@
     }
 
     .scheduleTitleTxt{
-        font-size: .9rem;
-    }
-
-    .scheduleTitleTxt2{
         font-size: .7rem;
     }
 
-    .scheduleTimeTxt{
+    .scheduleTitleTxt2{
         font-size: .6rem;
+    }
+
+    .scheduleTimeTxt{
+        font-size: .9rem;
+    }
+
+    .ScheduleCardCont{
+        gap: .5rem;
+        padding: .5rem 1rem .5rem 1rem;
+    }
+
+    .timeDiv{
+        width: 3rem;
     }
   }
