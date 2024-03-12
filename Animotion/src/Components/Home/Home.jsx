@@ -47,6 +47,8 @@ const Home = ({token}) =>{
             setUpcoming(res.data.topUpcomingAnimes)
             setTop(res.data.top10Animes.month)
         })
+
+        window.scrollTo(0,0);
     },[])
 
     if (screenWidth < 960) {

@@ -24,6 +24,8 @@ const MangaRead = () => {
     useEffect(()=>{
         axios.get(`https://animotion-consumet-api.vercel.app/manga/managreader/info?id=${chapId}`)
         .then((res) => setMangaData(res.data))
+
+        window.scrollTo(0,0);
     },[])
 
     const chapters = [mangaData.chapters];

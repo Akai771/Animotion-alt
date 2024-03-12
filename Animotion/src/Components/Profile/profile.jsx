@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -12,15 +12,14 @@ function Profile({token}) {
     const user = token?token.user.user_metadata:"No Data";
     const name = user.fname + " " + user.lname;
     const email = token?token.user.email:"No Data";
-    const [selectedOption, setSelectedOption] = useState("User Information");
     const [pass, setPass] = useState("");
     const [confPass, setConfPass] = useState("");
     const [changeEmail, setChangeEmail] = useState("");
     const navigate = useNavigate();
 
-    const handleOptionChange = (e) => {
-        setSelectedOption(e.target.value);
-      };
+    useEffect(()=>{
+        window.scrollTo(0,0);
+    },[])
 
     function handlePass(e) {
         setPass(e.target.value);

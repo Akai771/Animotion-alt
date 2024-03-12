@@ -63,6 +63,8 @@ const Browse = () => {
     useEffect(()=>{
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/home`)
         .then((res) => setGenres(res.data.genres))
+        
+        window.scrollTo(0,0);
     },[])
     return(<>
         <div>

@@ -8,14 +8,12 @@ import ChatbotButton from "../../Chatbot/ChatbotButton/ChatbotButton";
 import TopRedirect from "../../TopRedirectButton/TopRedirect";
 import axios from "axios";
 import BrowseCard from "../BrowseCard/BrowseCard";
-import SearchIcon from '@mui/icons-material/Search';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import Preloader from "../../Preloader/Preloader";
 
 const GenresPage = () => {
     const [browse, setBrowse] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("popular");
     const [page, setPage] = useState(1);
     const {genreId} = useParams();
     
@@ -35,6 +33,8 @@ const GenresPage = () => {
     useEffect(()=>{
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/genre/${genreId}?page=${page}`)
         .then((res) => setBrowse(res.data.animes))
+
+        window.scrollTo(0,0);
     },[genreId, page])
     console.log(browse);
     return(<>
