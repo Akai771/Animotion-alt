@@ -20,9 +20,10 @@ const Premium = () => {
     const [ftw, setFtw] = useState([]);
 
     useEffect(()=>{
-        axios.get("https://animotion-consumet-api-2.vercel.app/anime/gogoanime/top-airing")
-        .then((res) => setFtw(res.data.results.slice(0,6))
-        )
+        axios.get("https://animotion-consumet-api.vercel.app/anime/gogoanime/top-airing")
+        .then((res) => setFtw(res.data.results.slice(0,6)))
+
+        window.scrollTo(0,0);
     },[])
 
     console.log(ftw)
