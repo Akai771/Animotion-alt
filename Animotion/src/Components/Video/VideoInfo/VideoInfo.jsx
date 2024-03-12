@@ -12,10 +12,7 @@ import ReactPlayer from "react-player";
 import WatchlistButton from "./WatchButtons/watchlistButton";
 import WatchNowButton from "./WatchButtons/watchNowButton";
 import RecommendCard from "./RecommendCard/recommendCard";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Comment from "./Comments/comment";
-import Slider from "react-slick";
 
 const VideoInfo = () => {
     const [animeData, setAnimeData] = useState([]);
@@ -64,6 +61,8 @@ const VideoInfo = () => {
 
             axios.get(`https://api.anify.tv/search/anime/${id}`)
             .then((res) => setAddData2(res.data.results[0]))
+
+            window.scrollTo(0,0);
 
         },[id])
     }
@@ -146,12 +145,10 @@ const VideoInfo = () => {
             <div className={recommendPop.length === 0?"noSectionDisp":"recommendedSection"}>
                 <span className="AnimeTitle">Seasons:</span>
                     <div className="alignRecommendAnime">
-                    {/* <Slider {...settings}> */}
                         {recommendPop.map((season) => (
                             <RecommendCard key={season.id} id={season.id} title={season.name} image={season.poster} />
                             ))
                         }
-                    {/* </Slider> */}
                     </div>
             </div>
             <div className="commentSection">
