@@ -108,8 +108,9 @@
 .alignVidMain{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1rem;
+    margin-bottom: 4rem;
 }
 
 .alignVidInfoContent{
@@ -130,6 +131,14 @@
     border-radius: 1rem;
     padding: 2rem;
     max-width: 50rem;
+}
+
+.VidDescSection2{
+    background-color: #232323;
+    border-radius: 1rem;
+    padding: 2rem;
+    min-width:  30rem;
+    max-width: 65rem;
 }
 
 .VidEpisodes{
@@ -323,6 +332,12 @@
 
     .ServerBox{
         min-width: 60rem;
+        max-width: 60rem;
+    }
+
+    .serverChangeBox{
+        width: 20rem;
+        margin-left: 1rem;
     }
 
     .serveBoxCont1{
@@ -339,7 +354,28 @@
         justify-content: center;
         align-items: center;
         margin-top: 1rem;
-        margin-left: 35rem;
+        margin-left: 10rem;
+    }
+
+    .serverTags{
+        font-size: 1rem;
+        gap: 1rem;
+    }
+
+    .serverChangeBtn{
+        font-size: .8rem;
+    }
+
+    .ServerInfoTitle{
+        font-size: 1rem;
+    }
+
+    .ServerInfo{
+        font-size: 1rem;
+    }
+
+    .VidDescSection2{
+        max-width: 40rem;
     }
 
     .VidEpisodes{
@@ -492,6 +528,12 @@
 
     .VidDescSection{
         margin: 2rem;
+    }
+
+    .VidDescSection2{
+        margin: 2rem;
+        min-width: 10rem;
+        max-width: 40rem;
     }
 
     .characterSection{

@@ -6,7 +6,7 @@ import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/l
 import { useMediaRemote } from '@vidstack/react';
 import './VideoPlayer.css';
 
-function VideoPlayer({serverLink, kind, trackSrc, label, mal }) {
+function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
     const trackSource = trackSrc?trackSrc.filter((track) => {
         return track.label === "English";
     }):[];
@@ -23,7 +23,7 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal }) {
             className="VideoPlayer" 
             title="Sprite Fight" 
             src={serverLink} 
-            autoplay
+            // autoplay
             crossorigin
             playsinline
         >
@@ -36,7 +36,7 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal }) {
                     label="English"
                  />
             </MediaProvider>
-            <DefaultVideoLayout icons={defaultLayoutIcons} />
+            <DefaultVideoLayout icons={defaultLayoutIcons} thumbnails={thumbnails}/>
         </MediaPlayer>
     )
 }

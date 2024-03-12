@@ -13,6 +13,7 @@ import FastForwardIcon from '@mui/icons-material/FastForward';
 import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
 import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
 import VideoPlayer from "./VideoPlayer";
+import RecommendCard from "../VideoInfo/RecommendCard/recommendCard";
 
 const VideoMain = () => {
     const {id} = useParams();
@@ -32,6 +33,7 @@ const VideoMain = () => {
     const [episodeNumber, setEpisodeNumber] = useState(serverInfo.episodeNo);
     const [addData, setAddData] = useState([]);
     const [serverChangeBtn, setServerChangeBtn] = useState("serverChangeBtn");
+    const [recommendPop, setRecommendPop] = useState([]);
     const navigate = useNavigate();
     
     const handleOptionChange = (e) => {
@@ -56,6 +58,11 @@ const VideoMain = () => {
         axios.get(`https://api.anify.tv/search/anime/${id}`)
         .then((res) => setAddData(res.data.results[0]));
 
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
+        .then((res) => {
+            setRecommendPop(res.data.seasons)
+        });
+
     },[id])
     
     useEffect(()=>{
@@ -66,7 +73,6 @@ const VideoMain = () => {
             setEpNo(serverInfo.episodeNo)
         })     
         .catch((err) => console.error("Error fetching server data:", err))
-
 
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
         .then((res) => {
@@ -86,29 +92,19 @@ const VideoMain = () => {
         }
     },[serverLink2])
 
-
-    //   const handleNextEp = () => {
-    //     if (epNo >= 1 && epNo < episode.length) {
-    //         const newEpNo = epNo + 1;
-    //         setEpNo(newEpNo);
-    //         const newEpId = `${id}-episode-${newEpNo}`
-    //         setEpisodeId(newEpId);
-    //         navigate(`/watch/${id}?epId=${newEpId}`);
-    //         window.location.reload();
-    //     }
-    // }
+    const handleNextEp = () => {
+        const nextEpNo = serverInfo.episodeNo;
+        const nextEpId = episode[nextEpNo].episodeId;
+        navigate(`/watch/${id}?epId=${nextEpId}`);
+        window.location.reload();
+    }
     
-    // const handlePrevEp = () => {
-    //     if (epNo > 1) {
-    //         const newEpNo = epNo - 1;
-    //         setEpNo(newEpNo);
-    //         const newEpId = `${id}-episode-${newEpNo}`
-    //         setEpisodeId(newEpId);
-    //         navigate(`/watch/${id}?epId=${newEpId}`);
-    //         window.location.reload();
-    //     } 
-    // }
-
+    const handlePrevEp = () => {
+        const prevEpNo = serverInfo.episodeNo - 2;
+        const prevEpId = episode[prevEpNo].episodeId;
+        navigate(`/watch/${id}?epId=${prevEpId}`);
+        window.location.reload();
+    }
 
 
     var specificAnimeID = JSON.parse(localStorage.getItem('history'))
@@ -135,6 +131,8 @@ const VideoMain = () => {
                 mal={serverLink?serverLink.malID:null}
                 serverLink={serverLink.sources?serverLink.sources[0].url:null} 
                 trackSrc={serverLink.tracks} 
+                thumbnails={animeData.sources?animeData.sources[0].url:null}
+
             />
             <div className="ServerBox">
                 <div className="serveBoxCont1">
@@ -147,10 +145,10 @@ const VideoMain = () => {
                         <button className={serverChangeBtn} onClick={()=> setFormat("dub")}><KeyboardVoiceOutlinedIcon id="dubIcon"/> Dub</button>
                     </span>
                 </div>
-                {/* <div className="serveBoxCont2">
+                <div className="serveBoxCont2">
                     <button className="epChangeButton" onClick={handlePrevEp}><FastRewindIcon id="epChangeIcon" />Prev</button>
                     <button className="epChangeButton" onClick={handleNextEp}>Next<FastForwardIcon id="epChangeIcon"/></button>
-                </div> */}
+                </div>
             </div>
             <br/>
             <div className="VidEpisodes">
@@ -177,7 +175,7 @@ const VideoMain = () => {
             <br/>
             <div className="alignVidMain">
                 <img src={animeData.poster} alt="Anime Cover Image" className="video-info-cover-image"/>
-                <div className="VidDescSection">
+                <div className="VidDescSection2">
                     <span className="AnimeTitle">{animeData.name}</span>
                     <br/>
                     <span className="AnimeInfo">Episode {episodeNumber}</span>
@@ -187,6 +185,15 @@ const VideoMain = () => {
                         <span className="AnimeDesc">{animeData.description}</span>
                     </div>
                 </div>
+            </div>
+            <div className={recommendPop.length === 0?"noSectionDisp":"recommendedSection"}>
+                <span className="AnimeTitle">Seasons:</span>
+                    <div className="alignRecommendAnime">
+                        {recommendPop.map((season) => (
+                            <RecommendCard key={season.id} id={season.id} title={season.name} image={season.poster} />
+                            ))
+                        }
+                    </div>
             </div>
             <br /><br /><br />
         </div>
