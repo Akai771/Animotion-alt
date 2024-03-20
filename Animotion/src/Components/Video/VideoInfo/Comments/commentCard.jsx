@@ -22,7 +22,7 @@ function CommentCard({comment, user, userID, date, onCommentDelete}) {
 
     // Delete comment from the database
     async function deleteComment(){ 
-        const { data, error } = await supabase.from('comments').delete().eq('comment', comment);
+        const { data, error } = await supabase.from('comments_alt').delete().eq('comment', comment);
         if (error) {
             console.log("Error deleting comment: ", error);
         }

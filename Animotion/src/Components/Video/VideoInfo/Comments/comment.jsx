@@ -54,10 +54,11 @@ function Comment({animeId}) {
                 <textarea className="commentPara" placeholder="Add a public comment..."></textarea>
                 <button className="commentsBtn" type="submit">Comment</button>
             </form>
-
-            {comments?comments.map((anime) => (
-                <CommentCard key={anime.userId} user = {anime.userName} comment = {anime.comment} date={anime.created_date} userID={anime.userId} onCommentDelete={getComments}/>
+            <div className="CommentsDisplaySec">
+                {comments?comments.map((anime) => (
+                    <CommentCard key={anime.id} user = {anime.userName} comment = {anime.comment} date={anime.created_date} userID={anime.userId} onCommentDelete={getComments}/>
                 )):null}
+            </div>
         </div>
     );
 }

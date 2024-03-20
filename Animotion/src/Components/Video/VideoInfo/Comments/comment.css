@@ -117,7 +117,26 @@
     color: #949494;
 }
 
-@media screen and (max-width: 1368px){
+.CommentsDisplaySec{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    max-height: 30rem;
+    margin: 0;
+    box-sizing: border-box;
+    --sb-track-color: #242428;
+    --sb-thumb-color: #86ff84;
+    --sb-size: 14px;
+
+    scrollbar-color: var(--sb-thumb-color) 
+                     var(--sb-track-color);
+
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+}
+
+@media screen and (max-width: 1600px){
     .comment{
         width: 70rem;
     }
@@ -163,6 +182,11 @@
 
     .commentFont{
         font-size: 1rem;
+    }
+
+    .CommentsDisplaySec{
+        padding-left: 2.5rem;
+        padding-right: 1rem;
     }
 }
 
@@ -224,5 +248,8 @@
         font-size: .8rem;
     }
 
-    
+    .CommentsDisplaySec{
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
