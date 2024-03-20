@@ -1,8 +1,3 @@
-body{
-    background-color: rgb(255, 255, 255);
-    margin: 0;
-}
-
 .popSect{
     background-color: var(--bgColor2);
 }
