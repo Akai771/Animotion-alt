@@ -1,5 +1,5 @@
 import React from "react";
-import "./VideoMain.css";
+import "../VideoMain/VideoMain.css";
 
 const CharacterCard = ({image, c_name}) => {
     return(<>
