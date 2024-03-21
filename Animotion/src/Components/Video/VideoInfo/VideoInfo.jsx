@@ -7,7 +7,7 @@ import ChatbotButton from "../../Chatbot/ChatbotButton/ChatbotButton";
 import TopRedirect from "../../TopRedirectButton/TopRedirect";
 import Footer from "../../Footer/Footer";
 import Preloader from "../../Preloader/Preloader";
-import CharacterCard from "./characterCard";
+import CharacterCard from "../VideoMain/characterCard";
 import ReactPlayer from "react-player";
 import WatchlistButton from "./WatchButtons/watchlistButton";
 import WatchNowButton from "./WatchButtons/watchNowButton";
