@@ -2,8 +2,8 @@
     background-color: var(--bgColor2);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     overflow: hidden;
 }
 
@@ -22,6 +22,13 @@
     transform: scale(1.05);
 }
 
+.infoDivide{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 .additionalAnimeInfo{
     display: flex;
     flex-direction: column;
@@ -33,10 +40,20 @@
 }
 
 
-.alignVidInfo{
+.VidInfo{
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     padding-left: 2rem;
+}
+
+.alignInfoDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 55rem;
 }
 
 .AnimeTitle{
@@ -210,7 +227,7 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    margin-right: 40rem;
+    width: 100%;
 }
 
 
@@ -219,19 +236,7 @@
     border-radius: 1rem;
     padding: 2rem;
     margin-right: 15rem;
-}
-
-.trailerSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-bottom: 5rem;
-}
-
-.reactTrailerPlayer{
-    width: 200px;
-    height: 100px;
+    width: 80rem;
 }
 
 .descBoxBtnDiv{
@@ -287,10 +292,10 @@
 .recommendedSection{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 5rem;
-    margin-left: 20rem;
+    margin-left: 10rem;
 }
 
 .commentSection{
@@ -325,18 +330,34 @@
         max-width: 85rem;
     }
 
-    .characterCardAlign{
-        padding-left: 8rem;
+    .AnimeDescSection{
+        margin-right: 10rem;
+        width: 70rem;
+    }
+
+    .recommendedSection{
+        margin-left: 5rem;
     }
 
     .commentSection{
         margin-left: 5rem;
+    }
+
+    .alignInfoDiv{
+        width: 40rem;
     }
 }
 
 @media only screen and (max-width: 950px){
     .videoInfoPage{
         overflow: hidden;
+    }
+
+    .infoDivide{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .video-info-container{
@@ -348,7 +369,7 @@
     }
 
     .video-info-container img{
-        width: 60%;
+        width: 70%;
     }
 
     .additionalAnimeInfo{
@@ -362,7 +383,7 @@
     }
 
 
-    .alignVidInfo{
+    .VidInfo{
         padding-top: 2rem;
         width: 26rem;
     }
@@ -393,6 +414,7 @@
 
     .AnimeDescSection{
         margin-right: 1rem;
+        width: 23rem;
     }
 
     .AnimeDesc{
@@ -411,7 +433,7 @@
         font-size: .7rem;
     }
 
-    .trailerSection{
+    .trailer{
         display: none;
     }
 
@@ -421,7 +443,7 @@
 
     .commentSection{
         margin-bottom: 2rem;
-        margin-left: 0rem;
+        margin-left: 2rem;
     }
 
 }

@@ -10,6 +10,13 @@ function CommentCard({comment, user, userID, date, onCommentDelete}) {
     const userId = tokenData.user.id
     const [commentDisplay, setCommentDisplay] = useState(false);
 
+    if (user === "undefined undefined"){
+        user = "Anonymous";
+    }
+    else{
+        user = user;
+    }
+
     // Check if the user is the same as the comment user
     useEffect(() => {
         if(userId === userID){

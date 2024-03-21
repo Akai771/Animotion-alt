@@ -76,5 +76,71 @@
     border: none;
   }
 
+  @media screen and (max-width: 1600px) {
+    .RecommendCard {
+      width: 10rem;
+      height: 20rem;
+    }
+
+    .RecommendCardImage{
+      width: 10rem;
+      height: 16rem;
+    }
+
+    .RecommendCardTitle{
+      font-size: 0.7rem;
+    }
+
+    .playIcon3{
+      top: -1rem;
+      left: 0.3rem;
+    }
+
+    .RecommendCard:hover .playIcon3{
+      opacity: 1;
+      transition: 0.5s ease-in-out;
+    }
+
+    .RecommendCard:hover .RecommendCardImage{
+      text-align: center;
+      opacity: 1;
+      filter: saturate(.2);
+      transition: 0.5s ease-in-out;
+    }
+
+    .RecommendCard-info {
+      padding-top: 5px;
+      height: auto;
+    }
+
+    .RecommendCard:hover {
+      transform: scale(1.1);
+      transition: 0.5s ease-in-out;
+      cursor: pointer;
+    }
+
+    .RecommendCardTitle{
+      font-family: "montserrat", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .RecommendImage{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .recommendCardBtn{
+      outline: none;
+      border: none;
+    }
+
+    .recommendCardBtn:hover{
+      opacity: 0.5;
+      outline: none;
+      border: none;
+    }
+  }
 
       

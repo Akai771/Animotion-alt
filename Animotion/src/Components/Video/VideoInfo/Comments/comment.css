@@ -5,7 +5,7 @@
     height: auto;
     margin: 10px 0;
     padding: 10px;
-    width: 90rem;
+    width: 97rem;
     border-radius: 5px;
     background-color: #242428;
     margin-bottom: 5rem;
@@ -15,8 +15,8 @@
     display: flex;
     flex-direction: column;
     margin: 8px 0;
-    padding: 20px 20px 10px 20px;
-    width: 85rem;
+    padding: 10px 10px 10px 20px;
+    width: 92rem;
     border-radius: .7rem;
     background-color: #3A3A3E;
 }
@@ -57,7 +57,7 @@
     align-items: flex-start;
     gap: .5rem;
     margin: 1rem 0rem 1rem 1rem;
-    width: 85rem;
+    width: 92rem;
     border-radius: 5px;
 }
 
@@ -68,7 +68,7 @@
     font-weight: 600;
     border: none;
     padding: 1rem;
-    width: 85rem;
+    width: 92rem;
     height: 8rem;
     border-radius: .7rem;
     outline: none;
@@ -138,11 +138,13 @@
 
 @media screen and (max-width: 1600px){
     .comment{
-        width: 70rem;
+        width: 83rem;
     }
 
     .commentCard{
-        width: 65rem;
+        width: 80rem;
+        min-height: 5rem;
+        height: auto;
     }
 
     .commentUser{
@@ -160,7 +162,7 @@
     }
 
     .commentPara{
-        width: 65rem;
+        width: 79.5rem;
         font-size: .8rem;
     }
 
@@ -173,15 +175,15 @@
     }
 
     .dateFont{
-        font-size: .7rem;
+        font-size: .6rem;
     }
 
     .userFont{
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .commentFont{
-        font-size: 1rem;
+        font-size: .8rem;
     }
 
     .CommentsDisplaySec{
