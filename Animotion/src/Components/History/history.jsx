@@ -17,7 +17,7 @@ function History() {
         localStorage.getItem('history');
         setHistory(JSON.parse(localStorage.getItem('history')));
 
-        Window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
     },[])
 
     const handleHistoryClick = () =>{
