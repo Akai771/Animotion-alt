@@ -167,7 +167,7 @@ const VideoInfo = () => {
                 </div>
             </div>
             <div className="recommendedSection">
-                <span className="AnimeTitle">Seasons:</span>
+                <span className="AnimeTitle">Recommended for you:</span>
                     <div className="alignRecommendAnime">
                         {recommend === 0?
                             recommend.map((season) => (
