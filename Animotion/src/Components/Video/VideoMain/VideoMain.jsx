@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { useParams, useSearchParams, useNavigate} from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate, Link} from 'react-router-dom';
 import axios from "axios";
 import "./VideoMain.css";
 import NavBar from "../../Navbar/Navbar";
@@ -7,7 +7,6 @@ import Footer from "../../Footer/Footer";
 import ChatbotButton from "../../Chatbot/ChatbotButton/ChatbotButton";
 import TopRedirect from "../../TopRedirectButton/TopRedirect";
 import Preloader from "../../Preloader/Preloader";
-import CharacterCard from "./characterCard";
 import FastRewindIcon from '@mui/icons-material/FastRewind';
 import FastForwardIcon from '@mui/icons-material/FastForward';
 import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined';
@@ -27,22 +26,12 @@ const VideoMain = () => {
     const [serverLink2, setServerLink2] = useState([])
     const [episode, setEpisode] = useState([])
     const [format, setFormat] = useState("sub");
-    const [epNo, setEpNo] = useState(0);
-    const [selectedOption, setSelectedOption] = useState(serverInfo.episodeNo);
     const [episodeId, setEpisodeId] = useState(histEpisodeId);
-    const [episodeNumber, setEpisodeNumber] = useState(serverInfo.episodeNo);
-    const [addData, setAddData] = useState([]);
+    const [episodeNumber, setEpisodeNumber] = useState(0);
+    const [selectedOption, setSelectedOption] = useState(0);
     const [serverChangeBtn, setServerChangeBtn] = useState("serverChangeBtn");
     const [recommendPop, setRecommendPop] = useState([]);
     const navigate = useNavigate();
-    
-    const handleOptionChange = (e) => {
-        setEpisodeId(e.target.value);
-        setEpNo(e.target.name);
-        setSelectedOption(e.target.name);
-        navigate(`/watch/${id}?epId=${e.target.value}`)
-        window.location.reload();
-      };
 
     useEffect(()=>{
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
@@ -55,33 +44,32 @@ const VideoMain = () => {
             setAnimeData(res.data.anime.info)
         });
 
-        axios.get(`https://api.anify.tv/search/anime/${id}`)
-        .then((res) => setAddData(res.data.results[0]));
-
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
         .then((res) => {
             setRecommendPop(res.data.seasons)
         });
 
+        window.scrollTo(0, 0);
     },[id])
     
     useEffect(()=>{
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/servers?episodeId=${episodeId}`)
         .then((res) => {
             setServerInfo(res.data)
-            setEpisodeNumber(serverInfo.episodeNo)
-            setEpNo(serverInfo.episodeNo)
+            setEpisodeNumber(res.data.episodeNo)
         })     
         .catch((err) => console.error("Error fetching server data:", err))
 
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
         .then((res) => {
-            setServerLink(res.data)})
+            setServerLink(res.data)
+        })
 
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=dub`)
         .then((res) => {
-            setServerLink2(res.data)})
-    },[episodeId, id, format])
+            setServerLink2(res.data)
+        })
+    },[episodeId, format])
 
     useEffect(()=>{
         if (serverLink2.length == 0) {
@@ -91,6 +79,16 @@ const VideoMain = () => {
             setServerChangeBtn("serverChangeBtn")
         }
     },[serverLink2])
+
+    useEffect(()=>{
+        handleEpNumber()
+    },[serverInfo.episodeNo])
+
+    function handleEpNumber() {
+        setSelectedOption(serverInfo.episodeNo)
+        setEpisodeNumber(serverInfo.episodeNo)
+    }
+
 
     const handleNextEp = () => {
         const nextEpNo = serverInfo.episodeNo;
@@ -106,6 +104,12 @@ const VideoMain = () => {
         window.location.reload();
     }
 
+    const handleOptionChange = (e) => {
+        const episodeNo = e.target.name;
+        setSelectedOption(episodeNo);
+        navigate(`/watch/${id}?epId=${e.target.value}`)
+        window.location.reload();
+      };
 
     var specificAnimeID = JSON.parse(localStorage.getItem('history'))
     if (Array.isArray(specificAnimeID)) {
@@ -123,6 +127,7 @@ const VideoMain = () => {
     else {
         console.error("Invalid data format in 'history'");
     }
+
     return(<>
         <Preloader/>
         <NavBar />
@@ -174,7 +179,9 @@ const VideoMain = () => {
             </div>
             <br/>
             <div className="alignVidMain">
-                <img src={animeData.poster} alt="Anime Cover Image" className="video-info-cover-image"/>
+                <Link to={`/anime/${id}`}>
+                    <img src={animeData.poster} alt="Anime Cover Image" className="video-info-cover-image"/>
+                </Link>
                 <div className="VidDescSection2">
                     <span className="AnimeTitle">{animeData.name}</span>
                     <br/>
