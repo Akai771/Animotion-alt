@@ -36,7 +36,13 @@ function NewsBoard() {
                             />
                         ))
                     ) : (
-                        <p>No articles available</p>
+                        <NewsCard
+                            key={1}
+                            title={"No TITLE"}
+                            description={"No DESCRIPTION"}
+                            url={"No URL"}
+                            urlToImage={"https://via.placeholder.com/400x400"}
+                        />
                     )}
                 </div>
             </div>
