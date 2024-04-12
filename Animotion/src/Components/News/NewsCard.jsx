@@ -9,7 +9,7 @@ function NewsCard({ title, description, url, urlToImage}) {
                 <div class="card-body">
                     <h5 class="card-title cardTitle">{title?title.slice(0,50):"NoData"}</h5>
                     {/* <p class="card-tex cardDesc">{description?description.slice(0,90):"some information about the news"}....</p> */}
-                    <p class="card-tex cardDesc">Topics: {description?description.join(" | ").toUpperCase():"No Data"}</p>
+                    <p class="card-tex cardDesc">Topics: {description?description:"No Data"}</p>
                     <a href={url} class="ReadMoreBtn">Read More</a>
                 </div>
             </div>
