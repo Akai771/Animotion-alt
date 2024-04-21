@@ -34,17 +34,17 @@ const VideoMain = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/episodes/${id}`)
         .then((res) => {
             setEpisode(res.data.episodes)
         });
 
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/info?id=${id}`)
         .then((res) => {
             setAnimeData(res.data.anime.info)
         });
 
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/info?id=${id}`)
         .then((res) => {
             setRecommendPop(res.data.seasons)
         });
@@ -53,19 +53,19 @@ const VideoMain = () => {
     },[id])
     
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/servers?episodeId=${episodeId}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/servers?episodeId=${episodeId}`)
         .then((res) => {
             setServerInfo(res.data)
             setEpisodeNumber(res.data.episodeNo)
         })     
         .catch((err) => console.error("Error fetching server data:", err))
 
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
         .then((res) => {
             setServerLink(res.data)
         })
 
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=dub`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/episode-srcs?id=${episodeId}&category=dub`)
         .then((res) => {
             setServerLink2(res.data)
         })

@@ -38,7 +38,7 @@ const Schedule = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/schedule?date=${day}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/schedule?date=${day}`)
         .then((res) => setSchedule(res.data.scheduledAnimes))
         .catch((err) => console.log(err));
         window.scrollTo({

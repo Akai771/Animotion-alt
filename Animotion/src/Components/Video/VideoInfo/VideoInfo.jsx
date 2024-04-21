@@ -50,7 +50,7 @@ const VideoInfo = () => {
 
     try{
         useEffect(()=>{
-            axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
+            axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/info?id=${id}`)
             .then((res) => {
                 setAnimeData(res.data.anime.info)
                 setAddData(res.data.anime.moreInfo)
@@ -58,7 +58,7 @@ const VideoInfo = () => {
                 setRecommendPop(res.data.relatedAnimes)
             })
 
-            axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
+            axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/episodes/${id}`)
             .then((res) => {
                 setEpisode(res.data.episodes[0].episodeId)
             });
