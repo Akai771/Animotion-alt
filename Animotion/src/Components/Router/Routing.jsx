@@ -65,7 +65,7 @@ const Routing = () => {
           {/* {token?<Route exact path="/premium" element={<Premium/>} />:""} */}
           {token?<Route exact path="/news" element={<NewsBoard/>} />:""}
           {token?<Route exact path="/schedule" element={<Schedule/>} />:""}
-          {/* {token?<Route exact path="/anime" element={<Browse/>} />:""} */}
+          {token?<Route exact path="/anime" element={<Browse/>} />:""}
           {token?<Route exact path="/search/:searchId" element={<SearchPage/>} />:""}
           {token?<Route exact path="/genre/:genreId" element={<GenresPage/>} />:""}
           {token?<Route exact path="/details/:id" element={<VideoInfo/>} />:""}

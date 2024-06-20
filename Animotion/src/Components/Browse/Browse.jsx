@@ -56,9 +56,9 @@ const Browse = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/search?q=${searchTerm}&page=${page}`)
+        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/recently-updated?page=${page}`)
         .then((res) => setBrowse(res.data.animes))
-    },[searchTerm, page])
+    })
 
     useEffect(()=>{
         axios.get(`https://animotion-aniwatch-api.vercel.app/anime/home`)
@@ -71,20 +71,12 @@ const Browse = () => {
             <Preloader/>
             <NavBar/>
             <div className="browseContent">
-                <h1 className="browseTitle" id="browse">Browse Anime</h1>
-                <form className="browseAnimeSearchBox" onSubmit={handleSubmit}>
-                    <input type="text" className="SearchAnimeInput" placeholder="Search" onChange={handleChange}/>
-                    <button className="searchAnime__btn" type="submit">
-                        <SearchIcon style={{color:"white"}}/>
-                    </button>
-                </form>
                 <div className="browsePageDivide">
                     <div className="container">
                         <div class="row">
                             <div>
                                 <div className="BrowseAnimeContainer">
-                                    <span className="browseAnimeTitle">Search results for : <span className="browseAnimeTitle2">{displaySearch}</span></span>
-                                    <div className="alignBrowseAnime">
+                                    <h1 className="browseTitle" id="browse">Browse Anime</h1>                                    <div className="alignBrowseAnime">
                                         {browse?browse.map((seasonal) => (
                                                 <BrowseCard key={seasonal.id} id={seasonal.id} title={seasonal.name} coverImage={seasonal.poster}/>
                                             )):
