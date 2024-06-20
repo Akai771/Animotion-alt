@@ -16,6 +16,7 @@ import Comment from "./Comments/comment";
 
 const VideoInfo = () => {
     const [animeData, setAnimeData] = useState([]);
+    const [trailerData, setTrailerData] = useState([]);
     const [addData, setAddData] = useState([])
     const [addData2, setAddData2] = useState([])
     const [recommend, setRecommend] = useState([]);
@@ -50,15 +51,16 @@ const VideoInfo = () => {
 
     try{
         useEffect(()=>{
-            axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/info?id=${id}`)
+            axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
             .then((res) => {
                 setAnimeData(res.data.anime.info)
+                setTrailerData(res.data.anime.info.promotionalVideos[0])
                 setAddData(res.data.anime.moreInfo)
                 setRecommend(res.data.seasons)
                 setRecommendPop(res.data.relatedAnimes)
             })
 
-            axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/episodes/${id}`)
+            axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
             .then((res) => {
                 setEpisode(res.data.episodes[0].episodeId)
             });
@@ -140,7 +142,7 @@ const VideoInfo = () => {
                             </div>
                         </div>
                         <div className="trailer">
-                            <ReactPlayer  width={playerWidth} height={playerHeight} url={addData2 && addData2.trailer?addData2.trailer:"https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran"} title="YouTube video player" />
+                            <ReactPlayer  width={playerWidth} height={playerHeight} url={trailerData && trailerData.source?trailerData.source:"https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran"} title="YouTube video player" />
                         </div>
                     </div>
                     <br/>
