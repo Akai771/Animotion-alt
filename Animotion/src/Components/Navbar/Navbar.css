@@ -126,6 +126,58 @@ nav {
     color: #fff;
     align-items: center;
   }
+
+  .AnimeSearchBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+	margin-right: 4rem;
+  }
+
+  .SearchAnimeInputBox {
+    width: 20rem;
+    height: 100%;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #2e0069;
+    caret-color: #f7f7f8;
+    color: var(--secondary-color);
+    padding: 7px 10px;
+    border: 2px solid transparent;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    margin-right: 1px;
+    transition: all .2s ease;
+    outline: none;
+  }
+  
+  .SearchAnimeInputBox:hover {
+    border: 2px solid rgba(255, 255, 255, 0.16);
+  }
+  
+  .SearchAnimeInputBox:focus {
+    outline: none;
+
+  }
+
+  .searchAnime_btn {
+    border: none;
+    cursor: pointer;
+    background-color: rgba(42, 42, 45, 1);
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    height: 100%;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .search_btn:hover {
+    background-color: rgba(54, 54, 56, 1);
+  }
   
   @media screen and (max-width: 950px) {
 	header {

@@ -28,6 +28,7 @@ import Watchlist from "../Watchlist/watchlist";
 import GenresPage from "../Browse/GenresPage/GenresPage";
 import History from "../History/history";
 import RecentEpisodes from "../Home/RecentEpisodes/recentEpisodes";
+import SearchPage from "../NewBrowse/SearchPage";
 
 
 const Routing = () => {
@@ -61,14 +62,15 @@ const Routing = () => {
           {token?<Route exact path="/home" element={<Home token={token}/>} />:""}
           {token?<Route exact path="/latest-episodes" element={<RecentEpisodes token={token}/>} />:""}
           {token?<Route exact path="/hiro" element={<Chatbot/>} />:""}
-          {token?<Route exact path="/premium" element={<Premium/>} />:""}
+          {/* {token?<Route exact path="/premium" element={<Premium/>} />:""} */}
           {token?<Route exact path="/news" element={<NewsBoard/>} />:""}
           {token?<Route exact path="/schedule" element={<Schedule/>} />:""}
-          {token?<Route exact path="/anime" element={<Browse/>} />:""}
+          {/* {token?<Route exact path="/anime" element={<Browse/>} />:""} */}
+          {token?<Route exact path="/search/:searchId" element={<SearchPage/>} />:""}
           {token?<Route exact path="/genre/:genreId" element={<GenresPage/>} />:""}
           {token?<Route exact path="/details/:id" element={<VideoInfo/>} />:""}
           {token?<Route exact path="/watch/:id" element={<VideoMain/>} />:""}
-          {token?<Route exact path="/payment/:tag" element={<Payment/>} />:""}
+          {/* {token?<Route exact path="/payment/:tag" element={<Payment/>} />:""} */}
           {token?<Route exact path="/manga" element={<Manga/>} />:""}
           {token?<Route exact path="/manga/details/:id" element={<MangaInfo/>} />:""}
           {token?<Route exact path="/manga/read/:chapId/:lang/:chap" element={<MangaRead/>} />:""}
