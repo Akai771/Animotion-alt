@@ -40,7 +40,7 @@ const Home = ({token}) =>{
     let dataBasedOnScreenSize;
 
     useEffect(()=>{
-        axios.get("https://animotion-aniwatch-api-2.vercel.app/anime/home")
+        axios.get("https://animotion-aniwatch-api.vercel.app/anime/home")
         .then((res) => {
             setRecentEp(res.data.latestEpisodeAnimes)
             setTrending(res.data.trendingAnimes)
