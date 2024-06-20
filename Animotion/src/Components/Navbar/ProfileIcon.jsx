@@ -121,7 +121,6 @@ function ProfileIcon() {
             >
               <MenuItem onClick={handleCloseUserMenu}><span className="greetText1">Hi, <span className="greetText2">{name}</span> </span></MenuItem>
               <div className="greetDivider" />
-              <Link exact to={"/premium"} style={{textDecoration:"none", color:"#FFDF00"}}><MenuItem><WorkspacePremiumOutlinedIcon style={{fontSize:"1.4rem",marginRight:"0.5rem"}}/> Premium </MenuItem></Link>
               <MenuItem onClick={getGif}><AddAPhotoOutlinedIcon style={{fontSize:"1.2rem",marginRight:"0.5rem"}}/>Random PFP</MenuItem>
               <MenuItem onClick={handleRandomAnime}><ShuffleRoundedIcon style={{fontSize:"1.2rem",marginRight:"0.5rem"}}/> Random Anime </MenuItem>
               <Link exact to={"/profile"} style={{textDecoration:"none", color:"var(--textColor)"}}><MenuItem><AccountCircleOutlinedIcon style={{fontSize:"1.2rem",marginRight:"0.5rem"}}/> My Account </MenuItem></Link>
