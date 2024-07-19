@@ -11,7 +11,7 @@ Animotion is a comprehensive Anime Streaming Platform designed to cater to anime
 - **Random PFP Generator**: Enjoy a fun feature to randomly generate Profile Pictures.
 
 ### Home Page
-![image](https://github.com/Akai771/AniMotion/assets/90311912/4e328160-4923-41e8-8632-df22ee99634d)
+![image](https://github.com/user-attachments/assets/9ada43d0-78c7-4e3e-854a-f9d6e264f669)
 
 <details>
 <summary>View more</summary>
@@ -19,12 +19,14 @@ Animotion is a comprehensive Anime Streaming Platform designed to cater to anime
 ### Splash Page
 ![image](https://github.com/Akai771/AniMotion/assets/90311912/d1800459-acc8-4061-abbd-6a0764789868)
 
+### Anime Browse Page
+![image](https://github.com/user-attachments/assets/51ee38ef-5e8a-42c2-9998-317e4c70e846)
+
 ### Anime Info Page
-![image](https://github.com/Akai771/AniMotion/assets/90311912/fc12b55f-3a74-426b-ad81-e40260347d1d)
+![image](https://github.com/user-attachments/assets/e747027b-8a6b-4a2e-9171-5e0a6da8bc5d)
 
 ### Anime Watch Page
-![image](https://github.com/Akai771/AniMotion/assets/90311912/9395a5c2-f991-4d39-a1a0-f50210abb7eb)
-
+![image](https://github.com/user-attachments/assets/d1678784-dce9-468f-93aa-96acc13605f7)
 
 </details>
 
