@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import '@vidstack/react/player/styles/default/theme.css';
 import '@vidstack/react/player/styles/default/layouts/video.css';
-import { MediaPlayer, MediaProvider, PlayButton} from '@vidstack/react';
+import { MediaPlayer, MediaProvider, PlayButton, useMediaStore} from '@vidstack/react';
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 import { useMediaRemote } from '@vidstack/react';
 import './VideoPlayer.css';
@@ -15,17 +15,29 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
         return track.file;
     });
 
-    // const remote = useMediaRemote();
-    // remote.changeVolume(0.5);
+    const volume = useMediaStore((store) => store.volume);
+    useEffect(() => {
+        // Ensure volume is set to 50% after component mounts
+        if (volume !== 50) {
+            setTimeout(() => {
+                const mediaElement = document.querySelector('media-player');
+                if (mediaElement) {
+                    mediaElement.volume = 0.5;
+                }
+            }, 0);
+        }
+    }, [volume]);
+
     return (
         <MediaPlayer 
             key={mal} 
             className="VideoPlayer" 
             title="Sprite Fight" 
             src={serverLink} 
-            // autoplay
+            autoplay
             crossorigin
             playsinline
+            volume={0.5}
         >
             <MediaProvider>
                 <PlayButton />
@@ -34,7 +46,9 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
                     srcLang="en" 
                     src={track.toString()}
                     label="English"
+                    default
                  />
+                 
             </MediaProvider>
             <DefaultVideoLayout icons={defaultLayoutIcons} thumbnails={thumbnails}/>
         </MediaPlayer>
