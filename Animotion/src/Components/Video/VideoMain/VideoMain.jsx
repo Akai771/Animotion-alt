@@ -34,40 +34,36 @@ const VideoMain = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/anime/${id}/episodes`)
         .then((res) => {
-            setEpisode(res.data.episodes)
+            setEpisode(res.data.data.episodes)
         });
 
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/anime/${id}`)
         .then((res) => {
-            setAnimeData(res.data.anime.info)
-        });
-
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
-        .then((res) => {
-            setRecommendPop(res.data.seasons)
+            setAnimeData(res.data.data.anime.info)
+            setRecommendPop(res.data.data.seasons)
         });
 
         window.scrollTo(0, 0);
     },[id])
     
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/servers?episodeId=${episodeId}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/servers?animeEpisodeId=${episodeId}`)
         .then((res) => {
-            setServerInfo(res.data)
-            setEpisodeNumber(res.data.episodeNo)
+            setServerInfo(res.data.data)
+            setEpisodeNumber(res.data.data.episodeNo)
         })     
         .catch((err) => console.error("Error fetching server data:", err))
 
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=${format}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}&category=${format}`)
         .then((res) => {
-            setServerLink(res.data)
+            setServerLink(res.data.data)
         })
 
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episode-srcs?id=${episodeId}&category=dub`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}&category=dub`)
         .then((res) => {
-            setServerLink2(res.data)
+            setServerLink2(res.data.data)
         })
     },[episodeId, format])
 
@@ -132,26 +128,28 @@ const VideoMain = () => {
         <Preloader/>
         <NavBar />
         <div className="video-main-container">
-            <VideoPlayer 
-                mal={serverLink?serverLink.malID:null}
-                serverLink={serverLink.sources?serverLink.sources[0].url:null} 
-                trackSrc={serverLink.tracks} 
-                thumbnails={animeData.sources?animeData.sources[0].url:null}
-            />
-            <div className="ServerBox">
-                <div className="serveBoxCont1">
-                    <span className="ServerInfoTitle">Episode: <span className="ServerInfo">{serverInfo.episodeNo}</span></span>
-                </div>
-                <div className="serverChangeBox">
-                    <span className="serverTags">Format : </span>
-                    <span className="serverTags">
-                        <button className="serverChangeBtn" onClick={()=> setFormat("sub")}><ClosedCaptionOutlinedIcon id="subIcon"/> Sub</button>
-                        <button className={serverChangeBtn} onClick={()=> setFormat("dub")}><KeyboardVoiceOutlinedIcon id="dubIcon"/> Dub</button>
-                    </span>
-                </div>
-                <div className="serveBoxCont2">
-                    <button className="epChangeButton" onClick={handlePrevEp}><FastRewindIcon id="epChangeIcon" />Prev</button>
-                    <button className="epChangeButton" onClick={handleNextEp}>Next<FastForwardIcon id="epChangeIcon"/></button>
+            <div className="video-player-wrapper">
+                <VideoPlayer 
+                    mal={serverLink?serverLink.malID:null}
+                    serverLink={serverLink.sources?serverLink.sources[0].url:null} 
+                    trackSrc={serverLink.tracks} 
+                    thumbnails={animeData.sources?animeData.sources[0].url:null}
+                />
+                <div className="ServerBox">
+                    <div className="serverBoxCont1">
+                        <span className="ServerInfoTitle">Episode: <span className="ServerInfo">{serverInfo.episodeNo}</span></span>
+                        <div className="serverChangeBox">
+                            <span className="serverTags">Format : </span>
+                            <span className="serverTags">
+                                <button className="serverChangeBtn" onClick={()=> setFormat("sub")}><ClosedCaptionOutlinedIcon id="subIcon"/> Sub</button>
+                                <button className={serverChangeBtn} onClick={()=> setFormat("dub")}><KeyboardVoiceOutlinedIcon id="dubIcon"/> Dub</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div className="serverBoxCont2">
+                        <button className="epChangeButton" onClick={handlePrevEp}><FastRewindIcon id="epChangeIcon" />Prev</button>
+                        <button className="epChangeButton" onClick={handleNextEp}>Next<FastForwardIcon id="epChangeIcon"/></button>
+                    </div>
                 </div>
             </div>
             <br/>
@@ -178,7 +176,7 @@ const VideoMain = () => {
             </div>
             <br/>
             <div className="alignVidMain">
-                <Link to={`/anime/${id}`}>
+                <Link to={`/details/${id}`}>
                     <img src={animeData.poster} alt="Anime Cover Image" className="video-info-cover-image"/>
                 </Link>
                 <div className="VidDescSection2">

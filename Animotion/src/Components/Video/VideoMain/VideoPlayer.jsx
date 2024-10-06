@@ -23,7 +23,7 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
             className="VideoPlayer" 
             title="Sprite Fight" 
             src={serverLink} 
-            autoplay
+            // autoplay
             crossorigin
             playsinline
         >

@@ -40,13 +40,13 @@ const Home = ({token}) =>{
     let dataBasedOnScreenSize;
 
     useEffect(()=>{
-        axios.get("https://animotion-aniwatch-api.vercel.app/anime/home")
+        axios.get("https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/home")
         .then((res) => {
-            setRecentEp(res.data.latestEpisodeAnimes)
-            setTrending(res.data.trendingAnimes)
-            setTopAiring(res.data.topAiringAnimes)
-            setUpcoming(res.data.topUpcomingAnimes)
-            setTop(res.data.top10Animes.month)
+            setRecentEp(res.data.data.latestEpisodeAnimes)
+            setTrending(res.data.data.trendingAnimes)
+            setTopAiring(res.data.data.topAiringAnimes)
+            setUpcoming(res.data.data.topUpcomingAnimes)
+            setTop(res.data.data.top10Animes.month)
         })
 
         window.scrollTo(0,0);
@@ -186,7 +186,7 @@ const Home = ({token}) =>{
         <div className="alignCardMargin">
             <Slider {...settings}>
             {topAiring.map((movie) => (
-                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} type={movie.otherInfo[0]} />
+                    <VidCard2 key={movie.id} id={movie.id} title={movie.name} coverImage={movie.poster} type={movie.type} />
                     ))
                 }
             </Slider>

@@ -14,8 +14,8 @@
 
 
 body {
-  background-color: rgb(255, 255, 255); 
-  margin: 0rem;
+  margin: 0;
+  padding: 0;
   --sb-track-color: #232323;
   --sb-thumb-color: #86ff84;
   --sb-size: .7rem;

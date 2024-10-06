@@ -56,12 +56,12 @@ const Browse = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/recently-updated?page=${page}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/recently-updated?page=${page}`)
         .then((res) => setBrowse(res.data.animes))
     })
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/home`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/anime/home`)
         .then((res) => setGenres(res.data.genres))
         
         window.scrollTo(0,0);

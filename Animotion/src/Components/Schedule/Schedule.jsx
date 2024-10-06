@@ -38,8 +38,8 @@ const Schedule = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/schedule?date=${day}`)
-        .then((res) => setSchedule(res.data.scheduledAnimes))
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/schedule?date=${day}`)
+        .then((res) => setSchedule(res.data.data.scheduledAnimes))
         .catch((err) => console.log(err));
         window.scrollTo({
             top: 100,

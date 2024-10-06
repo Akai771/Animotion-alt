@@ -51,18 +51,18 @@ const VideoInfo = () => {
 
     try{
         useEffect(()=>{
-            axios.get(`https://animotion-aniwatch-api.vercel.app/anime/info?id=${id}`)
+            axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/anime/${id}`)
             .then((res) => {
-                setAnimeData(res.data.anime.info)
-                setTrailerData(res.data.anime.info.promotionalVideos[0])
-                setAddData(res.data.anime.moreInfo)
-                setRecommend(res.data.seasons)
-                setRecommendPop(res.data.relatedAnimes)
+                setAnimeData(res.data.data.anime.info)
+                setTrailerData(res.data.data.anime.info.promotionalVideos[0])
+                setAddData(res.data.data.anime.moreInfo)
+                setRecommend(res.data.data.seasons)
+                setRecommendPop(res.data.data.relatedAnimes)
             })
 
-            axios.get(`https://animotion-aniwatch-api.vercel.app/anime/episodes/${id}`)
+            axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/anime/${id}/episodes`)
             .then((res) => {
-                setEpisode(res.data.episodes[0].episodeId)
+                setEpisode(res.data.data.episodes[0].episodeId)
             });
 
             window.scrollTo(0,0);

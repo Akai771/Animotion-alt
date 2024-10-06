@@ -51,13 +51,13 @@ const SearchPage = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/search?q=${displaySearch}&page=${page}`)
-        .then((res) => setBrowse(res.data.animes))
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/search?q="${displaySearch}"&page=${page}`)
+        .then((res) => setBrowse(res.data.data.animes))
     },[displaySearch, page])
-
+    
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/home`)
-        .then((res) => setGenres(res.data.genres))
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/home`)
+        .then((res) => setGenres(res.data.data.genres))
         window.scrollTo(0,0);
     },[])
     return(<>

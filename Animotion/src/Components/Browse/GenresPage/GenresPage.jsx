@@ -31,8 +31,9 @@ const GenresPage = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/genre/${genreId}?page=${page}`)
-        .then((res) => setBrowse(res.data.animes))
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/genre/${genreId}?page=${page}`)
+        .then((res) => setBrowse(res.data.data.animes))
+        console.log(browse);
 
         window.scrollTo(0,0);
     },[genreId, page])
