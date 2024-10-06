@@ -24,6 +24,8 @@ const VideoMain = () => {
     const [serverInfo, setServerInfo] = useState([])
     const [serverLink, setServerLink] = useState([])
     const [serverLink2, setServerLink2] = useState([])
+    const [serverUrl, setServerUrl] = useState("")
+    const [serverUrl2, setServerUrl2] = useState("")
     const [episode, setEpisode] = useState([])
     const [format, setFormat] = useState("sub");
     const [episodeId, setEpisodeId] = useState(histEpisodeId);
@@ -56,14 +58,16 @@ const VideoMain = () => {
         })     
         .catch((err) => console.error("Error fetching server data:", err))
 
-        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}&category=${format}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}?server=hd-1&category=sub`)
         .then((res) => {
             setServerLink(res.data.data)
+            setServerUrl(res.data.data.sources[0].url)
         })
 
         axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}&category=dub`)
         .then((res) => {
             setServerLink2(res.data.data)
+            setServerUrl2(res.data.data.sources[0].url)
         })
     },[episodeId, format])
 
@@ -131,9 +135,8 @@ const VideoMain = () => {
             <div className="video-player-wrapper">
                 <VideoPlayer 
                     mal={serverLink?serverLink.malID:null}
-                    serverLink={serverLink.sources?serverLink.sources[0].url:null} 
+                    serverLink={serverLink?serverUrl:null} 
                     trackSrc={serverLink.tracks} 
-                    thumbnails={animeData.sources?animeData.sources[0].url:null}
                 />
                 <div className="ServerBox">
                     <div className="serverBoxCont1">

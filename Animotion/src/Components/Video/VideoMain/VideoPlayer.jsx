@@ -3,7 +3,7 @@ import { MediaPlayer, MediaProvider, PlayButton, useMediaStore} from '@vidstack/
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 import './VideoPlayer.css';
 
-function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
+function VideoPlayer({serverLink, trackSrc, mal}) {
     useEffect(() => {
         import ('@vidstack/react/player/styles/default/theme.css');
         import ('@vidstack/react/player/styles/default/layouts/video.css');
@@ -15,6 +15,7 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
     const track = trackSource.map((track) => {
         return track.file;
     });
+    // console.log(serverLink);
 
     const volume = useMediaStore((store) => store.volume);
     useEffect(() => {
@@ -33,7 +34,6 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
         <MediaPlayer 
             key={mal} 
             className="VideoPlayer" 
-            title="Sprite Fight" 
             src={serverLink} 
             autoplay
             crossorigin
@@ -51,7 +51,7 @@ function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
                  />
                  
             </MediaProvider>
-            <DefaultVideoLayout icons={defaultLayoutIcons} thumbnails={thumbnails}/>
+            <DefaultVideoLayout icons={defaultLayoutIcons}/>
         </MediaPlayer>
     )
 }
