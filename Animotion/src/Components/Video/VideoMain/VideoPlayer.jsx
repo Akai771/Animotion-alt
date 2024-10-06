@@ -1,10 +1,13 @@
 import React, {useEffect} from "react";
-import '@vidstack/react/style.css';
 import { MediaPlayer, MediaProvider, PlayButton, useMediaStore} from '@vidstack/react';
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 import './VideoPlayer.css';
 
 function VideoPlayer({serverLink, kind, trackSrc, label, mal,thumbnails }) {
+    useEffect(() => {
+        import ('@vidstack/react/player/styles/default/theme.css');
+        import ('@vidstack/react/player/styles/default/layouts/video.css');
+    }, []);
     const trackSource = trackSrc?trackSrc.filter((track) => {
         return track.label === "English";
     }):[];
