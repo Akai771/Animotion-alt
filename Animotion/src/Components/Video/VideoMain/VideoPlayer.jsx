@@ -3,7 +3,7 @@ import { MediaPlayer, MediaProvider, PlayButton, useMediaStore} from '@vidstack/
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 import './VideoPlayer.css';
 
-function VideoPlayer({serverLink, trackSrc, mal}) {
+function VideoPlayer({serverLink, trackSrc, mal, thumbnails}) {
     useEffect(() => {
         import ('@vidstack/react/player/styles/default/theme.css');
         import ('@vidstack/react/player/styles/default/layouts/video.css');
@@ -51,7 +51,7 @@ function VideoPlayer({serverLink, trackSrc, mal}) {
                  />
                  
             </MediaProvider>
-            <DefaultVideoLayout icons={defaultLayoutIcons}/>
+            <DefaultVideoLayout icons={defaultLayoutIcons} thumbnails={thumbnails}/>
         </MediaPlayer>
     )
 }

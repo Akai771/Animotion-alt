@@ -64,15 +64,30 @@ const VideoMain = () => {
             setServerUrl(res.data.data.sources[0].url)
         })
 
-        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}&category=dub`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}?server=hd-1&category=dub`)
         .then((res) => {
             setServerLink2(res.data.data)
             setServerUrl2(res.data.data.sources[0].url)
         })
     },[episodeId, format])
 
+    // console.log(serverLink, serverLink2)
+
+    // const handleLanguangeChange = () => {
+    //     if (format === "sub") {
+    //         setServerUrl(serverLink.sources[0].url)
+    //     }
+    //     else {
+    //         setServerUrl(serverLink2.sources[0].url)
+    //     }
+    // }
+
+    // useEffect(()=>{
+    //     handleLanguangeChange()
+    // },[format])
+
     useEffect(()=>{
-        if (serverLink2.length == 0) {
+        if (!serverUrl2) {
             setServerChangeBtn("serverChangeBtnDisabled")
         }
         else {
@@ -135,8 +150,9 @@ const VideoMain = () => {
             <div className="video-player-wrapper">
                 <VideoPlayer 
                     mal={serverLink?serverLink.malID:null}
-                    serverLink={serverLink?serverUrl:null} 
+                    serverLink={format=="sub"?serverUrl:serverUrl2} 
                     trackSrc={serverLink.tracks} 
+                    thumbnails={animeData.thumbnails}
                 />
                 <div className="ServerBox">
                     <div className="serverBoxCont1">

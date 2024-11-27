@@ -18,7 +18,7 @@ body {
   padding: 0;
   --sb-track-color: #232323;
   --sb-thumb-color: #86ff84;
-  --sb-size: .7rem;
+  --sb-size: 0;
 }
 
 body::-webkit-scrollbar {

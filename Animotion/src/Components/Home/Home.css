@@ -147,6 +147,12 @@
         overflow: hidden;
     }
 
+    .alignCardMargin3{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding-right: 4rem;
+    }
+
     .AnimePromotionImg{
         width: 60rem;
         height: 19rem;
