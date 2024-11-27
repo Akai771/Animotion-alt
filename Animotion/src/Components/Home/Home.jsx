@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import TrendingCard from "./VideoCard/TrendingCard/TrendingCard.jsx";
 import ContWatchingCard from "./VideoCard/ContinueWatching/contWatchCard";
+import RotatingPhrase from "./RotatingPhrase/rotatingPhrase.jsx";
 
 const Home = ({token}) =>{
     const [recentEp, setRecentEp] = useState([]);
@@ -122,6 +123,9 @@ const Home = ({token}) =>{
 
     <Preloader/>
     <Navbar/>
+    {/* <div className="apkAd">
+        <RotatingPhrase/>
+    </div> */}
     <div id="topCarousel">
         <CarouselHome />
     </div>
