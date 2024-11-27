@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./RotatingPhrase.css";
+import "./rotatingPhrase.css";
 
 const RotatingPhrase = () => {
   return (
