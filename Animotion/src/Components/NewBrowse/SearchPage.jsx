@@ -16,18 +16,11 @@ import "./SearchPage.css";
 
 const SearchPage = () => {
     const [browse, setBrowse] = useState([]);
-    const [displaySearch, setDisplaySearch] = useState("No Search Yet!");
     const [genres, setGenres] = useState([]);
     const [page, setPage] = useState(1);
     const [genreState, setGenreState] = useState(true);
 
     const {searchId} = useParams();
-
-    useEffect(()=>{
-        setDisplaySearch(searchId);
-        window.scrollTo(0,0);
-    },[searchId])
-
     const handleGenre = () => {
         if (genreState == true){
             setGenreState(false);
@@ -51,9 +44,9 @@ const SearchPage = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/search?q="${displaySearch}"&page=${page}`)
+        axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/search?q="${searchId}"&page=${page}`)
         .then((res) => setBrowse(res.data.data.animes))
-    },[displaySearch, page])
+    },[searchId, page])
     
     useEffect(()=>{
         axios.get(`https://animotion-aniwatch-api-2.vercel.app/api/v2/hianime/home`)
@@ -70,7 +63,7 @@ const SearchPage = () => {
                         <div class="row">
                             <div>
                                 <div className="BrowseAnimeContainer">
-                                    <span className="browseAnimeTitle">Search results for : <span className="browseAnimeTitle2">{displaySearch}</span></span>
+                                    <span className="browseAnimeTitle">Search results for : <span className="browseAnimeTitle2">{searchId}</span></span>
                                     <div className="alignBrowseAnime">
                                         {browse?browse.map((seasonal) => (
                                                 <BrowseCard key={seasonal.id} id={seasonal.id} title={seasonal.name} coverImage={seasonal.poster}/>
