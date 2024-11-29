@@ -51,7 +51,6 @@ header {
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-
 }
 
 .logoLink{
@@ -132,7 +131,7 @@ nav {
     justify-content: center;
     align-items: center;
     height: 3rem;
-	margin-right: 4rem;
+	  margin-right: 4rem;
   }
 
   .SearchAnimeInputBox {
@@ -182,40 +181,54 @@ nav {
   @media screen and (max-width: 950px) {
 	header {
 	  height: 4rem;
+    gap: 2rem;
 	}
 
-    #navbar {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      position: fixed;
-      top: 60px;
-      right: -300px;
-      width: 300px;
-      height: 100vh;
-      background: var(--primary-color2);
-      box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
-      padding: 40px 0 0 10px;
-      transition: 0.3s ease-in-out;
-      z-index: -2;
-    }
+  #navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: fixed;
+    top: 60px;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background: var(--primary-color2);
+    box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
+    padding: 40px 0 0 10px;
+    transition: left 0.5s ease;
+    z-index: 1000;
+  }
   
-    #navbar.active {
-      right: 0px;
-    }
+  #navbar.active {
+    left: 0;
+  }
   
-    #navbar li {
-      margin-bottom: 25px;
-    }
+  #navbar li {
+    margin-bottom: 25px;
+  }
   
-    #mobile {
-      display: block;
-    }
+  #mobile {
+    display: block;
+  }
   
-    #mobile i {
-      font-size: 24px;
-      cursor: pointer;
+  #mobile i {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+
+    .SearchAnimeInputBox{
+        width: 12rem;
+    }
+
+    .alignProfileIcon{
+      gap: 0rem;
+    }
+
+    .AnimeSearchBox{
+      margin-right: 2rem;
     }
   }
   

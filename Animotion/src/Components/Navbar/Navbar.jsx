@@ -28,6 +28,9 @@ function NavBar() {
 
 	return (
 		<header>
+			<div id="mobile" onClick={handleClick}>
+            	<i id="bar" className={clicked ? "fas fa-times" : "fas fa-bars"}/>
+          	</div>
 			<div className="navBar">
 				<nav id="navbar" className={clicked ? "#navbar active" : "#navbar"}>
 					<Link to="/home" className="logoLink">
@@ -40,23 +43,15 @@ function NavBar() {
 				<div className="alignProfileIcon">
 					<div className="searchIcon">
 						<form className="AnimeSearchBox" onSubmit={handleSubmit}>
-						<input type="text" className="SearchAnimeInputBox" placeholder="Search anime..." onChange={handleChange}/>
-						<button className="searchAnime_btn" type="submit">
-							<SearchIcon style={{color:"white"}}/>
-						</button>
+							<input type="text" className="SearchAnimeInputBox" placeholder="Search anime..." onChange={handleChange}/>
+							<button className="searchAnime_btn" type="submit">
+								<SearchIcon style={{color:"white"}}/>
+							</button>
 						</form>
 					</div>
 					<ProfileIcon/>
 				</div>
 			</div>
-			<div id="mobile" 
-			onClick={handleClick}
-			>
-            <i
-              id="bar"
-              className={clicked ? "fas fa-times" : "fas fa-bars"}
-            />
-          </div>
 		</header>
 	);
 }
