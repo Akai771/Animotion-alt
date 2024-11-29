@@ -123,9 +123,9 @@ const Home = ({token}) =>{
 
     <Preloader/>
     <Navbar/>
-    {/* <div className="apkAd">
+    <div className="apkAd">
         <RotatingPhrase/>
-    </div> */}
+    </div>
     <div id="topCarousel">
         <CarouselHome />
     </div>

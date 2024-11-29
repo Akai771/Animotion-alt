@@ -6,34 +6,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
     background-color: var(--bgColor3);
   }
   
   .rotating-text {
     position: absolute;
-    animation: fade-in-out 12s linear infinite;
+    animation: continuous-scroll 12s linear infinite;
+    display: inline-block;
     font-size: 1rem;
     white-space: nowrap;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
     color: var(--textColor);
     padding-top: 10px;
+    padding-left: 100%;
   }
 
-  .rotating-text span {
+  .text-highlight {
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
     color: rgb(255, 174, 0);
     text-shadow: 0 0 10px rgb(255, 174, 0),
                 0 0 20px rgba(255, 174, 0, 0.521);
   }
+
+  .repeated-text{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding-left: 20rem;
+  }
   
-  @keyframes fade-in-out {
+  @keyframes continuous-scroll {
     0% {
-      transform: translateX(100%);
+      transform: translateX(0);
     }
     100% {
-      transform:translateX(-100%);
+      transform: translateX(-100%);
     }
   }
   
