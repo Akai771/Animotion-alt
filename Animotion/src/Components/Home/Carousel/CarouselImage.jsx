@@ -8,6 +8,14 @@ const data = [
       url : "one-piece-100",
      },
      {
+      Logo: "https://i.postimg.cc/FK9wWkDq/dandandan-logo.png",
+      imageUrl: "https://i.postimg.cc/PJ4S8Sk5/dandadan-poster.webp", 
+      title:"Dan Da Dan",
+      season: '1',
+      description:"After being aggressively rejected, Momo Ayase finds herself sulking when she stumbles across a boy being bullied. Saved by her rash kindness, the alien-obsessed boy attempts to speak to her about extraterrestrial interests he believes they share ...",
+      url : "dandadan-19319",
+     },
+     {
       Logo: "https://i.postimg.cc/sXGc2DQw/solo-Leveling-2.png",
       imageUrl: "https://i.postimg.cc/SsgZntDx/solo-Leveling.jpg",
       title:"Solo Leveling",
@@ -19,9 +27,9 @@ const data = [
       Logo: "https://1000logos.net/wp-content/uploads/2022/06/Demon-Slayer-Logo-500x281.png",
       imageUrl: "https://i.postimg.cc/PqG0HcRG/demon-slayer.jpg", 
       title:"Demon Slayer",
-      season: '3',
+      season: '4',
       description:"It is the Taisho Period in Japan. Tanjiro, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself....",
-      url : "demon-slayer-kimetsu-no-yaiba-swordsmith-village-arc-18056",
+      url : "demon-slayer-the-hashira-meeting-arc-17859",
      },
      {
       Logo: "https://upload.wikimedia.org/wikipedia/commons/4/49/Jujutsu_Kaisen_logo.png",
@@ -43,9 +51,9 @@ const data = [
       Logo: "https://i.postimg.cc/GpcJvxB8/bleach-logo.png",
       imageUrl: "https://i.postimg.cc/C1x7psST/bleach-thousand-year-blood-war-hd-wallpaper-uhdpaper-com-812-1-i.jpg", 
       title:"Bleach: TYBW",
-      season: '5',
+      season: '7',
       description:"After a brutal surprise attack by the forces of Quincy King Yhwach, the resident Reapers of the Soul Society lick their wounds and mourn their losses. Many of the surviving Soul Reaper captains train to battle without their Bankai, the ultimate technique wielded ...",
-      url : "bleach-sennen-kessen-hen",
+      url : "bleach-thousand-year-blood-war-the-conflict-19322",
      }
 
 

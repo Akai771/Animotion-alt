@@ -144,6 +144,20 @@ const Home = ({token}) =>{
 
         <div className="horizontal-Line1" />
 
+        
+        {/* Advertisement Section */}
+        <div className="AnimePromotion">
+            <a href={import.meta.env.VITE_APK} download>
+                <img
+                    src="https://i.postimg.cc/j5cQSLbp/Anime-APK-AD-Cropped.png"
+                    alt="Anime Promotion"
+                    className="AnimePromotionImg"
+                />
+            </a>
+        </div>
+
+        <div className="horizontal-Line1" />
+
         <div className="latest-episode-section">
             <div class="vl"><h3 className="Mont600" style={{color:"#fff", paddingLeft:"10px"}}>Continue Watching</h3></div>
             <Link exact to={`/history`} ><button className="view-more-btn">View More<ChevronRightRoundedIcon id="arrow-Icon"/></button></Link>
@@ -174,9 +188,9 @@ const Home = ({token}) =>{
 
         {/* Advertisement Section */}
         <div className="AnimePromotion">
-            <Link to="/details/solo-leveling-18718">
+            <Link to="/details/dandadan-19319">
                 <img
-                    src="https://i.postimg.cc/HkyBJQp2/Solo-Leveling-Watch-Now-AD.png"
+                    src="https://i.postimg.cc/5yc3rZf0/Dan-Da-Dan-Watch-Now-Ad.png"
                     alt="Anime Promotion"
                     className="AnimePromotionImg"
                 />
