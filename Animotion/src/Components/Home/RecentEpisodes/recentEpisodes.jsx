@@ -41,7 +41,7 @@ const RecentEpisodes = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-aniwatch-api.vercel.app/anime/recently-updated?page=${page}`)
+        axios.get(`https://animotion-hianime-api.vercel.app/anime/recently-updated?page=${page}`)
         .then((res) => setRecentEp(res.data.animes))
     },[page])
 

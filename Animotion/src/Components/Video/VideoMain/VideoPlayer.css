@@ -4,6 +4,21 @@
     flex: 1;
 }
 
+.VideoPlayerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+}
+
+.PlaceholderImage {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .vds-audio-layout,
 .vds-video-layout {
   /* Shared. */

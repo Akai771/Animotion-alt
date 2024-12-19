@@ -8,6 +8,10 @@
     overflow: hidden;
 }
 
+.video-player{
+    min-height: 80dvh;
+}
+
 .video-player-wrapper {
     width: 80%;
     position: relative;
