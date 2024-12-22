@@ -44,7 +44,7 @@ const SearchPage = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-hianime-api.vercelapp/api/v2/hianime/search?q="${searchId}"&page=${page}`)
+        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/search?q="${searchId}"&page=${page}`)
         .then((res) => setBrowse(res.data.data.animes))
     },[searchId, page])
     
