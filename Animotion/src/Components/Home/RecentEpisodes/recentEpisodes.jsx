@@ -41,9 +41,9 @@ const RecentEpisodes = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-hianime-api.vercel.app/anime/recently-updated?page=${page}`)
-        .then((res) => setRecentEp(res.data.animes))
-    },[page])
+        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/home`)
+        .then((res) => setRecentEp(res.data.data.latestEpisodeAnimes))
+    },[])
 
     return(<>
         <div>
@@ -61,11 +61,11 @@ const RecentEpisodes = () => {
                                         ))
                                     }
                                 </div>
-                                <div className="pageBtnGrp">
+                                {/* <div className="pageBtnGrp">
                                     <button className="pageBtn" onClick={handlePrevPage}><KeyboardDoubleArrowLeftIcon/>Prev Page</button>
                                     <input class="quantity-input" type="text" value={page} disabled/>
                                     <button className="pageBtn" onClick={handleNextPage}>Next Page <KeyboardDoubleArrowRightIcon/></button>
-                                </div>
+                                </div> */}
                             </div>  
                         </div>
                     </div>
