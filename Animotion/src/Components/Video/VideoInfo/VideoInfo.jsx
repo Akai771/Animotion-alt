@@ -51,7 +51,7 @@ const VideoInfo = () => {
 
     try{
         useEffect(()=>{
-            axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/anime/${id}`)
+            axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/anime/${id}`)
             .then((res) => {
                 setAnimeData(res.data.data.anime.info)
                 setTrailerData(res.data.data.anime.info.promotionalVideos[0])
@@ -60,7 +60,7 @@ const VideoInfo = () => {
                 setRecommendPop(res.data.data.relatedAnimes)
             })
 
-            axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/anime/${id}/episodes`)
+            axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/anime/${id}/episodes`)
             .then((res) => {
                 setEpisode(res.data.data.episodes[0].episodeId)
             });

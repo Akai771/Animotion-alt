@@ -44,12 +44,12 @@ const SearchPage = () => {
     }
 
     useEffect(()=>{
-        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/search?q="${searchId}"&page=${page}`)
+        axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/search?q="${searchId}"&page=${page}`)
         .then((res) => setBrowse(res.data.data.animes))
     },[searchId, page])
     
     useEffect(()=>{
-        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/home`)
+        axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/home`)
         .then((res) => setGenres(res.data.data.genres))
         window.scrollTo(0,0);
     },[])

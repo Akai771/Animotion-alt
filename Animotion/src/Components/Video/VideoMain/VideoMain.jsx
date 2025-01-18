@@ -36,12 +36,12 @@ const VideoMain = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/anime/${id}/episodes`)
+        axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/anime/${id}/episodes`)
         .then((res) => {
             setEpisode(res.data.data.episodes)
         });
 
-        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/anime/${id}`)
+        axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/anime/${id}`)
         .then((res) => {
             setAnimeData(res.data.data.anime.info)
             setRecommendPop(res.data.data.seasons)
@@ -50,7 +50,7 @@ const VideoMain = () => {
     },[id])
     
     useEffect(()=>{
-        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/episode/servers?animeEpisodeId=${episodeId}`)
+        axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/episode/servers?animeEpisodeId=${episodeId}`)
         .then((res) => {
             setServerInfo(res.data.data)
             setEpisodeNumber(res.data.data.episodeNo)
@@ -58,13 +58,13 @@ const VideoMain = () => {
         })     
         .catch((err) => console.error("Error fetching server data:", err))
 
-        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}?server=hd-2&category=sub`)
+        axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}?server=hd-2&category=sub`)
         .then((res) => {
             setServerLink(res.data.data)
             setServerUrl(res.data.data.sources[0].url)
         })
 
-        axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}?server=hd-1&category=dub`)
+        axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/episode/sources?animeEpisodeId=${episodeId}?server=hd-1&category=dub`)
         .then((res) => {
             setServerLink2(res.data.data)
             setServerUrl2(res.data.data.sources[0].url)
