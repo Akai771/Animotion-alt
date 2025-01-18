@@ -81,8 +81,8 @@ function ProfileIcon() {
   const randomIndex = Math.floor(Math.random()*randomAnime.length);
 
   React.useEffect(()=>{
-    axios.get(`https://animotion-aniwatch-api.vercel.app/anime/recently-updated?page=${randomPage}`)
-    .then((res) => setRandomAnime(res.data.animes))
+    axios.get(`https://animotion-hianime-api.vercel.app/api/v2/hianime/azlist/all?page=${randomPage}`)
+    .then((res) => setRandomAnime(res.data.data.animes))
   },[])
 
   const randomAnimeData = randomAnime[randomIndex];
