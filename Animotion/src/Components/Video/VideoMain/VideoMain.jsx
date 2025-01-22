@@ -13,6 +13,7 @@ import ClosedCaptionOutlinedIcon from '@mui/icons-material/ClosedCaptionOutlined
 import KeyboardVoiceOutlinedIcon from '@mui/icons-material/KeyboardVoiceOutlined';
 import VideoPlayer from "./VideoPlayer";
 import RecommendCard from "../VideoInfo/RecommendCard/recommendCard";
+import Tooltip from "@mui/material/Tooltip";
 
 const VideoMain = () => {
     const {id} = useParams();
@@ -181,12 +182,18 @@ const VideoMain = () => {
                         <div className="episodeMainBtnGrp">
                             {episode.map((anime) => {       
                                 return(<>
-                                    <div className="episodeRadioBtnGrp">
+                                <Tooltip title={
+                                    <div>
+                                        <span className={anime.isFiller == true?"FillerDisplay":"FillerNone"}>Filler Episode</span>
+                                        <span className="Tooltip">{anime.title?anime.title:`Episode ${anime.number}`}</span>
+                                    </div>                                } placement="top" arrow disableInteractive>
+                                    <div className={anime.isFiller == true?"episodeRadioBtnGrpFiller":"episodeRadioBtnGrp"}>
                                         <label className="episodeBtnLabel" key={anime.episodeId} htmlFor={anime.episodeId}>
                                             <input  className="episodeRadioBtn" type="radio" name={anime.number} id={anime.episodeId} value={anime.episodeId} checked={selectedOption == anime.number} onChange={handleOptionChange}/>
                                             <span className="episodeRadioSpan">{anime.number}</span>
                                         </label>
                                     </div>
+                                </Tooltip>
                                 </>)
                                 }
                             )}

@@ -165,7 +165,7 @@
     padding: 1rem;
     border-radius: 1rem;
     max-width: 85rem;
-    max-height: 8rem;
+    max-height: 12rem;
     margin: 0;
     box-sizing: border-box;
     --sb-track-color: var(--bgColor);
@@ -196,6 +196,10 @@
     gap: 1rem;
     margin-right: 40rem;
 }
+
+
+
+
 
 .episodeRadioBtnGrp{
     position: relative;
@@ -248,8 +252,73 @@
 .episodeRadioBtnGrp .episodeBtnLabel input:hover + .episodeRadioSpan{
     background-color: var(--secondary-color);
     color: var(--primary-color);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
+
+
+
+
+
+
+.episodeRadioBtnGrpFiller{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: var(--bgColor3);
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    width: 4rem;
+    height: 3rem;
+    font-size: 14px;
+}
+
+.episodeRadioBtnGrpFiller .episodeBtnLabel {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.episodeRadioBtnGrpFiller .episodeBtnLabel  input{
+    display: none;
+}
+
+.episodeRadioBtnGrpFiller .episodeBtnLabel .episodeRadioSpan{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    border: none;
+    padding: .5rem;
+    color: var(--primary-color);
+    transition: all .15s ease-in-out;
+}
+
+.episodeBtnLabel .episodeRadioBtnGrpFiller .episodeRadioSpan:hover{
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+.episodeRadioBtnGrpFiller .episodeBtnLabel input:checked + .episodeRadioSpan{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    width: 4rem;
+    height: 3rem;
+}
+
+.episodeRadioBtnGrpFiller .episodeBtnLabel input:hover + .episodeRadioSpan{
+    background-color: var(--secondary-color2);
+    color: var(--textColor);
+    font-size: 1.3rem;
+}
+
+
+
+
+
+
 
 .characterSection{
     margin-top: 3rem;
@@ -333,6 +402,18 @@
     font-size: 2rem;
     padding-bottom: .2rem;
 } */
+
+.FillerDisplay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 166, 0);
+}
+
+.FillerNone{
+    display: none;
+}
 
 @media only screen and (max-width:1600px){
     /* .AnimeVideoPlayer{
@@ -517,6 +598,7 @@
         width: 3rem;
         height: 2rem;
     }
+    
     .episodeRadioBtnGrp .episodeBtnLabel .episodeRadioSpan{
         font-size: 0.8rem;
     }
@@ -526,6 +608,22 @@
         width: 3rem;
         height: 2rem;
     }
+
+    .episodeRadioBtnGrpFiller{
+        width: 3rem;
+        height: 2rem;
+    }
+
+    .episodeRadioBtnGrpFiller .episodeBtnLabel .episodeRadioSpan{
+        font-size: 0.8rem;
+    }
+
+    .episodeRadioBtnGrpFiller .episodeBtnLabel input:checked + .episodeRadioSpan{
+        font-size: 0.8rem;
+        width: 3rem;
+        height: 2rem;
+    }
+
 
     .alignVidMain{
         flex-direction: column;

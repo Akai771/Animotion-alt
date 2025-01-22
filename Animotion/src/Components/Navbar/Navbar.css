@@ -142,7 +142,7 @@ nav {
     font-weight: 500;
     background-color: #2e0069;
     caret-color: #f7f7f8;
-    color: var(--secondary-color);
+    color: var(--textColor);
     padding: 7px 10px;
     border: 2px solid transparent;
     border-top-left-radius: 7px;
