@@ -53,6 +53,20 @@ export default function Home(){
 
   // let dataBasedOnScreenSize;
 
+  useEffect(() => {
+    const contWatchingData = localStorage.getItem("history");
+    if (contWatchingData) {
+      try {
+        setContWatching(JSON.parse(contWatchingData));
+      } catch (error) {
+        console.error("Error parsing history from localStorage:", error);
+      }
+    }
+  }, []);
+  const contWatchingReversed = contWatching ? [...contWatching].reverse() : [];
+  console.log(contWatchingReversed);
+
+
   useEffect(()=>{
       axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/home`)
       .then((res) => {
@@ -65,18 +79,6 @@ export default function Home(){
 
       window.scrollTo(0,0);
   },[])
-
-  useEffect(() => {
-    const contWatchingData = localStorage.getItem("history");
-    if (contWatchingData) {
-      try {
-        setContWatching(JSON.parse(contWatchingData));
-      } catch (error) {
-        console.error("Error parsing history from localStorage:", error);
-      }
-    }
-  }, []);
-  const contWatchingReversed = contWatching?contWatching.reverse():null;
 
   if (screenWidth < 960) {
       settings = {
