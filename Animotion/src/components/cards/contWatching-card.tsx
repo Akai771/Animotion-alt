@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Play } from "lucide-react";
 
@@ -13,11 +13,6 @@ interface ContWatchingCardProps {
 
 const ContWatchingCard: React.FC<ContWatchingCardProps> = ({ id, title, coverImage, currentEpisode }) => {
   const redirectEpisodeId = `${id}-episode-${currentEpisode}`;
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/details/${id}`);
-  };
 
   return (
     <Card className="relative flex flex-col items-center justify-center w-80 h-60 rounded-lg transition-all duration-300 hover:bg-[#161616]">
