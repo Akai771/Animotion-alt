@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -22,8 +22,6 @@ const SearchPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [genreState, setGenreState] = useState<boolean>(true);
   const { searchId } = useParams<{ searchId: string }>();
-
-  const navigate = useNavigate();
 
   const handleGenre = () => setGenreState((prev) => !prev);
   const handleNextPage = () => setPage((prev) => prev + 1);
