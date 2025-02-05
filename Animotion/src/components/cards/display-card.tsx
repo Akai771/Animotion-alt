@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Play, Star, Mic, Captions } from "lucide-react";
 import Tooltip from "@mui/material/Tooltip";
@@ -19,7 +19,7 @@ type DisplayCardProps = {
   episodeId?: any;
 };
 
-const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, currentEpisode, type, duration, currentText, episodeId }) => {
+const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, currentEpisode, type, duration, currentText }) => {
   const [qtipData, setQtipData] = useState<any>({});
 
   useEffect(() => {

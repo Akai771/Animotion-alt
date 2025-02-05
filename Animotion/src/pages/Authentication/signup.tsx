@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "../../hooks/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -17,19 +16,9 @@ export default function Signup() {
     email: "",
     password: "",
   });
-  const [preEmail, setPreEmail] = useState("");
   const [passType, setPassType] = useState("password");
-  const location = useLocation();
 
-  useEffect(() => {
-    if (location.state && location.state.email) {
-      setPreEmail(location.state.email);
-    }
-  }, [location.state]);
 
-  function handlePreEmail() {
-    sessionStorage.removeItem("email");
-  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData((prevFormData) => ({
@@ -52,6 +41,7 @@ export default function Signup() {
           },
         },
       });
+      console.error(data)
 
       console.log("email:", formData.email);
       alert("Check your email for verification");
@@ -103,7 +93,6 @@ export default function Signup() {
                 type="email"
                 name="email"
                 onChange={handleChange}
-                onFocus={handlePreEmail}
                 required
               />
             </div>

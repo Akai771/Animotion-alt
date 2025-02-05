@@ -10,7 +10,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
-import { Skeleton } from "@/components/ui/skeleton";
 
 
 export default function Home(){
@@ -25,7 +24,7 @@ export default function Home(){
     currentText?: string;
   }
 
-  interface History {
+  interface History{
     animeId: string;
     animeTitle: string;
     animeImage: string;
@@ -33,13 +32,13 @@ export default function Home(){
   }
 
   const [recentEp, setRecentEp] = useState<Anime[]>([]);
-  const [upcoming, setUpcoming] = useState<Anime[]>([]);
+  const [upcoming,setUpcoming] = useState<Anime[]>([]);
   const [trending, setTrending] = useState<Anime[]>([]);
   const [top, setTop] = useState<Anime[]>([]);
   const [topAiring, setTopAiring] = useState<Anime[]>([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [contWatching, setContWatching] = useState<History[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  var settings = {}
 
   const handleResize = () => {
     setScreenWidth(window.innerWidth);
@@ -52,20 +51,20 @@ export default function Home(){
     };
   }, []);
 
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/home`)
-      .then((res) => {
-        setRecentEp(res.data.data.latestEpisodeAnimes);
-        setTrending(res.data.data.trendingAnimes);
-        setTopAiring(res.data.data.topAiringAnimes);
-        setUpcoming(res.data.data.topUpcomingAnimes);
-        setTop(res.data.data.top10Animes.month);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
+  // let dataBasedOnScreenSize;
 
-    window.scrollTo(0,0);
-  }, []);
+  useEffect(()=>{
+      axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/home`)
+      .then((res) => {
+          setRecentEp(res.data.data.latestEpisodeAnimes)
+          setTrending(res.data.data.trendingAnimes)
+          setTopAiring(res.data.data.topAiringAnimes)
+          setUpcoming(res.data.data.topUpcomingAnimes)
+          setTop(res.data.data.top10Animes.month)
+      })
+
+      window.scrollTo(0,0);
+  },[])
 
   useEffect(() => {
     const contWatchingData = localStorage.getItem("history");
@@ -77,104 +76,180 @@ export default function Home(){
       }
     }
   }, []);
+  const contWatchingReversed = contWatching?contWatching.reverse():null;
 
-  const contWatchingReversed = contWatching ? contWatching.reverse() : null;
+  if (screenWidth < 960) {
+      settings = {
+          dots: true,
+          infinite: true,
+          speed: 400,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          swipeToSlide: true,
+      };
+  }
+  else if (screenWidth < 1600) {
+      settings = {
+          dots: true,
+          infinite: true,
+          speed: 400,
+          slidesToShow: 6,
+          slidesToScroll: 2,
+          swipeToSlide: true,
+      };
+  } 
+  else {
+      settings = {
+          dots: true,
+          infinite: true,
+          speed: 400,
+          slidesToShow: 7,
+          slidesToScroll: 2,
+          swipeToSlide: true,
+      };
+  }
+
+  let settings2
+  if (screenWidth < 960) {
+      settings2 = {
+          dots: true,
+          infinite: false,
+          speed: 400,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          swipeToSlide: true,
+      };
+  }
+  else if (screenWidth < 1600) {
+      settings2 = {
+          dots: true,
+          infinite: false,
+          speed: 400,
+          slidesToShow: 4,
+          slidesToScroll: 2,
+          swipeToSlide: true,
+      };
+  } 
+  else {
+      settings2 = {
+          dots: false,
+          infinite: false,
+          speed: 400,
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          swipeToSlide: true,
+      };
+  }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-10 mt-16">
-      
-      {/* Carousel Section */}
-      <section>
-        {loading ? (
-          <Skeleton className="w-[90dvw] h-[40vh] rounded-lg" />
-        ) : (
+    // <SidebarProvider>
+    //   <AppSidebar />
+    //   <SearchBox />
+      <div className="flex flex-col items-center justify-center w-full h-full gap-10 mt-16">
+        <section>
           <CarouselMain />
-        )}
-      </section>
-
-      <section className="flex flex-col items-start justify-center w-[90dvw] h-full gap-10 mb-10">
-        
-        {/* Trending Section */}
-        <div id="Trending" className="w-full">
-          <div className="flex gap-5 items-center">
-            <div className="border border-l-4 border-[--primary-color] h-10" />
-            <span className="font-bold text-4xl text-[--text-color]">Trending</span>
-          </div>
-          <div className="mt-5">
-            {loading ? (
-              <div className="flex gap-4">
-                {[...Array(5)].map((_, index) => (
-                  <Skeleton key={index} className="w-[150px] h-[220px] rounded-lg" />
-                ))}
-              </div>
-            ) : (
-              <Slider dots infinite speed={400} slidesToShow={4} slidesToScroll={2}>
+        </section>
+        <section className="flex flex-col items-start justify-center w-[90dvw] h-full gap-10 mb-10">
+          <div id="Trending" className="flex-col items-center justify-start w-full h-full ">
+            <div className="flex gap-5 items-center justify-start">
+              <div className="border border-l-4 border-[--primary-color] h-10" />
+              <span className="font-bold text-4xl text-[--text-color]">Trending</span>
+            </div>
+            
+            <div className="mt-5">
+              <Slider {...settings2}>
                 {trending.map((trend) => (
                   <TrendingCard key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={trend.rank} />
-                ))}
+                  ))
+                }
               </Slider>
-            )}
+            </div>
           </div>
-        </div>
-        
-        <Separator />
-
-        {/* Advertisement Section */}
-        <div id="Advertisement" className="flex flex-col items-center justify-center w-full h-full">
-          {loading ? (
-            <Skeleton className="w-[70dvw] h-[35dvh] rounded-lg" />
-          ) : (
-            <AdvCard imageUrl="https://i.postimg.cc/j5cQSLbp/Anime-APK-AD-Cropped.png" link={import.meta.env.VITE_APK} />
-          )}
-        </div>
-
-        <Separator />
-
-        {/* Continue Watching Section */}
-        <div id="Continue-Watching" className="w-full">
-          <div className="flex gap-5 items-center">
-            <div className="border border-l-4 border-[--primary-color] h-10" />
-            <span className="font-bold text-4xl text-[--text-color]">Continue Watching</span>
+          <Separator />
+          <div id="Advertisement" className="flex flex-col items-center justify-center w-full h-full ">
+            <AdvCard imageUrl="https://i.postimg.cc/j5cQSLbp/Anime-APK-AD-Cropped.png" link={import.meta.env.VITE_APK}/>
           </div>
-          <div className="mt-5 flex flex-wrap gap-5">
-            {loading ? (
-              [...Array(4)].map((_, index) => (
-                <Skeleton key={index} className="w-[150px] h-[200px] rounded-lg" />
-              ))
-            ) : contWatchingReversed ? (
-              contWatchingReversed.slice(0, 4).map((cont) => (
-                <ContWatchingCard key={cont.animeId} id={cont.animeId} title={cont.animeTitle} coverImage={cont.animeImage} currentEpisode={cont.animeEpisodeId} />
-              ))
-            ) : (
-              <span className="bg-[#161616] max-w-xs p-8 rounded-lg font-semibold text-md">Start Watching to see your history here!</span>
-            )}
+          <Separator />
+          <div id="Continue-Watching" className="flex-col items-center justify-start w-full h-full ">
+            <div className="flex gap-5 items-center justify-start">
+              <div className="border border-l-4 border-[--primary-color] h-10" />
+              <span className="font-bold text-4xl text-[--text-color]">Continue Watching</span>
+            </div>
+            <div className="mt-5 flex flex-row items-center justify-start gap-10 max-w-[90dvw] flex-wrap">
+              {contWatchingReversed?contWatchingReversed.slice(0,4).map((cont) => (
+                  <ContWatchingCard key={cont.animeId} id={cont.animeId} title={cont.animeTitle} coverImage={cont.animeImage} currentEpisode={cont.animeEpisodeId}/>
+                  )): <span className="bg-[#161616] max-w-xs p-8 rounded-lg font-semibold text-md">Start Watching to see your history here!</span>
+              }
+            </div>
           </div>
-        </div>
-
-        <Separator />
-
-        {/* Recent Episodes */}
-        <div id="RecentEpisodes" className="w-full">
-          <div className="flex gap-5 items-center">
-            <div className="border border-l-4 border-[--primary-color] h-10" />
-            <span className="font-bold text-4xl text-[--text-color]">Recent Episodes</span>
+          <Separator />
+          <div id="RecentEpisodes" className="flex-col items-center justify-start w-full h-full ">
+            <div className="flex gap-5 items-center justify-start">
+              <div className="border border-l-4 border-[--primary-color] h-10" />
+              <span className="font-bold text-4xl text-[--text-color]">Recent Episodes</span>
+            </div>
+            <div className="mt-5 flex flex-row items-center justify-start gap-10 max-w-[90dvw] flex-wrap">
+              {recentEp.map((recentEp) => (
+                  <DisplayCard key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes?.sub || "N/A"} type={recentEp.type} duration={recentEp.duration} currentText={"Episode"}/>
+                  ))
+              }
+            </div>
           </div>
-          <div className="mt-5 flex flex-wrap gap-5">
-            {loading ? (
-              [...Array(5)].map((_, index) => (
-                <Skeleton key={index} className="w-[150px] h-[220px] rounded-lg" />
-              ))
-            ) : (
-              recentEp.map((recent) => (
-                <DisplayCard key={recent.id} id={recent.id} title={recent.name} coverImage={recent.poster} currentEpisode={recent.episodes?.sub || "N/A"} type={recent.type} duration={recent.duration} />
-              ))
-            )}
+          <Separator />
+          <div id="Advertisement" className="flex flex-col items-center justify-center w-full h-full ">
+            <AdvCard imageUrl="https://i.postimg.cc/5yc3rZf0/Dan-Da-Dan-Watch-Now-Ad.png" link="/details/dandadan-19319"/>
           </div>
-        </div>
-
-        <Separator />
-
-      </section>
-    </div>
+          <Separator />
+          <div id="Top-Airing" className="flex-col items-center justify-start w-full h-full ">
+            <div className="flex gap-5 items-center justify-start">
+              <div className="border border-l-4 border-[--primary-color] h-10" />
+              <span className="font-bold text-4xl text-[--text-color]">Top Airing</span>
+            </div>
+            <div className="mt-5 ">
+              <Slider {...settings}>
+                {topAiring.map((recentEp) => (
+                    <DisplayCard key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes?.sub || "N/A"} type={recentEp.type} duration={recentEp.duration} currentText={"Total Episodes:"}/>
+                    ))
+                }
+              </Slider>
+            </div>
+          </div>
+          <Separator />
+          <div id="Top-Airing" className="flex-col items-center justify-start w-full h-full ">
+            <div className="flex gap-5 items-center justify-start">
+              <div className="border border-l-4 border-[--primary-color] h-10" />
+              <span className="font-bold text-4xl text-[--text-color]">Popular Anime This Month</span>
+            </div>
+            <div className="mt-5 ">
+              <Slider {...settings}>
+                {top.map((recentEp) => (
+                    <DisplayCard key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes?.sub || "N/A"} type={recentEp.rank} duration={recentEp.duration} currentText={"Total Episodes:"}/>
+                    ))
+                }
+              </Slider>
+            </div>
+          </div>
+          <Separator />
+          <div id="Advertisement" className="flex flex-col items-center justify-center w-full h-full ">
+            <AdvCard imageUrl="https://i.postimg.cc/9fMs7Zvk/One-Piece-Ad.png" link="/details/one-piece-100"/>
+          </div>
+          <Separator />
+          <div id="Top-Airing" className="flex-col items-center justify-start w-full h-full ">
+            <div className="flex gap-5 items-center justify-start">
+              <div className="border border-l-4 border-[--primary-color] h-10" />
+              <span className="font-bold text-4xl text-[--text-color]">Upcoming Anime</span>
+            </div>
+            <div className="mt-5 ">
+              <Slider {...settings}>
+                {upcoming.map((item) => (
+                    <DisplayCard key={item.id} id={item.id} title={item.name} coverImage={item.poster} currentEpisode={item.type}/>
+                    ))
+                }
+              </Slider>
+            </div>
+          </div>
+        </section>
+      </div>
+    // </SidebarProvider>
   );
-}
+};

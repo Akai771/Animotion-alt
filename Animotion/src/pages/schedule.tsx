@@ -17,7 +17,6 @@ interface ScheduleItem {
 const Schedule: React.FC = () => {
   const [schedule, setSchedule] = useState<ScheduleItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const today = new Date();
   const [day, setDay] = useState<string>("");
   const [weekDates, setWeekDates] = useState<string[]>([]);
 

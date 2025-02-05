@@ -19,12 +19,6 @@ import Schedule from "@/pages/schedule";
 import SplashPage from "@/pages/splash-page";
 import Profile from "@/pages/profile";
 
-
-// Mock authentication function
-const useAuth = (token: any) => {
-  return token !== null;
-};
-
 // Protected Route Wrapper
 const ProtectedRoute = ({ token }: { token: any }) => {
   if (token === null) return null; // ✅ Prevent redirect before token is retrieved

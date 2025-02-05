@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { MediaPlayer, MediaProvider, PlayButton, useMediaStore } from "@vidstack/react";
+import { MediaPlayer, MediaProvider, PlayButton } from "@vidstack/react";
 import { defaultLayoutIcons, DefaultVideoLayout } from "@vidstack/react/player/layouts/default";
 // import "./VideoPlayer.css";
 

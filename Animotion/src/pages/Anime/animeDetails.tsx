@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,28 +20,15 @@ export default function AnimeDetails() {
     const [animeData, setAnimeData] = useState<any>(null);
     const [trailerData, setTrailerData] = useState<any>(null);
     const [addData, setAddData] = useState<any>(null);
-    const [addData2, setAddData2] = useState<any>(null);
     const [recommend, setRecommend] = useState<any>([]);
     const [recommendPop, setRecommendPop] = useState<any>([]);
     const [episode, setEpisode] = useState<any>(null);
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-    const [playerWidth, setPlayerWidth] = useState(400);
-    const [playerHeight, setPlayerHeight] = useState(225);
+    const playerWidth = 400;
+    const playerHeight = 225;
     var settings = {};
 
     const { id } = useParams();
     const navigate = useNavigate();
-
-    const handleResize = () => {
-        setScreenWidth(window.innerWidth);
-    };
-
-    useEffect(() => {
-        window.addEventListener("resize", handleResize);
-        return () => {
-        window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     const handleGenreRedirect = (genre: string) => {
         const newGenre = genre.split(" ").join("-").toLowerCase();
@@ -72,8 +59,6 @@ export default function AnimeDetails() {
         slidesToScroll: 1,
         swipeToSlide: true,
     };
-
-    console.log(recommendPop);
 
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[--background] text-[--text-color] p-5 mt-10">
