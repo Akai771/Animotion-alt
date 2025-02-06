@@ -41,7 +41,7 @@ const News: React.FC = () => {
           <Separator className="my-4" />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {loading
-              ? Array.from({ length: 6 }).map((_, index) => (
+              ? Array.from({ length: 5 }).map((_, index) => (
                   <Skeleton key={index} className="w-[345px] h-[400px] rounded-lg" />
                 ))
               : articles.length > 0

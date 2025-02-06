@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import SearchBox from "@/components/searchbox";
 import Home from "../pages/home";
@@ -67,7 +67,6 @@ export default function Routing() {
       <SidebarProvider>
         {/* ✅ Show Sidebar only if NOT on an excluded route */}
         {!excludedRoutes.includes(location.pathname) && <AppSidebar />}
-        <SidebarTrigger className="fixed md:hidden sm:block h-full" />
         {!excludedRoutes.includes(location.pathname) && <SearchBox />}
 
         <Routes>

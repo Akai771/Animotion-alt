@@ -146,6 +146,7 @@ export default function AnimeDetails() {
       )}
 
       {/* Recommended Section */}
+      {recommendPop.length > 0 && (
       <Card className="w-full max-w-[90dvw] shadow-lg p-5 mt-5">
         <CardTitle className="text-xl font-semibold">Recommended for you:</CardTitle>
         <div className="mt-3">
@@ -156,6 +157,7 @@ export default function AnimeDetails() {
             </Slider>
         </div>
       </Card>
+      )}
 
       {/* Comments Section */}
       <Card className="w-full max-w-[90dvw] shadow-lg p-5 mt-5">

@@ -10,6 +10,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 export default function Home(){
@@ -38,20 +39,12 @@ export default function Home(){
   const [topAiring, setTopAiring] = useState<Anime[]>([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [contWatching, setContWatching] = useState<History[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   var settings = {}
 
   const handleResize = () => {
     setScreenWidth(window.innerWidth);
   };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  // let dataBasedOnScreenSize;
 
   useEffect(() => {
     const contWatchingData = localStorage.getItem("history");
@@ -62,9 +55,26 @@ export default function Home(){
         console.error("Error parsing history from localStorage:", error);
       }
     }
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+    
   }, []);
+
+  // let dataBasedOnScreenSize;
   const contWatchingReversed = contWatching ? [...contWatching].reverse() : [];
-  console.log(contWatchingReversed);
+
+  useEffect(() => {
+    if(!trending || !recentEp || !topAiring || !upcoming || !top){
+      setLoading(true);
+    }
+    else{
+      setLoading(false);
+    }
+  }, [trending, recentEp, topAiring, upcoming, top]);
+
 
 
   useEffect(()=>{
@@ -142,11 +152,17 @@ export default function Home(){
           swipeToSlide: true,
       };
   }
-
-  return (
-    // <SidebarProvider>
-    //   <AppSidebar />
-    //   <SearchBox />
+  return (<>
+      {loading?
+        (
+          <div className="flex flex-col items-center justify-center w-full h-full gap-10 mt-16">
+             <Skeleton className="w-[90dvw] h-[50dvh]"/>
+             <div className="flex flex-col gap-5 items-start justify-start w-[90dvw]">
+              <Skeleton className="w-[90dvw] h-[10dvh]"/>
+              <Skeleton className="w-[90dvw] h-[30dvh]"/>
+             </div>
+          </div>
+      ):(
       <div className="flex flex-col items-center justify-center w-full h-full gap-10 mt-16">
         <section>
           <CarouselMain />
@@ -157,13 +173,11 @@ export default function Home(){
               <div className="border border-l-4 border-[--primary-color] h-10" />
               <span className="font-bold text-4xl text-[--text-color]">Trending</span>
             </div>
-            
             <div className="mt-5">
               <Slider {...settings2}>
-                {trending.map((trend) => (
-                  <TrendingCard key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={trend.rank} />
-                  ))
-                }
+              {trending.map((trend) => (
+                <TrendingCard key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={trend.rank} />
+              ))}
               </Slider>
             </div>
           </div>
@@ -253,5 +267,6 @@ export default function Home(){
         </section>
       </div>
     // </SidebarProvider>
-  );
+    )}
+  </>);
 };

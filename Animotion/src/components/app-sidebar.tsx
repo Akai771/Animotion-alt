@@ -79,7 +79,7 @@ export function AppSidebar() {
 
 
   return (
-    <div className="flex">
+    <div className="flex relative z-20">
       <Sidebar className="fixed h-full w-64">
         <SidebarContent>
           <SidebarGroup>
@@ -94,7 +94,7 @@ export function AppSidebar() {
                   const isActive = location.pathname === item.url;
                   return (
                     <TooltipProvider key={item.title}>
-                      <Tooltip delayDuration={50}>
+                      <Tooltip delayDuration={50} >
                         <SidebarMenuItem>
                           <TooltipTrigger asChild>
                             <SidebarMenuButton asChild>
@@ -104,7 +104,7 @@ export function AppSidebar() {
                               </a>
                             </SidebarMenuButton>
                           </TooltipTrigger>
-                          <TooltipContent side="right" className="bg-neutral-800 text-[--text-color] ml-4 p-2 rounded-lg">
+                          <TooltipContent side="right" className="bg-[--bgColor3] text-[--text-color] ml-4 p-2 rounded-lg">
                             {item.title}
                           </TooltipContent>
                         </SidebarMenuItem>
@@ -129,7 +129,7 @@ export function AppSidebar() {
                               </a>
                             </SidebarMenuButton>
                           </TooltipTrigger>
-                          <TooltipContent side="right" className="bg-neutral-800 text-[--text-color] ml-4 p-2 rounded-lg">
+                          <TooltipContent side="right" className="bg-[--bgColor3] text-[--text-color] ml-4 p-2 rounded-lg">
                             {item.title}
                           </TooltipContent>
                         </SidebarMenuItem>
@@ -148,25 +148,13 @@ export function AppSidebar() {
                           </span>
                         </SidebarMenuButton>
                       </TooltipTrigger>
-                      <TooltipContent side="right" className="bg-neutral-800 text-[--text-color] ml-4 p-2 rounded-lg">Random Anime</TooltipContent>
+                      <TooltipContent side="right" className="bg-[--bgColor3] text-[--text-color] ml-4 p-2 rounded-lg">Random Anime</TooltipContent>
                     </SidebarMenuItem>
                     </Tooltip>
                 </TooltipProvider>
 
                 {/* User Section */}
                 <SidebarSeparator />
-                <TooltipProvider>
-                  <Tooltip delayDuration={50}>
-                    <SidebarMenuItem className="flex flex-col items-center">
-                      <TooltipTrigger>
-                        <Link to="/profile">
-                          <Avatar src={pfp} alt="profile" sx={{ width: 25, height: 25 }}/>
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent side="right" className="bg-neutral-800 text-[--text-color] ml-4 p-2 rounded-lg">Profile</TooltipContent>
-                    </SidebarMenuItem>
-                    </Tooltip>
-                </TooltipProvider>
                 {userNavItems.map((item) => {
                   const isActive = location.pathname === item.url;
                   return (
@@ -181,7 +169,7 @@ export function AppSidebar() {
                               </a>
                             </SidebarMenuButton>
                           </TooltipTrigger>
-                          <TooltipContent side="right" className="bg-neutral-800 text-[--text-color] ml-4 p-2 rounded-lg">
+                          <TooltipContent side="right" className="bg-[--bgColor3] text-[--text-color] ml-4 p-2 rounded-lg">
                             {item.title}
                           </TooltipContent>
                         </SidebarMenuItem>
@@ -189,6 +177,18 @@ export function AppSidebar() {
                     </TooltipProvider>
                   );
                 })}
+                <TooltipProvider>
+                  <Tooltip delayDuration={50}>
+                    <SidebarMenuItem className="flex flex-col items-center">
+                      <TooltipTrigger>
+                        <Link to="/profile">
+                          <Avatar src={pfp} alt="profile" sx={{ width: 25, height: 25 }}/>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent side="right" className="bg-[--bgColor3] text-[--text-color] ml-4 p-2 rounded-lg">Profile</TooltipContent>
+                    </SidebarMenuItem>
+                    </Tooltip>
+                </TooltipProvider>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -211,7 +211,7 @@ export function AppSidebar() {
                           {isDarkMode ? "Light Mode" : "Dark Mode"}
                         </SidebarMenuButton>
                       </TooltipTrigger>
-                      <TooltipContent side="right" className="bg-neutral-800 text-[--text-color] ml-4 p-2 rounded-lg">
+                      <TooltipContent side="right" className="bg-[--bgColor3] text-[--text-color] ml-4 p-2 rounded-lg">
                         Toggle Theme
                       </TooltipContent>
                     </Tooltip>
@@ -228,7 +228,7 @@ export function AppSidebar() {
                           <span>Logout</span>
                         </SidebarMenuButton>
                       </TooltipTrigger>
-                      <TooltipContent side="right" className="bg-neutral-800 text-[--text-color] ml-4 p-2 rounded-lg">
+                      <TooltipContent side="right" className="bg-[--bgColor3] text-[--text-color] ml-4 p-2 rounded-lg">
                         Logout
                       </TooltipContent>
                     </Tooltip>
@@ -240,6 +240,7 @@ export function AppSidebar() {
           </SidebarGroup>
         </SidebarFooter>
       </Sidebar>
+      {/* <SidebarTrigger className="relative top-1 z-50 bg-[--bgColor3] p-2 rounded-r-lg shadow-lg hover:bg-[--bgColor2] transition-all duration-200"/> */}
     </div>
   );
 }
