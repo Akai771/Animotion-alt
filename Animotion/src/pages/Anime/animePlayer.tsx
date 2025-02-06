@@ -130,18 +130,23 @@ const AnimePlayer: React.FC = () => {
             />
 
             <Card className="flex flex-row items-center justify-between p-2">
-                {/* Server Controls */}
-                <div className="flex flex-row items-center gap-2 ml-2">
-                    <span className="font-bold">Format:</span>
-                    <Button variant="outline" onClick={() => setFormat("sub")} className={`${format === "sub" ? "bg-[--primary-color] text-white" : ""}`}><Captions size={16} /> Sub</Button>
-                    <Button variant="outline" onClick={() => setFormat("dub")} className={`${format === "dub" ? "bg-[--primary-color] text-white" : ""}`}><Mic size={16} /> Dub</Button>
+              <div className="flex flex-row gap-10">
+                <div className="flex flex-col">
+                  <span className="text-xs font-light text-neutral-500">Current Episode:</span>
+                  <span className="text-xl font-bold text-[--text-color]">Episode {serverInfo?.episodeNo}</span>
                 </div>
+                <div className="border border-l-1" /> 
+              </div>               {/* Server Controls */}
+              <div className="flex flex-row items-center gap-2 ml-2">
+                <Button variant="outline" onClick={() => setFormat("sub")} className={`${format === "sub" ? "bg-[--primary-color] text-white" : ""}`}><Captions size={16} /> Sub</Button>
+                <Button variant="outline" onClick={() => setFormat("dub")} className={`${format === "dub" ? "bg-[--primary-color] text-white" : ""}`}><Mic size={16} /> Dub</Button>
+              </div>
 
-                {/* Episode Navigation */}
-                <div className="flex flex-row gap-2">
-                    <Button onClick={handlePrevEp} disabled={!serverInfo}><Rewind size={16} /> Previous</Button>
-                    <Button onClick={handleNextEp} disabled={!serverInfo}>Next <FastForward size={16} /></Button>
-                </div>
+              {/* Episode Navigation */}
+              <div className="flex flex-row gap-2">
+                <Button onClick={handlePrevEp} disabled={!serverInfo}><Rewind size={16} /> Previous</Button>
+                <Button onClick={handleNextEp} disabled={!serverInfo}>Next <FastForward size={16} /></Button>
+              </div>
             </Card>
         </Card>
 
