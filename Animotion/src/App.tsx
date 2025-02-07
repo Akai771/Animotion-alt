@@ -1,6 +1,7 @@
 import Routing from './routing/routing'
 import { useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
+import { ScrollArea, ScrollBar } from './components/ui/scroll-area';
 
 function App() {
   useEffect(() => {
@@ -13,9 +14,12 @@ function App() {
   }, []);
   return (
     <>
+    <ScrollArea className='absolute h-screen w-screen z-30'>
       <Router>
         <Routing/>
       </Router>
+      <ScrollBar />
+    </ScrollArea>
     </>
   )
 }
