@@ -16,12 +16,12 @@ type Anime = {
 
 type Genre = string;
 
-const SearchPage: React.FC = () => {
+const GenrePage: React.FC = () => {
   const [browse, setBrowse] = useState<Anime[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [page, setPage] = useState<number>(1);
   const [genreState, setGenreState] = useState<boolean>(true);
-  const { searchId } = useParams<{ searchId: string }>();
+  const { genreId } = useParams<{ genreId: string }>();
 
   const handleGenre = () => setGenreState((prev) => !prev);
   const handleNextPage = () => setPage((prev) => prev + 1);
@@ -29,10 +29,10 @@ const SearchPage: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API}/api/v2/hianime/search?q="${searchId}"&page=${page}`)
+      .get(`${import.meta.env.VITE_API}/api/v2/hianime/genre/${genreId}?page=${page}`)
       .then((res) => setBrowse(res.data.data.animes))
       .catch((err) => console.error("Error fetching search results:", err));
-  }, [searchId, page]);
+  }, [genreId, page]);
 
   useEffect(() => {
     axios
@@ -42,16 +42,18 @@ const SearchPage: React.FC = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const genreTitle = genreId ? genreId.charAt(0).toUpperCase() + genreId.slice(1) : '';
+
   return (
     <>
     <div className="w-full mt-10">
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
             <div className="flex flex-row items-center justify-between">
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">Search results for: <span className="text-[--primary-color]">{searchId}</span></span>
-                <Card className="p-2">{browse.length} Results found</Card>
+                <span className="text-2xl font-bold text-gray-900 dark:text-white"><span className="text-[--text-color]">Anime List</span></span>
+                <Card className="p-2 font-medium">Genre: {genreTitle}</Card>
             </div>
-            <Card className="p-5 mt-5">
+            <Card className="p-5 mt-2">
                 <ScrollArea className="w-full h-[70dvh]">
                     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                         {browse.length > 0 ? (
@@ -84,7 +86,7 @@ const SearchPage: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Genres</h2>
           <div className="flex flex-wrap gap-3">
             {genres.slice(0, genreState ? 21 : genres.length).map((genre) => (
-                <Button key={genre} id={genre} title={genre} variant="outline">
+                <Button key={genre} id={genre} title={genre} variant="outline" onClick={() => window.location.href = `/genre/${genre}`}>
                     {genre}
                 </Button>
             ))}
@@ -99,4 +101,4 @@ const SearchPage: React.FC = () => {
   );
 };
 
-export default SearchPage;
+export default GenrePage;

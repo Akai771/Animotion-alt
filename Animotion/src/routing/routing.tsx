@@ -18,6 +18,7 @@ import News from "@/pages/news";
 import Schedule from "@/pages/schedule";
 import SplashPage from "@/pages/splash-page";
 import Profile from "@/pages/profile";
+import GenrePage from "@/pages/genre-page";
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ token }: { token: any }) => {
@@ -84,6 +85,7 @@ export default function Routing() {
             <Route path="/watch/:id" element={<AnimePlayer />} />
             <Route path="/history" element={<History />} />
             <Route path="/watchlist" element={<Watchlist />} />
+            <Route path="/genre/:genreId" element={<GenrePage />} />
             <Route path="/search/:searchId" element={<SearchPage />} />
             <Route path="/hiro" element={<Chatbot />} />
             <Route path="/news" element={<News />} />
