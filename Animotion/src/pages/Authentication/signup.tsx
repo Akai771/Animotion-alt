@@ -42,8 +42,6 @@ export default function Signup() {
         },
       });
       console.error(data)
-
-      console.log("email:", formData.email);
       alert("Check your email for verification");
     } 
     catch (error) {

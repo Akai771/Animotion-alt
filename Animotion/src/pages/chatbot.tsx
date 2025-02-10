@@ -106,8 +106,6 @@ const Chatbot: React.FC = () => {
     }
   }
 
-  console.log(messages);
-
   return (
     <>
       <div className="w-full flex flex-col items-center justify-center min-h-screen">

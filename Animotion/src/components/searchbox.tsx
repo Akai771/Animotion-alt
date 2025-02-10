@@ -39,8 +39,6 @@ export default function SearchBox() {
     setSearch("");
   };
 
-  console.log(suggestion.length)
-
   return (
     <div className="w-full fixed flex flex-col justify-start items-center z-10 gap-10">
       <form
