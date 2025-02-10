@@ -19,6 +19,8 @@ interface Episode {
 
 interface ServerInfo {
   episodeNo: number;
+  dub?: string[];
+  sub?: string[];
 }
 
 interface AnimeData {
@@ -140,6 +142,7 @@ const AnimePlayer: React.FC = () => {
       setSelectedEpisode(prevEp);
     }
   };
+  const hasDub = serverInfo?.dub && serverInfo.dub.length > 0;
 
   return (
     <div className="flex flex-col items-center justify-center max-w-10xl w-full min-h-screen bg-[--background] text-[--text-color] p-5">
@@ -193,6 +196,7 @@ const AnimePlayer: React.FC = () => {
                     >
                       <Captions size={16} /> Sub
                     </Button>
+                    {hasDub && (
                     <Button
                       variant="outline"
                       onClick={() => setFormat("dub")}
@@ -200,6 +204,7 @@ const AnimePlayer: React.FC = () => {
                     >
                       <Mic size={16} /> Dub
                     </Button>
+                    )}
                   </div>
                 </div>
               </Card>
