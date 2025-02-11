@@ -240,6 +240,7 @@ const AnimePlayer: React.FC = () => {
             </Card>
           </span>
           <ScrollArea className="h-[75dvh]">
+          {episodeList.length<50?(
             <div className="grid grid-cols-1 gap-3">
               {episodeList.map((ep) => (
                 <Button
@@ -257,7 +258,25 @@ const AnimePlayer: React.FC = () => {
                   <span className="w-5/6 truncate text-left">{ep.title}</span>
                 </Button>
               ))}
+            </div>):(
+              <div className="grid grid-cols-6 gap-3">
+              {episodeList.map((ep) => (
+                <Button
+                  key={ep.episodeId}
+                  variant={selectedEpisode === ep.episodeId ? "default" : "outline"}
+                  onClick={() => {
+                    navigate(`/watch/${id}?epId=${ep.episodeId}`);
+                    setSelectedEpisode(ep.episodeId);
+                  }}
+                  className={`w-full ${
+                    ep.isFiller ? "bg-purple-500/10" : ""
+                  } flex flex-row items-center justify-center`}
+                >
+                  <span className="font-black text-neutral-500">{ep.number}</span>
+                </Button>
+              ))}
             </div>
+            )}
             <ScrollBar />
           </ScrollArea>
         </Card>
