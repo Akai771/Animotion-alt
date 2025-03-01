@@ -1,5 +1,5 @@
 // Code for carousel component [src/components/carousel.tsx]
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
