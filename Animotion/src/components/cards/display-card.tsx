@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Play, Star, Mic, Captions } from "lucide-react";
+import { Play } from "lucide-react";
 import Tooltip from "@mui/material/Tooltip";
 import "../../styling/cards.css"
-
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Star, Mic, Captions } from "lucide-react";
 
 type DisplayCardProps = {
   id: any;
@@ -21,22 +22,75 @@ type DisplayCardProps = {
 
 const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, currentEpisode, type, duration, currentText }) => {
   const [qtipData, setQtipData] = useState<any>({});
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API}/api/v2/hianime/qtip/${id}`)
-      .then((res) => {
-        setQtipData(res.data.data.anime);
-      })
-      .catch((err) => {
-        console.error("Error fetching Qtip Data: ", err);
-      });
-  }, [id]);
+    if (!isMobile) {
+      axios
+        .get(`${import.meta.env.VITE_API}/api/v2/hianime/qtip/${id}`)
+        .then((res) => {
+          setQtipData(res.data.data.anime);
+        })
+        .catch((err) => {
+          console.error("Error fetching Qtip Data: ", err);
+        });
+    }
+  }, [id, isMobile]);
 
   const episodeSub = qtipData?.episodes?.sub || "N/A";
   const episodeDub = qtipData?.episodes?.dub || "N/A";
   const genres = qtipData?.genres || [];
 
+  // Mobile version
+  if (isMobile) {
+    return (
+      <div className="mb-2">
+        <Link to={`/details/${id}`} className="block">
+          <Card className="overflow-hidden rounded-md shadow-sm relative">
+            {/* Main image */}
+            <div className="relative aspect-[2/3]">
+              <img 
+                src={coverImage} 
+                alt={title} 
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Overlay for hover effect */}
+              <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <Play size={30} className="text-white" fill="white" />
+              </div>
+              
+              {/* Tags overlay */}
+              <div className="absolute top-1 left-1 flex flex-wrap gap-1">
+                {type && (
+                  <Badge className="text-[8px] px-1.5 py-0 rounded-sm bg-red-500 text-white">
+                    {type}
+                  </Badge>
+                )}
+                {duration && (
+                  <Badge className="text-[8px] px-1.5 py-0 rounded-sm bg-[--primary-color] text-white">
+                    {duration}
+                  </Badge>
+                )}
+              </div>
+            </div>
+            
+            {/* Title and info */}
+            <div className="p-1">
+              <h3 className="text-xs font-medium line-clamp-1 mb-0.5">{title}</h3>
+              {currentEpisode && (
+                <p className="text-[10px] text-gray-400">
+                  {currentText} {currentEpisode}
+                </p>
+              )}
+            </div>
+          </Card>
+        </Link>
+      </div>
+    );
+  }
+
+  // Desktop version - original implementation
   return (
     <Tooltip title={
         <div className="flex flex-col p-1">
@@ -82,8 +136,8 @@ const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, curren
                 <span className="displayInfoCont">{currentText} {currentEpisode}</span>
             </div>
         </Card>
-    </Tooltip>  
-    );
+    </Tooltip>
+  );
 };
 
 export default DisplayCard;

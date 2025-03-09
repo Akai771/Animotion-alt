@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/use-mobile";
 import "../styling/globals.css";
 
 interface ScheduleItem {
@@ -19,6 +20,10 @@ const Schedule: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [day, setDay] = useState<string>("");
   const [weekDates, setWeekDates] = useState<string[]>([]);
+  const isMobile = useIsMobile();
+
+  // Day names for tabs
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   useEffect(() => {
     const getWeekDates = () => {
@@ -56,29 +61,45 @@ const Schedule: React.FC = () => {
   return (
     <>
       <div className="min-h-screen ml-5 text-white mt-10">
-        <div className="max-w-10xl mx-auto px-4 py-6 ">
+        <div className="max-w-10xl mx-auto px-4 py-6">
           <h1 className="text-3xl font-bold text-center">Anime Schedule</h1>
           {weekDates.length > 0 && (
-            <Card className="w-[90dvw] p-2">
-            <Tabs defaultValue={day} className="mt-3 w-full flex flex-col items-center">
-              <Card className="p-2">
-
-              <TabsList className="max-w-3xl space-x-6 h-12 rounded-lg">
-                {weekDates.map((date, index) => (
-                  <TabsTrigger
-                    key={date}
-                    value={date}
-                    className="px-4 py-2 rounded-lg text-white transition-all data-[state=active]:bg-black"
-                    onClick={() => setDay(date)}
-                  >
-                    {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][index]}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              </Card>
-              {weekDates.map((date) => (
-                <TabsContent key={date} value={date} className="mt-4 w-full">
-                    <ScrollArea className="h-[70dvh]">
+            <Card className={`${isMobile ? 'w-full' : 'w-[90dvw]'} p-2`}>
+              <Tabs defaultValue={day} className="mt-3 w-full flex flex-col items-center">
+                <Card className="p-2">
+                  {isMobile ? (
+                    // Mobile version - compact tabs with abbreviated day names
+                    <TabsList className="flex overflow-x-auto max-w-full h-12 rounded-lg">
+                      {weekDates.map((date, index) => (
+                        <TabsTrigger
+                          key={date}
+                          value={date}
+                          className="px-2 py-1 text-xs rounded-lg text-white transition-all whitespace-nowrap data-[state=active]:bg-black"
+                          onClick={() => setDay(date)}
+                        >
+                          {dayNames[index].substring(0, 3)}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                  ) : (
+                    // Desktop version - original spacious tabs
+                    <TabsList className="max-w-3xl space-x-6 h-12 rounded-lg">
+                      {weekDates.map((date, index) => (
+                        <TabsTrigger
+                          key={date}
+                          value={date}
+                          className="px-4 py-2 rounded-lg text-white transition-all data-[state=active]:bg-black"
+                          onClick={() => setDay(date)}
+                        >
+                          {dayNames[index]}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                  )}
+                </Card>
+                {weekDates.map((date) => (
+                  <TabsContent key={date} value={date} className="mt-4 w-full">
+                    <ScrollArea className={`${isMobile ? 'h-[60dvh]' : 'h-[70dvh]'}`}>
                       {loading ? (
                         Array.from({ length: 6 }).map((_, index) => (
                           <Skeleton key={index} className="w-full h-[80px] rounded-md mb-3" />
@@ -92,10 +113,10 @@ const Schedule: React.FC = () => {
                       )}
                       <ScrollBar />
                     </ScrollArea>
-                  
-                </TabsContent>
-              ))}
-            </Tabs></Card>
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </Card>
           )}
         </div>
       </div>

@@ -20,6 +20,8 @@ import SplashPage from "@/pages/splash-page";
 import Profile from "@/pages/profile";
 import GenrePage from "@/pages/genre-page";
 
+import { useIsMobile } from "@/hooks/use-mobile";
+
 // Protected Route Wrapper
 const ProtectedRoute = ({ token }: { token: any }) => {
   if (token === null) return null; // ✅ Prevent redirect before token is retrieved
@@ -32,9 +34,9 @@ const excludedRoutes = ["/", "/login", "/signup", "/forgot-password", "/update-p
 export default function Routing() {
   const [token, setToken] = useState<any>(null);
   const location = useLocation();
-  const [loading, setLoading] = useState(true); // ✅ Prevent premature redirect
+  const [loading, setLoading] = useState(true);
+  const isMobile = useIsMobile();
 
-  // ✅ Retrieve token from localStorage on page load
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -67,8 +69,15 @@ export default function Routing() {
     <>
       <SidebarProvider>
         {/* ✅ Show Sidebar only if NOT on an excluded route */}
-        {!excludedRoutes.includes(location.pathname) && <AppSidebar />}
-        {!excludedRoutes.includes(location.pathname) && <SearchBox />}
+        {isMobile?(
+          <div className="flex flex-row border border-red-400">
+            {!excludedRoutes.includes(location.pathname) && <AppSidebar />}
+            {!excludedRoutes.includes(location.pathname) && <SearchBox />}
+          </div>
+        ):(<>
+          {!excludedRoutes.includes(location.pathname) && <AppSidebar />}
+          {!excludedRoutes.includes(location.pathname) && <SearchBox />}
+        </>)}
 
         <Routes>
           {/* Public Routes */}

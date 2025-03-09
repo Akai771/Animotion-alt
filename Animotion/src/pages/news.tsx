@@ -18,7 +18,7 @@ const News: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("https://animotion-consumet-api.vercel.app/news/ann/recent-feeds")
+      .get("https://animotion-consumet-api-2.vercel.app/news/ann/recent-feeds")
       .then((res) => {
         setArticles(res.data);
         setLoading(false);
