@@ -45,7 +45,7 @@ const WatchNowButton: React.FC<WatchNowButtonProps> = ({ animeId, animeTitle, an
   };
 
   return (
-    <Button variant="default" className="mt-2 px-4 py-2 bg-[--primary-color] text-[--text-color] transition-all duration-300 ease-in-out hover:bg-[--primary-color2]" onClick={handleWatchButton}>Watch Now</Button>
+    <Button variant="default" className="mt-2 px-4 py-2 bg-[--primary-color] dark:text-[--text-color] transition-all duration-300 ease-in-out hover:bg-[--primary-color2]" onClick={handleWatchButton}>Watch Now</Button>
   );
 };
 

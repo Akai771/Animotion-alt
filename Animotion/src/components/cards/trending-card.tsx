@@ -84,17 +84,17 @@ const TrendingCard: React.FC<TrendingCardProps> = ({ id, title, coverImage, type
       <div className="flex flex-col p-1">
         <span className="text-2xl font-bold mb-1">{qtipData.name}</span>
         <div className="flex flex-row gap-[.2rem] mb-4">
-          <Badge className="text-xs rounded-lg bg-[#f0c929] gap-1"><Star size={15} fill="black"/>{qtipData?.malscore}</Badge>
-          <Badge className="text-xs rounded-lg bg-[--primary-color] text-[--text-color] gap-1">{qtipData?.type}</Badge>
-          <Badge className="text-xs rounded-lg bg-[--primary-color] text-[--text-color] gap-1"><Captions size={15} />{episodeSub}</Badge>
-          <Badge className="text-xs rounded-lg bg-[--primary-color] text-[--text-color] gap-1"><Mic size={15} />{episodeDub}</Badge>
+          <Badge className="text-xs rounded-lg bg-[#f0c929] gap-1"><Star size={15} className="fill-white dark:fill-black" />{qtipData?.malscore}</Badge>
+          <Badge className="text-xs rounded-lg dark:bg-[--primary-color] dark:text-[--text-color] gap-1">{qtipData?.type}</Badge>
+          <Badge className="text-xs rounded-lg dark:bg-[--primary-color] dark:text-[--text-color] gap-1"><Captions size={15} />{episodeSub}</Badge>
+          <Badge className="text-xs rounded-lg dark:bg-[--primary-color] dark:text-[--text-color] gap-1"><Mic size={15} />{episodeDub}</Badge>
         </div>
         <div className="flex flex-col gap-1">
-          <span className="text-sm text-[--secondary-color] font-semibold">Jname:  <span className="text-xs text-[--text-color] font-normal">{qtipData.jname?qtipData.jname:"N/A"} </span></span>
-          <span className="text-sm text-[--secondary-color] font-semibold">Genres: <span className="text-xs text-[--text-color] font-normal">{genres.join(", ")} </span></span>
-          <span className="text-sm text-[--secondary-color] font-semibold">Aired: <span className="text-xs text-[--text-color] font-normal">{qtipData.aired} </span></span>
-          <span className="text-sm text-[--secondary-color] font-semibold">Status: <span className="text-xs text-[--text-color] font-normal">{qtipData.status} </span></span>
-          <span className="text-sm text-[--secondary-color] font-semibold">Desc: <span className="text-xs text-[--text-color] font-normal">{qtipData.description? qtipData.description: "N/A"} </span></span>
+          <span className="text-sm dark:text-[--secondary-color] font-semibold">Jname:  <span className="text-xs text-[--text-color] font-normal">{qtipData.jname?qtipData.jname:"N/A"} </span></span>
+          <span className="text-sm dark:text-[--secondary-color] font-semibold">Genres: <span className="text-xs text-[--text-color] font-normal">{genres.join(", ")} </span></span>
+          <span className="text-sm dark:text-[--secondary-color] font-semibold">Aired: <span className="text-xs text-[--text-color] font-normal">{qtipData.aired} </span></span>
+          <span className="text-sm dark:text-[--secondary-color] font-semibold">Status: <span className="text-xs text-[--text-color] font-normal">{qtipData.status} </span></span>
+          <span className="text-sm dark:text-[--secondary-color] font-semibold">Desc: <span className="text-xs text-[--text-color] font-normal">{qtipData.description? qtipData.description: "N/A"} </span></span>
         </div>
       </div>
     } placement="right" arrow disableInteractive>

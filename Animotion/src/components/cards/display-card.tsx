@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Play } from "lucide-react";
+import { Play, Star, Mic, Captions } from "lucide-react";
 import Tooltip from "@mui/material/Tooltip";
-import "../../styling/cards.css"
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Star, Mic, Captions } from "lucide-react";
 
 type DisplayCardProps = {
   id: any;
@@ -90,50 +88,52 @@ const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, curren
     );
   }
 
-  // Desktop version - original implementation
+  // Desktop version with Tailwind
   return (
     <Tooltip title={
         <div className="flex flex-col p-1">
             <span className="text-xl font-bold mb-1">{qtipData.name}</span>
             <div className="flex flex-row gap-[.2rem] mb-4">
                 <Badge className="text-xs rounded-lg bg-[#f0c929] gap-1"><Star size={15} fill="black"/>{qtipData?.malscore}</Badge>
-                <Badge className="text-xs rounded-lg bg-[--primary-color] text-[--text-color] gap-1">{qtipData?.type}</Badge>
-                <Badge className="text-xs rounded-lg bg-[--primary-color] text-[--text-color] gap-1"><Captions size={15} />{episodeSub}</Badge>
-                <Badge className="text-xs rounded-lg bg-[--primary-color] text-[--text-color] gap-1"><Mic size={15} />{episodeDub}</Badge>
+                <Badge className="text-xs rounded-lg dark:bg-[--primary-color] dark:text-[--text-color] gap-1">{qtipData?.type}</Badge>
+                <Badge className="text-xs rounded-lg dark:bg-[--primary-color] dark:text-[--text-color] gap-1"><Captions size={15} />{episodeSub}</Badge>
+                <Badge className="text-xs rounded-lg dark:bg-[--primary-color] dark:text-[--text-color] gap-1"><Mic size={15} />{episodeDub}</Badge>
             </div>
             <div className="flex flex-col gap-1">
-                <span className="text-sm text-[--secondary-color] font-semibold">Jname:  <span className="text-xs text-[--text-color] font-normal">{qtipData.jname?qtipData.jname:"N/A"} </span></span>
-                <span className="text-sm text-[--secondary-color] font-semibold">Genres: <span className="text-xs text-[--text-color] font-normal">{genres.join(", ")} </span></span>
-                <span className="text-sm text-[--secondary-color] font-semibold">Aired: <span className="text-xs text-[--text-color] font-normal">{qtipData.aired} </span></span>
-                <span className="text-sm text-[--secondary-color] font-semibold">Status: <span className="text-xs text-[--text-color] font-normal">{qtipData.status} </span></span>
-                <span className="text-sm text-[--secondary-color] font-semibold">Desc: <span className="text-xs text-[--text-color] font-normal">{qtipData.description? qtipData.description: "N/A"} </span></span>
+                <span className="text-sm dark:text-[--secondary-color] font-semibold">Jname:  <span className="text-xs text-[--text-color] font-normal">{qtipData.jname?qtipData.jname:"N/A"} </span></span>
+                <span className="text-sm dark:text-[--secondary-color] font-semibold">Genres: <span className="text-xs text-[--text-color] font-normal">{genres.join(", ")} </span></span>
+                <span className="text-sm dark:text-[--secondary-color] font-semibold">Aired: <span className="text-xs text-[--text-color] font-normal">{qtipData.aired} </span></span>
+                <span className="text-sm dark:text-[--secondary-color] font-semibold">Status: <span className="text-xs text-[--text-color] font-normal">{qtipData.status} </span></span>
+                <span className="text-sm dark:text-[--secondary-color] font-semibold">Desc: <span className="text-xs text-[--text-color] font-normal">{qtipData.description? qtipData.description: "N/A"} </span></span>
             </div>
         </div>
     } placement="right" arrow disableInteractive>
-        <Card className="displayCard">
+        <Card className="group flex flex-col w-56 max-h-96 p-3 bg-[--bgColor2] text-white relative overflow-visible transition-transform duration-500 ease-in-out cursor-pointer">
             <Link to={`/details/${id}`}>
-                <div className="displayCardImage">
-                    <img className="displayImage rounded-md" src={coverImage} alt={title} />
-                    <div className="displayCardOverlay">
-                        <div className="displayCardTags">
-                            {type && (
-                                <Badge className="text-[10px] h-6 font-bold rounded-lg bg-red-500 text-white">{type}</Badge>
-                            )}
-                            {duration && (
-                                <Badge className="text-[10px] h-6 font-bold rounded-lg bg-[--primary-color] text-white">{duration}</Badge>
-                            )}
-                        </div>
+                <div className="relative w-50 h-72 overflow-hidden rounded-md">
+                    <img 
+                        className="w-full h-72 object-cover hover:opacity-50 hover:blur-sm transition-all duration-500 ease-in-out group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50" 
+                        src={coverImage} 
+                        alt={title} 
+                    />
+                    <div className="absolute top-4 left-3 flex flex-row gap-1.5 transition-all duration-500 ease-in-out ">
+                        {type && (
+                            <Badge className="text-[10px] h-6 font-bold bg-red-500 text-white">{type}</Badge>
+                        )}
+                        {duration && (
+                            <Badge className="text-[10px] h-6 font-bold bg-[--primary-color] text-white">{duration}</Badge>
+                        )}
                     </div>
-                    <div className="playIcon2">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 ease-in-out z-10">
                         <Play size={35} fill="white" />
                     </div>
                 </div>
             </Link>
-            <div className="display-info flex flex-col items-start justify-start">
-                <div className="line-clamp-1 w-full h-7">
-                    <span className="displayTitle">{title}</span>
+            <div className="flex flex-col items-start justify-start pt-1.5">
+                <div className="w-full h-7 line-clamp-1">
+                    <span className="font-sans text-sm font-semibold text-[--text-color]">{title}</span>
                 </div>
-                <span className="displayInfoCont">{currentText} {currentEpisode}</span>
+                <span className="text-xs font-sans font-normal text-[--secondary-color] pr-4">{currentText} {currentEpisode}</span>
             </div>
         </Card>
     </Tooltip>

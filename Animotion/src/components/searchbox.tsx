@@ -99,9 +99,20 @@ export default function SearchBox() {
             onClick={() => handleNavigation(item.id)}
           >
             <img src={item.poster} alt="poster" className="w-12 rounded-md" />
-            <div className={`${isMobile ? 'w-[70%]' : 'w-full'} flex flex-col items-start justify-start`}>
-              <span className={`text-sm font-bold text-[--text-color] truncate`}>{item.name}</span>
-              <span className="font-medium text-xs text-neutral-500 truncate">{item.jname}</span>
+            <div className={`${isMobile ? 'w-[70%]' : 'w-full'} h-16 flex flex-col items-start justify-between`}>
+              <div className="flex flex-col items-start justify-start">
+                <span className={`text-sm font-bold text-[--text-color] truncate`}>{item.name}</span>
+                <span className="font-medium text-xs  text-[--secondary-color] truncate">{item.jname}</span>
+              </div>
+              <div className="flex flex-row items-center justify-start gap-2">
+                {item.moreInfo.map((subitem: any, index: number) => (
+                  <span key={index} className="font-medium text-xs text-neutral-400 truncate">
+                    {subitem}
+                    {index < item.moreInfo.length - 1 && <span className="text-[--text-color] pl-2">•</span>}
+                  </span>
+                ))}
+              </div>
+              
             </div>
           </Button>
         )):(

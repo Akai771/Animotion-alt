@@ -103,7 +103,7 @@ export default function Home(){
         dots: true,
         infinite: true,
         speed: 400,
-        slidesToShow: isCompactView ? 6 : 4,
+        slidesToShow: isCompactView ? 5 : 4,
         slidesToScroll: 2,
         swipeToSlide: true,
       };

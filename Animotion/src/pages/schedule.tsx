@@ -13,6 +13,7 @@ interface ScheduleItem {
   name: string;
   jname: string;
   time: string;
+  episode: number;
 }
 
 const Schedule: React.FC = () => {
@@ -58,6 +59,7 @@ const Schedule: React.FC = () => {
     window.scrollTo(0, 0);
   }, [day]);
 
+  console.log(day);
   return (
     <>
       <div className="min-h-screen ml-5 text-white mt-10">
@@ -88,7 +90,7 @@ const Schedule: React.FC = () => {
                         <TabsTrigger
                           key={date}
                           value={date}
-                          className="px-4 py-2 rounded-lg text-white transition-all data-[state=active]:bg-black"
+                          className="px-4 py-2 rounded-lg text-[--text-color] transition-all data-[state=active]:bg-black data-[state=active]:text-white"
                           onClick={() => setDay(date)}
                         >
                           {dayNames[index]}
@@ -106,7 +108,7 @@ const Schedule: React.FC = () => {
                         ))
                       ) : schedule.length > 0 ? (
                         schedule.map((anime) => (
-                          <ScheduleCard key={anime.id} id={anime.id} title={anime.name} jtitle={anime.jname} time={anime.time} />
+                          <ScheduleCard key={anime.id} id={anime.id} title={anime.name} jtitle={anime.jname} time={anime.time} episode={anime.episode}/>
                         ))
                       ) : (
                         <Card className="p-6 text-center">No scheduled anime for this day.</Card>

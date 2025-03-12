@@ -22,6 +22,7 @@ export default function AnimeDetails() {
     const [recommend, setRecommend] = useState<any>([]);
     const [recommendPop, setRecommendPop] = useState<any>([]);
     const [episode, setEpisode] = useState<any>(null);
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const isMobile = useIsMobile();
     const playerWidth = 400;
     const playerHeight = 225;
@@ -34,41 +35,67 @@ export default function AnimeDetails() {
         navigate(`/genre/${newGenre}`);
     };
 
+    const handleResize = () => {
+        setScreenWidth(window.innerWidth);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/anime/${id}`).then((res) => {
-        setAnimeData(res.data.data.anime.info);
-        setTrailerData(res.data.data.anime.info.promotionalVideos?.[0]);
-        setAddData(res.data.data.anime.moreInfo);
-        setRecommend(res.data.data.seasons);
-        setRecommendPop(res.data.data.mostPopularAnimes);
+            setAnimeData(res.data.data.anime.info);
+            setTrailerData(res.data.data.anime.info.promotionalVideos?.[0]);
+            setAddData(res.data.data.anime.moreInfo);
+            setRecommend(res.data.data.seasons);
+            setRecommendPop(res.data.data.mostPopularAnimes);
         });
 
         axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/anime/${id}/episodes`).then((res) => {
-        setEpisode(res.data.data.episodes?.[0]?.episodeId);
+            setEpisode(res.data.data.episodes?.[0]?.episodeId);
         });
 
         window.scrollTo(0, 0);
     }, [id]);
 
-    // Desktop slider settings - preserving original
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 400,
-        slidesToShow: 7,
-        slidesToScroll: 1,
-        swipeToSlide: true,
+    // Configure Slider settings based on screen width, similar to home.tsx
+    const getSliderSettings = (isCompactView = false) => {
+        if (isMobile) {
+            return {
+                dots: true,
+                infinite: true,
+                speed: 400,
+                slidesToShow: isCompactView ? 2 : 1,
+                slidesToScroll: isCompactView ? 2 : 1,
+                swipeToSlide: true,
+            };
+        } else if (screenWidth < 1600) {
+            return {
+                dots: true,
+                infinite: true,
+                speed: 400,
+                slidesToShow: isCompactView ? 5 : 4,
+                slidesToScroll: 2,
+                swipeToSlide: true,
+            };
+        } else {
+            return {
+                dots: isCompactView ? true : false,
+                infinite: isCompactView ? true : false,
+                speed: 400,
+                slidesToShow: isCompactView ? 7 : 5,
+                slidesToScroll: isCompactView ? 2 : 1,
+                swipeToSlide: true,
+            };
+        }
     };
 
-    // Mobile slider settings
-    const mobileSettings = {
-        dots: true,
-        infinite: true,
-        speed: 400,
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        swipeToSlide: true,
-    };
+    const settings = getSliderSettings(true);
+    const seasonSettings = getSliderSettings(false);
 
     if (isMobile) {
         // Mobile layout
@@ -153,8 +180,8 @@ export default function AnimeDetails() {
                 <Card className="w-full max-w-[90dvw] shadow-lg p-3 mt-5">
                     <CardTitle className="text-xl font-semibold mb-2">Seasons:</CardTitle>
                     <div className="mt-3">
-                        <Slider {...mobileSettings}>
-                            {(recommend.slice(0, 7)).map((season: any) => (
+                        <Slider {...seasonSettings}>
+                            {recommend.map((season: any) => (
                                 <div key={season.id} className="px-1">
                                     <DisplayCard id={season.id} title={season.name} type={season.type} coverImage={season.poster} />
                                 </div>
@@ -169,7 +196,7 @@ export default function AnimeDetails() {
                 <Card className="w-full max-w-[90dvw] shadow-lg p-3 mt-5">
                     <CardTitle className="text-xl font-semibold mb-2">Recommended for you:</CardTitle>
                     <div className="mt-3">
-                        <Slider {...mobileSettings}>
+                        <Slider {...settings}>
                             {recommendPop.map((season: any) => (
                                 <div key={season.id} className="px-1">
                                     <DisplayCard id={season.id} title={season.name} type={season.type} coverImage={season.poster} />
@@ -189,7 +216,7 @@ export default function AnimeDetails() {
         );
     }
 
-    // Desktop layout - preserved exactly as original
+    // Desktop layout
     return (
         <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[--background] text-[--text-color] p-5 mt-10">
             {/* Anime Details Section */}
@@ -263,11 +290,21 @@ export default function AnimeDetails() {
             <Card className="w-full max-w-[90dvw] shadow-lg p-5 mt-5">
                 <CardTitle className="text-xl font-semibold">Seasons:</CardTitle>
                 <div className="mt-3">
-                    <div className="flex flex-row gap-5">
-                        {(recommend.slice(0, 7)).map((season: any) => (
-                            <DisplayCard key={season.id} id={season.id} title={season.name} type={season.type} coverImage={season.poster} />
-                        ))}
-                    </div>
+                    {screenWidth < 1200 ? (
+                        <Slider {...seasonSettings}>
+                            {recommend.map((season: any) => (
+                                <div key={season.id} className="px-2">
+                                    <DisplayCard id={season.id} title={season.name} type={season.type} coverImage={season.poster} />
+                                </div>
+                            ))}
+                        </Slider>
+                    ) : (
+                        <div className="flex flex-row gap-5 overflow-x-auto pb-2">
+                            {recommend.slice(0, 7).map((season: any) => (
+                                <DisplayCard key={season.id} id={season.id} title={season.name} type={season.type} coverImage={season.poster} />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </Card>
             )}
@@ -279,7 +316,9 @@ export default function AnimeDetails() {
                 <div className="mt-3">
                     <Slider {...settings}>
                         {recommendPop.map((season: any) => (
-                            <DisplayCard key={season.id} id={season.id} title={season.name} type={season.type} coverImage={season.poster} />
+                            <div key={season.id} className="px-2">
+                                <DisplayCard id={season.id} title={season.name} type={season.type} coverImage={season.poster} />
+                            </div>
                         ))}
                     </Slider>
                 </div>
