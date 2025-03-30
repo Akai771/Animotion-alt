@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Rewind, FastForward, Mic, Captions, Server } from "lucide-react";
+import { Rewind, FastForward, Mic, Captions, Server, Info } from "lucide-react";
 import VideoPlayer from "../../components/video-player";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
@@ -473,6 +473,14 @@ const AnimePlayer: React.FC = () => {
                       HD-2
                     </Button>
                   </div>
+                </div>
+              </Card>
+              <Card className="flex flex-col w-80 gap-10 p-2 bg-[--bgColor3]">
+                <div className="flex flex-row w-full h-full gap-2 items-center justify-center">
+                  <span className="text-[--text-color3]"><Info /></span>
+                  <span className="text-xs text-[--text-color3] font-light">
+                    If your video doesn't load, click "Refresh Player" to reload it.
+                  </span>
                 </div>
               </Card>
             </div>
