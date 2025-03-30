@@ -1,23 +1,21 @@
 import React, { useEffect } from "react";
 import { MediaPlayer, MediaProvider, PlayButton } from "@vidstack/react";
 import { defaultLayoutIcons, DefaultVideoLayout } from "@vidstack/react/player/layouts/default";
-// import "./VideoPlayer.css";
 
-// Define Props Interface
 interface VideoPlayerProps {
+  originalLink?: string;
   serverLink: string | null;
   trackSrc?: { label: any; file: any }[];
   mal?: string;
   thumbnails?: string;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ serverLink, trackSrc =[], mal, thumbnails }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ serverLink, trackSrc = [], mal, thumbnails }) => {
+
   useEffect(() => {
     import("@vidstack/react/player/styles/default/theme.css");
     import("@vidstack/react/player/styles/default/layouts/video.css");
-}, []);
-
-
+  }, [serverLink]);
 
   // Filter and get English track
   const trackSource = trackSrc.filter((track) => track.label === "English");
@@ -25,12 +23,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ serverLink, trackSrc =[], mal
 
   // Placeholder image
   const placeholderImage = "https://placehold.jp/000000/ffffff/1920x1080.png?text=Loading...&css=%7B%22font-weight%22%3A%22%20700%22%7D";
-
   return (
     <div className="VideoPlayerContainer">
       {serverLink ? (
         <MediaPlayer
-          key={mal}
+          key={mal} // Use URL as key to force refresh when URL changes
           className="VideoPlayer"
           src={serverLink}
           autoplay

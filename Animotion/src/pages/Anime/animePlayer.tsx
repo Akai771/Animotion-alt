@@ -123,11 +123,11 @@ const AnimePlayer: React.FC = () => {
       .catch((err) => console.error("Error fetching server data:", err));
 
     axios
-      .get(
-        `${
-          import.meta.env.VITE_API
-        }/api/v2/hianime/episode/sources?animeEpisodeId=${selectedEpisode}&server=${server}&category=${format}`
-      )
+      .get(`${import.meta.env.VITE_API}/api/v2/hianime/episode/sources?animeEpisodeId=${selectedEpisode}&server=${server}&category=${format}`,{
+        headers: {
+          "Referer": "https://megacloud.club/",
+        }
+      })
       .then((res) => {
         setServerUrl(res.data.data.sources[0].url);
         setServerLink(res.data.data);
@@ -165,7 +165,8 @@ const AnimePlayer: React.FC = () => {
         <div className="w-full flex flex-col items-start justify-start pt-10 gap-3">
           <Card className="w-full p-3">
             <VideoPlayer
-              serverLink={serverUrl}
+              originalLink={serverUrl}
+              serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
               mal={serverLink ? serverLink.malID : null}
               trackSrc={serverLink?.tracks || []}
               thumbnails={serverLink?.tracks?.[1]?.file || ""}
@@ -392,12 +393,12 @@ const AnimePlayer: React.FC = () => {
       <div className="w-full flex sm:!flex-col md:!flex-row items-start justify-start pt-10 gap-5 !important">
         <Card className="w-full p-5">
           <VideoPlayer
-            serverLink={serverUrl}
+            originalLink={serverUrl}
+            serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
             mal={serverLink ? serverLink.malID : null}
             trackSrc={serverLink?.tracks || []}
             thumbnails={serverLink?.tracks?.[1]?.file || ""}
           />
-
           <Card className="flex flex-row items-center justify-between p-2 mt-3">
             {/* Current Episode */}
             <div className="flex flex-row gap-5">
