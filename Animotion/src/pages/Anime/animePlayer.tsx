@@ -8,10 +8,12 @@ import {
 import axios from "axios";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Rewind, FastForward, Mic, Captions, Server, Info } from "lucide-react";
+import { Rewind, FastForward, Mic, Captions, Server, Info, Search, FilterX } from "lucide-react";
 import VideoPlayer from "../../components/video-player";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import DisplayCard from "@/components/cards/display-card";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -50,8 +52,14 @@ const AnimePlayer: React.FC = () => {
   const [serverLink, setServerLink] = useState<any>(null);
   const [serverUrl, setServerUrl] = useState("");
   const [episodeList, setEpisodeList] = useState<Episode[]>([]);
+  const [filteredEpisodes, setFilteredEpisodes] = useState<Episode[]>([]);
   const [selectedEpisode, setSelectedEpisode] = useState(histEpisodeId);
   const [recommendPop, setRecommendPop] = useState<AnimeData[]>([]);
+
+  // Search and filter states
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showFillerOnly, setShowFillerOnly] = useState(false);
+  const [hideFillers, setHideFillers] = useState(false);
 
   // NEW: Manage server & format in state
   const [server, setServer] = useState<"hd-1" | "hd-2">("hd-1");
@@ -70,6 +78,39 @@ const AnimePlayer: React.FC = () => {
     localStorage.setItem("server", server);
     localStorage.setItem("format", format);
   }, [server, format]);
+
+  // Filter episodes based on search term and filter settings
+  useEffect(() => {
+    if (!episodeList.length) return;
+    
+    let filtered = [...episodeList];
+    
+    // Apply search filter
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        episode => 
+          episode.title?.toLowerCase().includes(term) || 
+          episode.number.toString().includes(term)
+      );
+    }
+    
+    // Apply filler filters
+    if (showFillerOnly) {
+      filtered = filtered.filter(episode => episode.isFiller);
+    } else if (hideFillers) {
+      filtered = filtered.filter(episode => !episode.isFiller);
+    }
+    
+    setFilteredEpisodes(filtered);
+  }, [searchTerm, showFillerOnly, hideFillers, episodeList]);
+
+  // Clear all filters
+  const clearFilters = () => {
+    setSearchTerm("");
+    setShowFillerOnly(false);
+    setHideFillers(false);
+  };
 
   // Update Episode History in localStorage
   const updateEpisodeHistory = (animeId: string, episodeId: string) => {
@@ -99,6 +140,7 @@ const AnimePlayer: React.FC = () => {
       .get(`${import.meta.env.VITE_API}/api/v2/hianime/anime/${id}/episodes`)
       .then((res) => {
         setEpisodeList(res.data.data.episodes);
+        setFilteredEpisodes(res.data.data.episodes);
       });
 
     axios
@@ -155,7 +197,91 @@ const AnimePlayer: React.FC = () => {
       setSelectedEpisode(prevEp);
     }
   };
+  
   const hasDub = serverInfo?.dub && serverInfo.dub.length > 0;
+  const hasFillers = episodeList.some(ep => ep.isFiller);
+
+  // Episode List Search Box Component
+  const EpisodeSearchBox = () => (
+    <div className="mb-4 space-y-2">
+      <div className="relative">
+        <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Input
+          placeholder="Search by episode number or title..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="pl-8"
+        />
+        {searchTerm && (
+          <Button 
+            variant="ghost" 
+            className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+            onClick={() => setSearchTerm("")}
+          >
+            <FilterX className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
+      
+      {hasFillers && (
+        <div className="flex flex-wrap gap-4 h-10">
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="hide-fillers" 
+              checked={hideFillers} 
+              onCheckedChange={() => {
+                setHideFillers(!hideFillers);
+                if (!hideFillers) setShowFillerOnly(false);
+              }}
+            />
+            <label htmlFor="hide-fillers" className="text-sm font-medium leading-none cursor-pointer">
+              Hide Fillers
+            </label>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="show-fillers-only" 
+              checked={showFillerOnly} 
+              onCheckedChange={() => {
+                setShowFillerOnly(!showFillerOnly);
+                if (!showFillerOnly) setHideFillers(false);
+              }}
+            />
+            <label htmlFor="show-fillers-only" className="text-sm font-medium leading-none cursor-pointer">
+              Show Fillers Only
+            </label>
+          </div>
+          
+          {(searchTerm || showFillerOnly || hideFillers) && (
+            <>
+              {isMobile ? (
+                <Button variant="destructive" size="icon" onClick={clearFilters} className="ml-auto">
+                  <FilterX className="h-4 w-4 mr-1" />
+                </Button>
+                ):(
+                <Button variant="outline" size="sm" onClick={clearFilters} className="ml-auto">
+                  <FilterX className="h-4 w-4 mr-1" /> Clear Filters
+                </Button>
+              )}
+            </>
+            
+          )}
+        </div>
+      )}
+      
+      <div className="flex justify-between items-center text-sm">
+        <span className="text-gray-400">
+          {filteredEpisodes.length} of {episodeList.length} episodes
+        </span>
+        {searchTerm && (
+          <span className="text-gray-400">
+            Search results for: "{searchTerm}"
+          </span>
+        )}
+      </div>
+    </div>
+  );
 
   if (isMobile) {
     // Mobile layout
@@ -175,11 +301,11 @@ const AnimePlayer: React.FC = () => {
             <Card className="flex flex-col items-start gap-3 p-2 mt-3">
               {/* Current Episode */}
               <div className="flex flex-row gap-3 items-center w-full">
-                <div className="flex flex-col items-start justify-center">
+                <div className="flex flex-col w-32 items-start justify-center">
                   <span className="text-xs font-light text-neutral-500">
                     Current Episode:
                   </span>
-                  <span className="text-2xl font-bold text-[--text-color]">
+                  <span className="text-lg w-full truncate font-bold text-[--text-color]">
                     Episode {serverInfo?.episodeNo}
                   </span>
                 </div>
@@ -276,16 +402,20 @@ const AnimePlayer: React.FC = () => {
 
           {/* Episodes List */}
           <Card className="w-full shadow-lg p-3">
-            <span className="text-lg font-bold mb-2 flex flex-row items-center justify-between w-full">
+            <span className="text-lg font-bold flex flex-row items-center justify-between w-full mb-2">
               Episodes List:
               <Badge className="text-neutral-500 text-xs font-semibold">
                 {episodeList.length} Episodes
               </Badge>
             </span>
-            <ScrollArea className="h-[40dvh] mt-2">
+            
+            {/* Episode Search and Filter */}
+            <EpisodeSearchBox />
+            
+            <ScrollArea className="h-[40dvh]">
               {episodeList.length < 50 ? (
                 <div className="grid grid-cols-1 gap-2">
-                  {episodeList.map((ep) => (
+                  {filteredEpisodes.map((ep) => (
                     <Button
                       key={ep.episodeId}
                       variant={
@@ -305,12 +435,17 @@ const AnimePlayer: React.FC = () => {
                       <span className="w-5/6 truncate text-left">
                         {ep.title}
                       </span>
+                      {ep.isFiller && (
+                        <Badge variant="outline" className="ml-auto text-[10px] bg-purple-500/20">
+                          Filler
+                        </Badge>
+                      )}
                     </Button>
                   ))}
                 </div>
               ) : (
                 <div className="grid grid-cols-4 gap-2">
-                  {episodeList.map((ep) => (
+                  {filteredEpisodes.map((ep) => (
                     <Button
                       key={ep.episodeId}
                       variant={
@@ -386,7 +521,7 @@ const AnimePlayer: React.FC = () => {
     );
   }
 
-  // Original Desktop Layout (unchanged)
+  // Desktop Layout
   return (
     <div className="flex flex-col items-center justify-center max-w-10xl w-full min-h-screen bg-[--background] text-[--text-color] p-5">
       {/* Video Player Section */}
@@ -513,10 +648,14 @@ const AnimePlayer: React.FC = () => {
               {episodeList.length} Episodes
             </Card>
           </span>
-          <ScrollArea className="h-[75dvh]">
+
+          {/* Episode Search and Filter */}
+          <EpisodeSearchBox />
+          
+          <ScrollArea className="h-[65dvh]">
             {episodeList.length < 50 ? (
               <div className="grid grid-cols-1 gap-3">
-                {episodeList.map((ep) => (
+                {filteredEpisodes.map((ep) => (
                   <Button
                     key={ep.episodeId}
                     variant={
@@ -530,16 +669,21 @@ const AnimePlayer: React.FC = () => {
                       ep.isFiller ? "bg-purple-500/10" : ""
                     } flex flex-row items-center justify-start`}
                   >
-                    <span className="font-black text-neutral-500">
+                    <span className="font-black text-neutral-500 mr-2">
                       {ep.number}.
                     </span>
                     <span className="w-5/6 truncate text-left">{ep.title}</span>
+                    {ep.isFiller && (
+                      <Badge variant="outline" className="ml-auto text-xs bg-purple-500/20">
+                        Filler
+                      </Badge>
+                    )}
                   </Button>
                 ))}
               </div>
             ) : (
               <div className="grid grid-cols-6 gap-3">
-                {episodeList.map((ep) => (
+                {filteredEpisodes.map((ep) => (
                   <Button
                     key={ep.episodeId}
                     variant={
@@ -551,11 +695,14 @@ const AnimePlayer: React.FC = () => {
                     }}
                     className={`w-full ${
                       ep.isFiller ? "bg-purple-500/10" : ""
-                    } flex flex-row items-center justify-center`}
+                    } flex flex-row items-center justify-center relative`}
                   >
                     <span className="font-black text-neutral-500">
                       {ep.number}
                     </span>
+                    {ep.isFiller && (
+                      <span className="absolute top-0 right-0 w-2 h-2 bg-purple-500 rounded-full"></span>
+                    )}
                   </Button>
                 ))}
               </div>

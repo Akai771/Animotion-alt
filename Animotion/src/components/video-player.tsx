@@ -42,7 +42,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ serverLink, trackSrc = [], th
   const placeholderImage = "https://placehold.jp/000000/ffffff/1920x1080.png?text=Loading...&css=%7B%22font-weight%22%3A%22%20700%22%7D";
 
   return (
-    <div className="VideoPlayerContainer relative">
+    <div className="relative">
       <div className="absolute top-2 right-2 z-10">
         <Button 
           variant="outline" 
