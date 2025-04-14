@@ -95,11 +95,11 @@ export function AppSidebar() {
           <SheetContent side="left" className="w-64 p-0">
             <div className="h-full overflow-y-auto flex flex-col">
               {/* Logo section */}
-              <div className="p-4 border-b border-[--bgColor3]">
+              <div className="p-4 border-b border-[--bgColor3] flex flex-row items-center gap-2">
                 <img 
-                  src={isDarkMode ? "Animotion_Dark.svg" : "Animotion_Light.svg"} 
+                  src={isDarkMode ? "Animotion_Light.svg" : "Animotion_Dark.svg"} 
                   alt="Animotion Logo" 
-                  className="h-10 mb-2"
+                  className="h-5"
                 />
               </div>
               

@@ -59,7 +59,7 @@ export default function CarouselMain() {
       <CarouselContent className="flex w-full h-full">
         {carouselData.map((item) => (
           <CarouselItem key={item.ID}>
-            <Card className={`relative ${isMobile ? 'w-full' : 'w-[100dvw]'} ${isMobile ? 'h-[40dvh]' : 'h-[60dvh]'} overflow-x-hidden`}>
+            <Card className={`relative ${isMobile ? 'w-full' : 'w-[100dvw]'} ${isMobile ? 'h-[40dvh]' : 'h-[60dvh]'} ${isMobile ? 'mx-2' : 'mx-0'} overflow-x-hidden`}>
               <img 
                 src={item.imageUrl} 
                 alt={item.title} 

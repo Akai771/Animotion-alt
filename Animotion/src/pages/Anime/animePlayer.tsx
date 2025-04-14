@@ -286,9 +286,9 @@ const AnimePlayer: React.FC = () => {
   if (isMobile) {
     // Mobile layout
     return (
-      <div className="flex flex-col items-center justify-center max-w-10xl w-full min-h-screen bg-[--background] text-[--text-color] p-3">
+      <div className="flex flex-col items-center justify-center max-w-8xl w-[100dvw] min-h-screen bg-[--background] text-[--text-color] p-3">
         {/* Video Player Section */}
-        <div className="w-full flex flex-col items-start justify-start pt-10 gap-3">
+        <div className="w-full flex flex-col items-start justify-start pt-14 gap-3">
           <Card className="w-full p-3">
             <VideoPlayer
               originalLink={serverUrl}

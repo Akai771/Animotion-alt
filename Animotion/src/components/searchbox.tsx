@@ -65,7 +65,7 @@ export default function SearchBox() {
 
   return (
     <div 
-      className={`w-full fixed flex flex-col justify-start items-center ${isMobile ? 'z-30' : 'z-10'} gap-10`}
+      className={`w-full fixed flex flex-col justify-start items-center ${isMobile ? 'pl-8' : 'pl-0'} ${isMobile ? 'z-30' : 'z-10'} gap-10`}
       ref={searchBoxRef}
     >
       <form

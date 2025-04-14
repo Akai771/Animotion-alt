@@ -70,7 +70,7 @@ export default function Routing() {
       <SidebarProvider>
         {/* ✅ Show Sidebar only if NOT on an excluded route */}
         {isMobile?(
-          <div className="flex flex-row border border-red-400">
+          <div className="flex flex-row">
             {!excludedRoutes.includes(location.pathname) && <AppSidebar />}
             {!excludedRoutes.includes(location.pathname) && <SearchBox />}
           </div>
