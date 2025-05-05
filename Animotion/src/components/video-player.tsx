@@ -1,20 +1,91 @@
 import React, { useEffect, useState } from "react";
-import { MediaPlayer, MediaProvider, PlayButton } from "@vidstack/react";
+import { MediaPlayer, MediaProvider, PlayButton, useMediaState, useMediaRemote } from "@vidstack/react";
 import { defaultLayoutIcons, DefaultVideoLayout } from "@vidstack/react/player/layouts/default";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, SkipForward } from "lucide-react";
 import { Button } from "@/components/ui/button";
-// import "./VideoPlayer.css";
 
 // Define Props Interface
 interface VideoPlayerProps {
   serverLink: string | null;
-  originalLink?: string;
   trackSrc?: { label: any; file: any }[];
   mal?: string;
   thumbnails?: string;
+  intro?: { start: number; end: number };
+  outro?: { start: number; end: number };
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ serverLink, trackSrc = [], thumbnails }) => {
+// Custom Skip Intro/Outro Button Component
+const SkipControls: React.FC<{
+  intro?: { start: number; end: number };
+  outro?: { start: number; end: number };
+}> = ({ intro, outro }) => {
+  const currentTime = useMediaState('currentTime');
+  const duration = useMediaState('duration');
+  const remote = useMediaRemote();
+  
+  // Check if current time is within intro range
+  const inIntro = intro && 
+    typeof currentTime === 'number' && 
+    currentTime >= intro.start && 
+    currentTime <= intro.end;
+  
+  // Check if current time is within outro range
+  const inOutro = outro && 
+    typeof currentTime === 'number' && 
+    typeof duration === 'number' &&
+    currentTime >= outro.start && 
+    currentTime <= outro.end;
+
+  const handleSkipIntro = () => {
+    if (remote && intro) {
+      remote.seek(intro.end + 1); // Skip just after intro ends
+    }
+  };
+
+  const handleSkipOutro = () => {
+    if (remote && outro && typeof duration === 'number') {
+      // Skip to 10 seconds before the end
+      remote.seek(Math.max(0, duration - 10));
+    }
+  };
+
+  if (!inIntro && !inOutro) return null;
+
+  return (
+    <div className="absolute bottom-[80px] right-4 z-10">
+      {inIntro && (
+        <Button 
+          variant="secondary" 
+          size="sm"
+          className="mr-2 bg-purple-600 hover:bg-purple-800 text-white border-none"
+          onClick={handleSkipIntro}
+        >
+          <SkipForward size={16} className="mr-1" />
+          Skip Intro
+        </Button>
+      )}
+      {inOutro && (
+        <Button 
+          variant="secondary" 
+          size="sm"
+          className="bg-purple-600 hover:bg-purple-700 text-white border-none"
+          onClick={handleSkipOutro}
+        >
+          <SkipForward size={16} className="mr-1" />
+          Skip Outro
+        </Button>
+      )}
+    </div>
+  );
+};
+
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ 
+  serverLink, 
+  trackSrc = [], 
+  thumbnails,
+  intro, // From API
+  outro  // From API
+}) => {
   const [key, setKey] = useState<number>(Date.now());
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -28,7 +99,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ serverLink, trackSrc = [], th
     setLoading(true);
     setKey(Date.now());
     
-    // Small timeout to simulate refresh and show loading state
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -73,6 +143,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ serverLink, trackSrc = [], th
             )}
           </MediaProvider>
           <DefaultVideoLayout icons={defaultLayoutIcons} thumbnails={thumbnails} />
+          
+          {/* Add Custom Skip Controls */}
+          <SkipControls 
+            intro={intro} 
+            outro={outro} 
+          />
         </MediaPlayer>
       ) : (
         <img src={placeholderImage} alt="Placeholder" className="PlaceholderImage" />

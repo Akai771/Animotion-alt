@@ -291,11 +291,12 @@ const AnimePlayer: React.FC = () => {
         <div className="w-full flex flex-col items-start justify-start pt-14 gap-3">
           <Card className="w-full p-3">
             <VideoPlayer
-              originalLink={serverUrl}
               serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
               mal={serverLink ? serverLink.malID : null}
               trackSrc={serverLink?.tracks || []}
               thumbnails={serverLink?.tracks?.[1]?.file || ""}
+              intro={serverLink?.intro}
+              outro={serverLink?.outro}
             />
 
             <Card className="flex flex-col items-start gap-3 p-2 mt-3">
@@ -528,11 +529,12 @@ const AnimePlayer: React.FC = () => {
       <div className="w-full flex sm:!flex-col md:!flex-row items-start justify-start pt-10 gap-5 !important">
         <Card className="w-full p-5">
           <VideoPlayer
-            originalLink={serverUrl}
             serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
             mal={serverLink ? serverLink.malID : null}
             trackSrc={serverLink?.tracks || []}
             thumbnails={serverLink?.tracks?.[1]?.file || ""}
+            intro={serverLink?.intro}
+            outro={serverLink?.outro}
           />
           <Card className="flex flex-row items-center justify-between p-2 mt-3">
             {/* Current Episode */}
