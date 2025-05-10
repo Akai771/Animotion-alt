@@ -1,3 +1,6 @@
+// video-player.tsx
+// This file is part of the Animotion Website.
+
 import React, { useEffect, useState } from "react";
 import { MediaPlayer, MediaProvider, PlayButton, useMediaState, useMediaRemote } from "@vidstack/react";
 import { defaultLayoutIcons, DefaultVideoLayout } from "@vidstack/react/player/layouts/default";
@@ -70,9 +73,7 @@ const SkipControls: React.FC<{
           size="sm"
           className="bg-purple-600 hover:bg-purple-700 text-white border-none"
           onClick={handleSkipOutro}
-        >
-          <SkipForward size={16} className="mr-1" />
-          Skip Outro
+        ><SkipForward size={16} className="mr-1" />Skip Outro
         </Button>
       )}
     </div>
