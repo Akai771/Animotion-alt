@@ -10,7 +10,10 @@ import { Button } from "@/components/ui/button";
 // Define Props Interface
 interface VideoPlayerProps {
   serverLink: string | null;
-  trackSrc?: { label: any; file: any }[];
+  trackSrc?: {
+    url: any;
+    lang: string; label: any; file: any 
+}[];
   mal?: string;
   thumbnails?: string;
   intro?: { start: number; end: number };
@@ -106,8 +109,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   };
 
   // Filter and get English track
-  const trackSource = trackSrc.filter((track) => track.label === "English");
-  const track = trackSource.length > 0 ? trackSource[0].file : "";
+  const trackSource = trackSrc.filter((track) => track.lang === "English");
+  const track = trackSource.length > 0 ? trackSource[0].url : "";
 
   // Placeholder image
   const placeholderImage = "https://placehold.jp/000000/ffffff/1920x1080.png?text=Loading...&css=%7B%22font-weight%22%3A%22%20700%22%7D";
