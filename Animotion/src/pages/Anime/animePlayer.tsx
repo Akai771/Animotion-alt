@@ -188,6 +188,7 @@ const AnimePlayer: React.FC = () => {
       setSelectedEpisode(nextEp);
     }
   };
+  
 
   const handlePrevEp = () => {
     if (!serverInfo) return;
@@ -196,6 +197,29 @@ const AnimePlayer: React.FC = () => {
       navigate(`/watch/${id}?epId=${prevEp}`);
       setSelectedEpisode(prevEp);
     }
+  };
+
+  const checkHasNextEpisode = (): boolean => {
+    if (!serverInfo || !episodeList.length) return false;
+    const nextEpIndex = serverInfo.episodeNo;
+    return nextEpIndex < episodeList.length;
+  };
+
+  // NEW: Function to get next episode info
+  const getNextEpisodeInfo = () => {
+    if (!serverInfo || !episodeList.length || !animeData) return undefined;
+    
+    const nextEpIndex = serverInfo.episodeNo; // This gives us the next episode index (0-based)
+    const nextEpisode = episodeList[nextEpIndex];
+    
+    if (!nextEpisode) return undefined;
+
+    return {
+      title: nextEpisode.title || `${animeData.name}`,
+      episode: `Episode ${nextEpisode.number}`,
+      duration: animeData.stats?.duration || "24m",
+      thumbnail: animeData.poster || "https://placehold.jp/320x192.png?text=Next+Episode"
+    };
   };
   
   const hasDub = serverInfo?.dub && serverInfo.dub.length > 0;
@@ -297,6 +321,9 @@ const AnimePlayer: React.FC = () => {
               thumbnails={serverLink?.tracks?.[1]?.file || ""}
               intro={serverLink?.intro}
               outro={serverLink?.outro}
+              onNextEpisode={handleNextEp}
+              hasNextEpisode={checkHasNextEpisode()}
+              nextEpisodeInfo={getNextEpisodeInfo()}
             />
 
             <Card className="flex flex-col items-start gap-3 p-2 mt-3">
@@ -535,6 +562,9 @@ const AnimePlayer: React.FC = () => {
             thumbnails={serverLink?.tracks?.[1]?.file || ""}
             intro={serverLink?.intro}
             outro={serverLink?.outro}
+            onNextEpisode={handleNextEp}
+            hasNextEpisode={checkHasNextEpisode()}
+            nextEpisodeInfo={getNextEpisodeInfo()}
           />
           <Card className="flex flex-row items-center justify-between p-2 mt-3">
             {/* Current Episode */}
