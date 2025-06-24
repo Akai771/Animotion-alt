@@ -32,9 +32,7 @@ const ContWatchingCard: React.FC<ContWatchingCardProps> = ({ id, title, coverIma
         console.error(error);
       });
   }, []);
-
-  console.log(episode);
-
+  
   // Mobile version
   if (isMobile) {
     return (
@@ -84,7 +82,7 @@ const ContWatchingCard: React.FC<ContWatchingCardProps> = ({ id, title, coverIma
       </div>
       <div className="w-72 p-2 flex flex-col items-start text-md">
         <span className="w-full font-bold text-[--text-color] whitespace-nowrap overflow-hidden text-ellipsis">{title}</span>
-        <span className="font-medium text-[--secondary-color] whitespace-nowrap overflow-hidden text-ellipsis text-xs">EP {episode? episode : "No Data"}</span>
+        <span className="w-full font-medium text-[--secondary-color] text-xs truncate">EP {episode? episode : "No Data"}</span>
       </div>
     </Card>
   );
