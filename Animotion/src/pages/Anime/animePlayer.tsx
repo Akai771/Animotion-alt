@@ -62,7 +62,7 @@ const AnimePlayer: React.FC = () => {
   const [hideFillers, setHideFillers] = useState(false);
 
   // NEW: Manage server & format in state
-  const [server, setServer] = useState<"hd-1" | "hd-2">("hd-1");
+  const [server, setServer] = useState<"hd-1" | "hd-2">("hd-2");
   const [format, setFormat] = useState<"sub" | "dub">("sub");
 
   // One-time effect to read server & format preferences from localStorage
