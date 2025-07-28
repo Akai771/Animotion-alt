@@ -225,6 +225,15 @@ const AnimePlayer: React.FC = () => {
   const hasDub = serverInfo?.dub && serverInfo.dub.length > 0;
   const hasFillers = episodeList.some(ep => ep.isFiller);
 
+  const getProxiedTracks = (tracks: any[]) => {
+  if (!tracks || !serverLink?.headers?.Referer) return tracks;
+  
+  return tracks.map(track => ({
+    ...track,
+    url: `${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${encodeURIComponent(track.url)}&referer=${encodeURIComponent(serverLink.headers.Referer)}`
+  }));
+};
+
   // Episode List Search Box Component
   const EpisodeSearchBox = () => (
     <div className="mb-4 space-y-2">
@@ -317,7 +326,7 @@ const AnimePlayer: React.FC = () => {
             <VideoPlayer
               serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
               mal={serverLink ? serverLink.malID : null}
-              trackSrc={serverLink?.tracks || []}
+              trackSrc={getProxiedTracks(serverLink?.tracks || [])}
               thumbnails={serverLink?.tracks?.[1]?.file || ""}
               intro={serverLink?.intro}
               outro={serverLink?.outro}
@@ -558,7 +567,7 @@ const AnimePlayer: React.FC = () => {
           <VideoPlayer
             serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
             mal={serverLink ? serverLink.malID : null}
-            trackSrc={serverLink?.tracks || []}
+            trackSrc={getProxiedTracks(serverLink?.tracks || [])}
             thumbnails={serverLink?.tracks?.[1]?.file || ""}
             intro={serverLink?.intro}
             outro={serverLink?.outro}
