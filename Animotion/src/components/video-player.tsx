@@ -103,15 +103,12 @@ const NextEpisodeCard: React.FC<{
       clearInterval(intervalRef.current);
     }
     
-    console.log('Manual next episode click triggered');
     onNextEpisode();
   }, [onNextEpisode]);
 
   // Calculate stroke dash offset for timer animation
   const circumference = 2 * Math.PI * 28;
   const strokeDashoffset = circumference - (countdown / 10) * circumference;
-
-  console.log("Next Episode Card rendered with info:", nextEpisodeInfo);
 
   return (
     <div 
@@ -245,19 +242,6 @@ const SkipControls: React.FC<{
   const [showNextEpisodeCard, setShowNextEpisodeCard] = useState(false);
   const [cardWasShown, setCardWasShown] = useState(false);
 
-  // Debug logging
-  useEffect(() => {
-    console.log('SkipControls state:', {
-      currentTime,
-      duration,
-      intro,
-      outro,
-      hasNextEpisode,
-      showNextEpisodeCard,
-      cardWasShown
-    });
-  }, [currentTime, duration, intro, outro, hasNextEpisode, showNextEpisodeCard, cardWasShown]);
-
   // Check if current time is within intro range
   const inIntro = intro &&
     typeof currentTime === "number" &&
@@ -286,7 +270,6 @@ const SkipControls: React.FC<{
     const shouldShow = shouldShowCard();
     
     if (shouldShow && !showNextEpisodeCard) {
-      console.log('Showing next episode card');
       setShowNextEpisodeCard(true);
       setCardWasShown(true);
     } else if (!shouldShow && showNextEpisodeCard && cardWasShown) {
@@ -294,7 +277,6 @@ const SkipControls: React.FC<{
       if (typeof currentTime === "number" && typeof duration === "number") {
         const timeRemaining = duration - currentTime;
         if (timeRemaining > 150) { // More than 2.5 minutes remaining
-          console.log('Hiding next episode card - too early');
           setShowNextEpisodeCard(false);
           setCardWasShown(false);
         }
@@ -322,14 +304,12 @@ const SkipControls: React.FC<{
   };
 
   const handleNextEpisode = useCallback(() => {
-    console.log('handleNextEpisode called');
     if (onNextEpisode) {
       onNextEpisode();
     }
   }, [onNextEpisode]);
 
   const handleCancelNextEpisode = useCallback(() => {
-    console.log('Next episode card cancelled by user');
     setShowNextEpisodeCard(false);
     // Don't reset cardWasShown so it can show again if still in outro
   }, []);
@@ -394,18 +374,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     import("@vidstack/react/player/styles/default/theme.css");
     import("@vidstack/react/player/styles/default/layouts/video.css");
   }, []);
-
-  // Debug logging for props
-  useEffect(() => {
-    console.log('VideoPlayer props:', {
-      hasIntro: !!intro,
-      hasOutro: !!outro,
-      intro,
-      outro,
-      hasNextEpisode,
-      nextEpisodeInfo
-    });
-  }, [intro, outro, hasNextEpisode, nextEpisodeInfo]);
 
   // Handle refresh button click
   const handleRefresh = () => {
