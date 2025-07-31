@@ -1,3 +1,4 @@
+// src/components/cards/trending-card.tsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";

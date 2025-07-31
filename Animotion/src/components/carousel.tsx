@@ -1,3 +1,4 @@
+// src/components/carousel.tsx
 import { useState, useEffect, useRef } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";

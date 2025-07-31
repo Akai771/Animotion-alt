@@ -4,17 +4,56 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { AuroraText } from "@/components/ui/aurora-text";
-import { Github, Twitter, Youtube, Instagram } from 'lucide-react';
+import { Github, Twitter, Youtube, Instagram, Home } from 'lucide-react';
 import { BlurFade } from '@/components/ui/blur-fade';
 import { TextAnimate } from '@/components/ui/text-animate';
 
 const Splash = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const parsedToken = JSON.parse(token);
+          // Check if token exists and has user data
+          if (parsedToken && parsedToken.user) {
+            setIsLoggedIn(true);
+          }
+        } catch (error) {
+          console.error("Error parsing token:", error);
+          // Remove invalid token
+          localStorage.removeItem("token");
+        }
+      }
+      setLoading(false);
+    };
+
+    checkLoginStatus();
+  }, []);
 
   const handleClick = () => {
-    navigate('/login');
+    if (isLoggedIn) {
+      navigate('/home');
+    } else {
+      navigate('/login');
+    }
   };
+
+  // Don't render until we've checked login status
+  if (loading) {
+    return (
+      <div className="min-h-screen w-full bg-black text-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full bg-black text-white">
@@ -25,7 +64,7 @@ const Splash = () => {
           style={{ animationDuration: '10s' }}
         />
         <div 
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[128px] animate-pulse transition-transformhover:-translate-y-1"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[128px] animate-pulse transition-transform hover:-translate-y-1"
           style={{ animationDuration: '15s' }}
         />
       </div>
@@ -53,10 +92,17 @@ const Splash = () => {
           <nav className="hidden z-[10] md:flex items-center">
             <Button
               className="z-[10]"
-              variant="secondary"
+              variant={isLoggedIn ? "default" : "secondary"}
               onClick={handleClick}
             >
-              Login
+              {isLoggedIn ? (
+                <>
+                  <Home className="mr-2 h-4 w-4" />
+                  Home
+                </>
+              ) : (
+                "Login"
+              )}
             </Button>
           </nav>
 
@@ -70,7 +116,19 @@ const Splash = () => {
               </SheetTrigger>
               <SheetContent side="right" className="bg-black text-white">
                 <nav className="flex flex-col gap-4 mt-8">
-                  <Button className="w-full bg-purple-400 text-white" onClick={handleClick}>Login</Button>
+                  <Button 
+                    className={`w-full ${isLoggedIn ? "bg-green-600 text-white" : "bg-purple-400 text-white"}`} 
+                    onClick={handleClick}
+                  >
+                    {isLoggedIn ? (
+                      <>
+                        <Home className="mr-2 h-4 w-4" />
+                        Go to Home
+                      </>
+                    ) : (
+                      "Login"
+                    )}
+                  </Button>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -83,7 +141,7 @@ const Splash = () => {
         <div className="mx-auto px-4 h-full max-h-[90dvh] flex flex-col items-center justify-center">
           <div className="max-w-3xl mx-auto text-center">
             <Button variant="outline" className="mb-6 rounded-full">
-              Free Anime Streaming
+              {isLoggedIn ? "Welcome Back!" : "Free Anime Streaming"}
             </Button>
             <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
               Where Fans Unite For 
@@ -92,12 +150,22 @@ const Splash = () => {
               </AuroraText>
             </h1>
             <TextAnimate animation="blurIn" by="character" className="text-lg md:text-xl text-gray-400 mb-12 font-light max-w-xl mx-auto">
-              Stream thousands of anime series & movies in top-notch quality, 
-              anytime, anywhere — completely free and ad-free. Join a global 
-              community of fans & celebrate your passion for anime!
+              {isLoggedIn ? (
+                "Welcome back to your anime adventure! Continue watching your favorite series and discover new ones in our vast library."
+              ) : (
+                "Stream thousands of anime series & movies in top-notch quality, anytime, anywhere — completely free and ad-free. Join a global community of fans & celebrate your passion for anime!"
+              )}
             </TextAnimate>
             <Button onClick={handleClick} size="lg">
-              <Play className="mr-2" /> Start Watching
+              {isLoggedIn ? (
+                <>
+                  <Home className="mr-2" /> Go to Home
+                </>
+              ) : (
+                <>
+                  <Play className="mr-2" /> Start Watching
+                </>
+              )}
             </Button>
           </div>
         </div>

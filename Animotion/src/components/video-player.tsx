@@ -1,7 +1,7 @@
 // video-player.tsx
 // This file is part of the Animotion Website.
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   MediaPlayer,
   MediaProvider,
@@ -29,8 +29,8 @@ interface VideoPlayerProps {
   thumbnails?: string;
   intro?: { start: number; end: number };
   outro?: { start: number; end: number };
-  onNextEpisode?: () => void; // New prop for next episode navigation
-  hasNextEpisode?: boolean; // New prop to check if next episode exists
+  onNextEpisode?: () => void;
+  hasNextEpisode?: boolean;
   nextEpisodeInfo?: {
     title?: string;
     episode?: string;
@@ -50,10 +50,11 @@ const NextEpisodeCard: React.FC<{
   };
   onCancel: () => void;
 }> = ({ onNextEpisode, nextEpisodeInfo, onCancel }) => {
-  const [countdown, setCountdown] = useState(10); // 10 seconds countdown
+  const [countdown, setCountdown] = useState(10);
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const hasNavigated = useRef(false); // Prevent double navigation
 
   useEffect(() => {
     // Fade in animation
@@ -62,8 +63,8 @@ const NextEpisodeCard: React.FC<{
     // Start countdown
     intervalRef.current = setInterval(() => {
       setCountdown((prev) => {
-        if (prev <= 1) {
-          // Auto advance to next episode when countdown reaches 0
+        if (prev <= 1 && !hasNavigated.current) {
+          hasNavigated.current = true;
           onNextEpisode();
           return 0;
         }
@@ -79,28 +80,38 @@ const NextEpisodeCard: React.FC<{
     };
   }, [onNextEpisode]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setIsExiting(true);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
     
-    // Exit animation then remove component
     setTimeout(() => {
       onCancel();
     }, 300);
-  };
+  }, [onCancel]);
 
-  const handlePlayNow = () => {
+  const handlePlayNow = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    
+    if (hasNavigated.current) return; // Prevent double clicks
+    
+    hasNavigated.current = true;
+    
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
+    
+    console.log('Manual next episode click triggered');
     onNextEpisode();
-  };
+  }, [onNextEpisode]);
 
   // Calculate stroke dash offset for timer animation
-  const circumference = 2 * Math.PI * 28; // radius = 28
+  const circumference = 2 * Math.PI * 28;
   const strokeDashoffset = circumference - (countdown / 10) * circumference;
+
+  console.log("Next Episode Card rendered with info:", nextEpisodeInfo);
 
   return (
     <div 
@@ -111,6 +122,7 @@ const NextEpisodeCard: React.FC<{
           ? 'opacity-0 translate-y-4 scale-95'
           : 'opacity-0 translate-y-8'
       }`}
+      onClick={(e) => e.stopPropagation()} // Prevent event bubbling
     >
       <div className="relative w-80 h-48 rounded-xl overflow-hidden shadow-2xl border border-gray-600/30 group cursor-pointer">
         {/* Background Thumbnail */}
@@ -120,7 +132,6 @@ const NextEpisodeCard: React.FC<{
             alt="Next Episode Thumbnail"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
-          {/* Dark overlay for better contrast */}
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
@@ -131,7 +142,8 @@ const NextEpisodeCard: React.FC<{
           </span>
           <button
             onClick={handleCancel}
-            className="w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:scale-110 group/cancel"
+            className="w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:scale-110 group/cancel z-30"
+            type="button"
           >
             <X size={16} className="text-white/80 group-hover/cancel:text-white transition-colors" />
           </button>
@@ -141,14 +153,14 @@ const NextEpisodeCard: React.FC<{
         <div className="absolute inset-0 flex items-center justify-center">
           <button
             onClick={handlePlayNow}
-            className="relative w-16 h-16 rounded-full bg-black/50 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center transition-all duration-300 hover:scale-110 group/play border border-white/20"
+            className="relative w-16 h-16 rounded-full bg-black/50 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center transition-all duration-300 hover:scale-110 group/play border border-white/20 z-30"
+            type="button"
           >
             {/* Timer Circle */}
             <svg 
-              className="absolute inset-0 w-full h-full -rotate-90" 
+              className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" 
               viewBox="0 0 64 64"
             >
-              {/* Background circle */}
               <circle
                 cx="32"
                 cy="32"
@@ -157,7 +169,6 @@ const NextEpisodeCard: React.FC<{
                 strokeWidth="2"
                 fill="none"
               />
-              {/* Progress circle */}
               <circle
                 cx="32"
                 cy="32"
@@ -172,30 +183,27 @@ const NextEpisodeCard: React.FC<{
               />
             </svg>
             
-            {/* Play Icon */}
             <Play 
               size={20} 
-              className="text-white ml-1 group-hover/play:scale-110 transition-transform duration-300 drop-shadow-lg" 
+              className="text-white ml-1 group-hover/play:scale-110 transition-transform duration-300 drop-shadow-lg pointer-events-none" 
               fill="white" 
             />
             
-            {/* Countdown number */}
-            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+            <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none">
               <span className="text-xs font-bold text-white bg-black/50 px-2 py-1 rounded-full backdrop-blur-sm">
                 {countdown}s
               </span>
             </div>
 
-            {/* Pulse animation for urgency when countdown is low */}
             {countdown <= 3 && (
-              <div className="absolute inset-0 rounded-full border-2 border-white/60 animate-pulse"></div>
+              <div className="absolute inset-0 rounded-full border-2 border-white/60 animate-pulse pointer-events-none"></div>
             )}
           </button>
         </div>
 
         {/* Bottom Gradient and Episode Info */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 right-0 p-4 z-10 pointer-events-none">
           <div className="flex items-end justify-between">
             <div>
               <h3 className="text-lg font-semibold text-white mb-1 drop-shadow-lg">
@@ -212,7 +220,7 @@ const NextEpisodeCard: React.FC<{
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
       </div>
     </div>
   );
@@ -235,53 +243,96 @@ const SkipControls: React.FC<{
   const duration = useMediaState("duration");
   const remote = useMediaRemote();
   const [showNextEpisodeCard, setShowNextEpisodeCard] = useState(false);
+  const [cardWasShown, setCardWasShown] = useState(false);
+
+  // Debug logging
+  useEffect(() => {
+    console.log('SkipControls state:', {
+      currentTime,
+      duration,
+      intro,
+      outro,
+      hasNextEpisode,
+      showNextEpisodeCard,
+      cardWasShown
+    });
+  }, [currentTime, duration, intro, outro, hasNextEpisode, showNextEpisodeCard, cardWasShown]);
 
   // Check if current time is within intro range
-  const inIntro =
-    intro &&
+  const inIntro = intro &&
     typeof currentTime === "number" &&
     currentTime >= intro.start &&
     currentTime <= intro.end;
 
-  // Check if current time is within outro range
-  const inOutro =
-    outro &&
+  // More robust outro detection
+  const shouldShowCard = useCallback(() => {
+    if (!hasNextEpisode || !onNextEpisode) return false;
+    
+    if (typeof currentTime !== "number" || typeof duration !== "number") return false;
+    
+    // If we have outro data, use it with some buffer
+    if (outro) {
+      const inOutroRange = currentTime >= outro.start && currentTime <= outro.end;
+      if (inOutroRange) return true;
+    }
+    
+    // Fallback: show in last 2 minutes
+    const timeRemaining = duration - currentTime;
+    return timeRemaining <= 120 && timeRemaining > 5; // 2 minutes before end, but not in last 5 seconds
+  }, [currentTime, duration, outro, hasNextEpisode, onNextEpisode]);
+
+  // Main effect to show/hide card
+  useEffect(() => {
+    const shouldShow = shouldShowCard();
+    
+    if (shouldShow && !showNextEpisodeCard) {
+      console.log('Showing next episode card');
+      setShowNextEpisodeCard(true);
+      setCardWasShown(true);
+    } else if (!shouldShow && showNextEpisodeCard && cardWasShown) {
+      // Only hide if we're far from the outro region to prevent flickering
+      if (typeof currentTime === "number" && typeof duration === "number") {
+        const timeRemaining = duration - currentTime;
+        if (timeRemaining > 150) { // More than 2.5 minutes remaining
+          console.log('Hiding next episode card - too early');
+          setShowNextEpisodeCard(false);
+          setCardWasShown(false);
+        }
+      }
+    }
+  }, [shouldShowCard, showNextEpisodeCard, cardWasShown, currentTime, duration]);
+
+  // Check if current time is within outro range (for skip button)
+  const inOutro = outro &&
     typeof currentTime === "number" &&
     typeof duration === "number" &&
     currentTime >= outro.start &&
     currentTime <= outro.end;
 
-  // Show next episode card when in outro
-  useEffect(() => {
-    if (inOutro && hasNextEpisode && onNextEpisode && !showNextEpisodeCard) {
-      setShowNextEpisodeCard(true);
-    } else if (!inOutro && showNextEpisodeCard) {
-      setShowNextEpisodeCard(false);
-    }
-  }, [inOutro, hasNextEpisode, onNextEpisode, showNextEpisodeCard]);
-
   const handleSkipIntro = () => {
     if (remote && intro) {
-      remote.seek(intro.end + 1); // Skip just after intro ends
+      remote.seek(intro.end + 1);
     }
   };
 
   const handleSkipOutro = () => {
     if (remote && outro && typeof duration === "number") {
-      // Skip to 10 seconds before the end
       remote.seek(Math.max(0, duration - 10));
     }
   };
 
-  const handleNextEpisode = () => {
+  const handleNextEpisode = useCallback(() => {
+    console.log('handleNextEpisode called');
     if (onNextEpisode) {
       onNextEpisode();
     }
-  };
+  }, [onNextEpisode]);
 
-  const handleCancelNextEpisode = () => {
+  const handleCancelNextEpisode = useCallback(() => {
+    console.log('Next episode card cancelled by user');
     setShowNextEpisodeCard(false);
-  };
+    // Don't reset cardWasShown so it can show again if still in outro
+  }, []);
 
   return (
     <>
@@ -343,6 +394,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     import("@vidstack/react/player/styles/default/theme.css");
     import("@vidstack/react/player/styles/default/layouts/video.css");
   }, []);
+
+  // Debug logging for props
+  useEffect(() => {
+    console.log('VideoPlayer props:', {
+      hasIntro: !!intro,
+      hasOutro: !!outro,
+      intro,
+      outro,
+      hasNextEpisode,
+      nextEpisodeInfo
+    });
+  }, [intro, outro, hasNextEpisode, nextEpisodeInfo]);
 
   // Handle refresh button click
   const handleRefresh = () => {
@@ -407,7 +470,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
             thumbnails={thumbnails}
           />
 
-          {/* Add Custom Skip Controls with Next Episode Card */}
           <SkipControls
             intro={intro}
             outro={outro}
