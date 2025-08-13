@@ -97,6 +97,14 @@ export default function AnimeDetails() {
     const settings = getSliderSettings(true);
     const seasonSettings = getSliderSettings(false);
 
+    const handleExternalClick = (source: string) => {
+        if (source === "MAL") {
+            window.open(`https://myanimelist.net/anime/${animeData.malId}`, "_blank");
+        } else if (source === "Anilist") {
+            window.open(`https://anilist.co/anime/${animeData.anilistId}`, "_blank");
+        }
+    };
+
     if (isMobile) {
         // Mobile layout
         return (
@@ -142,6 +150,10 @@ export default function AnimeDetails() {
                                         <span className="font-bold">Episodes: <span className="font-normal">{animeData.stats?.episodes?.sub || "0"}</span></span>
                                         <span className="font-bold">MAL Score: <span className="font-normal">{addData?.malscore || "No Data"}</span></span>
                                         <span className="font-bold">Studio: <span className="font-normal">{addData?.studios || "No Data"}</span></span>
+                                    </div>
+                                    <div className="flex gap-2 mt-2">
+                                        <Button variant="outline" className="w-full rounded-sm text-xs" onClick={() => handleExternalClick("MAL")}>MAL</Button>
+                                        <Button variant="outline" className="w-full rounded-sm text-xs" onClick={() => handleExternalClick("Anilist")}>Anilist</Button>
                                     </div>
                                 </div>
                             </div>
@@ -225,10 +237,16 @@ export default function AnimeDetails() {
                 <>
                     <CardHeader className="flex flex-row gap-6 justify-between">
                         <div className="flex flex-row gap-6">
-                            <img
-                                src={animeData.poster || "https://via.placeholder.com/150x190"}
-                                alt="Anime Cover"
-                                className="w-48 h-64 object-cover rounded-lg" />
+                            <div>
+                                <img
+                                    src={animeData.poster || "https://via.placeholder.com/150x190"}
+                                    alt="Anime Cover"
+                                    className="w-48 h-64 object-cover rounded-lg" />
+                                <div className="flex gap-2 mt-2">
+                                    <Button variant="outline" className="w-full rounded-sm text-xs" onClick={() => handleExternalClick("MAL")}>MAL</Button>
+                                    <Button variant="outline" className="w-full rounded-sm text-xs" onClick={() => handleExternalClick("Anilist")}>Anilist</Button>
+                                </div>
+                            </div>
                             <div className="flex flex-col justify-between">
                                 <CardTitle className="text-2xl font-bold">{animeData.name}</CardTitle>
                                 <div className="flex gap-3 text-sm">
@@ -257,6 +275,7 @@ export default function AnimeDetails() {
                                 <span className="text-sm font-bold">Episodes: <span className="font-normal">{animeData.stats?.episodes?.sub || "0"}</span></span>
                                 <span className="text-sm font-bold">MAL Score: <span className="font-normal">{addData?.malscore || "No Data"}</span></span>
                                 <span className="text-sm font-bold">Studio: <span className="font-normal">{addData?.studios || "No Data"}</span></span>
+                                
                             </div>
                         </div>
                         <div>

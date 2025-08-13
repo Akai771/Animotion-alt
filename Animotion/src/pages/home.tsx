@@ -95,7 +95,7 @@ export default function Home(){
         infinite: true,
         speed: 400,
         slidesToShow: isCompactView ? 2 : 1,
-        slidesToScroll: isCompactView ? 2 : 1,
+        slidesToScroll: isCompactView ? 1 : 1,
         swipeToSlide: true,
       };
     } else if (screenWidth < 1600) {
@@ -104,7 +104,7 @@ export default function Home(){
         infinite: true,
         speed: 400,
         slidesToShow: isCompactView ? 5 : 4,
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         swipeToSlide: true,
       };
     } else {
@@ -206,7 +206,7 @@ export default function Home(){
                 </div>
               </div>
             ) : (
-              <div className="mt-5 flex flex-row items-center justify-start gap-10 max-w-[90dvw] flex-wrap">
+              <div className="mt-5 flex flex-row items-center justify-start max-w-[90dvw] flex-wrap">
                 {recentEp.map((recentEp) => (
                     <DisplayCard key={recentEp.id} id={recentEp.id} title={recentEp.name} coverImage={recentEp.poster} currentEpisode={recentEp.episodes?.sub || "N/A"} type={recentEp.type} duration={recentEp.duration} currentText={"Episode"}/>
                 ))}

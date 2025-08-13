@@ -59,7 +59,6 @@ const Schedule: React.FC = () => {
     window.scrollTo(0, 0);
   }, [day]);
 
-  console.log(day);
   return (
     <>
       <div className="min-h-screen ml-5 text-white mt-10">

@@ -109,7 +109,7 @@ const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, curren
             </div>
         </div>
     } placement="right" arrow disableInteractive>
-        <Card className="group flex flex-col w-56 max-h-96 p-3 bg-[--bgColor2] text-white relative overflow-visible transition-transform duration-500 ease-in-out cursor-pointer">
+        <Card className="group flex flex-col w-56 max-h-96 p-3 bg-[--bgColor2] text-white relative overflow-visible transition-all duration-500 ease-in-out cursor-pointer border-none hover:bg-[--bgColor3]">
             <Link to={`/details/${id}`}>
                 <div className="relative w-50 h-72 overflow-hidden rounded-md">
                     <img 
@@ -117,12 +117,9 @@ const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, curren
                         src={coverImage} 
                         alt={title} 
                     />
-                    <div className="absolute top-4 left-3 flex flex-row gap-1.5 transition-all duration-500 ease-in-out ">
+                    <div className="absolute top-1 right-1 flex flex-row gap-1.5 transition-all duration-500 ease-in-out ">
                         {type && (
-                            <Badge className="text-[10px] h-6 font-bold bg-red-500 text-white">{type}</Badge>
-                        )}
-                        {duration && (
-                            <Badge className="text-[10px] h-6 font-bold bg-[--primary-color] text-white">{duration}</Badge>
+                            <Badge variant="secondary" className="rounded-md text-[10px] h-6 font-bold text-[--text-color] backdrop-blur-xl bg-card/50 border-border/50">{type}</Badge>
                         )}
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 ease-in-out z-10">
@@ -131,10 +128,13 @@ const DisplayCard: React.FC<DisplayCardProps> = ({ id, title, coverImage, curren
                 </div>
             </Link>
             <div className="flex flex-col items-start justify-start pt-1.5">
-                <div className="w-full h-7 line-clamp-1">
-                    <span className="font-sans text-sm font-semibold text-[--text-color]">{title}</span>
+                <div className="w-full h-6 line-clamp-1">
+                    <span className="font-sans text-sm font-semibold text-foreground">{title}</span>
                 </div>
-                <span className="text-xs font-sans font-normal text-[--secondary-color] pr-4">{currentText} {currentEpisode}</span>
+                <div className="">
+                  <span className="text-xs font-sans font-normal text-muted-foreground">{currentText} {currentEpisode}</span>
+                  {duration && <span className="text-xs font-sans font-normal text-muted-foreground"> • {duration}</span>}
+                </div>
             </div>
         </Card>
     </Tooltip>
