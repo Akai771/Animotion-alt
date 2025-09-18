@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import DisplayCard from "@/components/cards/display-card";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Helmet } from "react-helmet-async";
 
 // Define types for episodes & anime
 interface Episode {
@@ -320,6 +321,14 @@ const AnimePlayer: React.FC = () => {
     // Mobile layout
     return (
       <div className="flex flex-col items-center justify-center max-w-8xl w-[100dvw] min-h-screen bg-[--background] text-[--text-color] p-3">
+        <Helmet>
+            <title>{animeData ? `Watching ${animeData.name} Episode ${serverInfo?.episodeNo} on Animotion` : 'Loading... - Animotion'}</title>
+            <meta name="description" content={animeData ? `Watch ${animeData.name} Episode ${serverInfo?.episodeNo}. ${animeData.description}` : 'Loading...'} />
+            <meta property="og:title" content={animeData ? `Watch Episode ${serverInfo?.episodeNo} of ${animeData.name} on Animotion` : 'Loading... - Animotion'} />
+            <meta property="og:description" content={animeData ? `${animeData.description}` : 'Loading...'} />
+            <meta property="og:image" content={animeData ? animeData.poster : 'https://via.placeholder.com/150x190'} />
+        </Helmet>
+        
         {/* Video Player Section */}
         <div className="w-full flex flex-col items-start justify-start pt-14 gap-3">
           <Card className="w-full p-3">
@@ -561,6 +570,14 @@ const AnimePlayer: React.FC = () => {
   // Desktop Layout
   return (
     <div className="flex flex-col items-center justify-center max-w-10xl w-full min-h-screen bg-[--background] text-[--text-color] p-5">
+        <Helmet>
+            <title>{animeData ? `Watching ${animeData.name} Episode ${serverInfo?.episodeNo} on Animotion` : 'Loading... - Animotion'}</title>
+            <meta name="description" content={animeData ? `Watch ${animeData.name} Episode ${serverInfo?.episodeNo}. ${animeData.description}` : 'Loading...'} />
+            <meta property="og:title" content={animeData ? `Watch Episode ${serverInfo?.episodeNo} of ${animeData.name} on Animotion` : 'Loading... - Animotion'} />
+            <meta property="og:description" content={animeData ? `${animeData.description}` : 'Loading...'} />
+            <meta property="og:image" content={animeData ? animeData.poster : 'https://via.placeholder.com/150x190'} />
+        </Helmet>
+        
       {/* Video Player Section */}
       <div className="w-full flex sm:!flex-col md:!flex-row items-start justify-start pt-10 gap-5 !important">
         <Card className="w-full p-5">

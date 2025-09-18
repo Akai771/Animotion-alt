@@ -143,13 +143,13 @@ const Splash = () => {
             <Button variant="outline" className="mb-6 rounded-full">
               {isLoggedIn ? "Welcome Back!" : "Free Anime Streaming"}
             </Button>
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+            <h1 className="text-4xl md:text-7xl font-bold mb-4 md:mb-8 leading-tight">
               Where Fans Unite For 
               <AuroraText>
                 Endless Anime.
               </AuroraText>
             </h1>
-            <TextAnimate animation="blurIn" by="character" className="text-lg md:text-xl text-gray-400 mb-12 font-light max-w-xl mx-auto">
+            <TextAnimate animation="blurIn" by="character" className="w-80 md:w-full text-sm md:text-xl text-gray-400 mb-8 md:mb-12 font-light max-w-lg mx-auto">
               {isLoggedIn ? (
                 "Welcome back to your anime adventure! Continue watching your favorite series and discover new ones in our vast library."
               ) : (
@@ -178,7 +178,7 @@ const Splash = () => {
             Key Features
           </h2>
           <BlurFade delay={0.25} inView>
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-xs md:max-w-5xl mx-auto">
             {[
               { title: "1080p HD Streaming", desc: "Crystal-clear anime viewing with zero buffering.", icon: <Monitor size={32} /> },
               { title: "Dub & Sub Options", desc: "Watch anime in your preferred language.", icon: <Film size={32} /> },
@@ -203,7 +203,7 @@ const Splash = () => {
 
       {/* Why Choose Animotion? */}
       <section className="py-24">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-10 md:px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
             Why Choose Animotion?
           </h2>
@@ -235,7 +235,7 @@ const Splash = () => {
             How It Works
           </h2>
           <BlurFade delay={0.25} inView>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-xs md:max-w-4xl mx-auto">
             {[
               { icon: <ShieldCheck size={40} />, title: "1. Create Free Account", desc: "Sign up in seconds and access our entire anime library without any subscription fees." },
               { icon: <Film size={40} />, title: "2. Browse & Discover", desc: "Explore thousands of titles, or use our categories and recommendations to find your new favorite anime." },
@@ -255,11 +255,11 @@ const Splash = () => {
       {/* FAQ */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
+          <h2 className="text-2xl md:text-4xl font-bold mb-16 text-center">
             Frequently Asked Questions
           </h2>
           <BlurFade delay={0.25} inView>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-xs md:max-w-2xl mx-auto">
             <Accordion 
               type="single" 
               defaultValue="item-0" 

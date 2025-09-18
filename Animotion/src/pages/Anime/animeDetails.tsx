@@ -14,6 +14,7 @@ import WatchNowButton from "../../components/buttons/WatchNowButton";
 import WatchlistButton from "../../components/buttons/WatchlistButton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Comment from "../../components/comment";
+import { Helmet } from "react-helmet-async";
 
 export default function AnimeDetails() {
     const [animeData, setAnimeData] = useState<any>(null);
@@ -109,6 +110,14 @@ export default function AnimeDetails() {
         // Mobile layout
         return (
             <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[--background] text-[--text-color] p-3 mt-10">
+                <Helmet>
+                    <title>{animeData ? `${animeData.name} - Animotion` : 'Loading... - Animotion'}</title>
+                    <meta name="description" content={animeData ? animeData.description : 'Loading...'} />
+                    <meta property="og:title" content={animeData ? `${animeData.name} - Animotion` : 'Loading... - Animotion'} />
+                    <meta property="og:description" content={animeData ? animeData.description : 'Loading...'} />
+                    <meta property="og:image" content={animeData ? animeData.poster : 'https://via.placeholder.com/150x190'} />
+                </Helmet>
+                
                 {/* Anime Details Section */}
                 <Card className="w-full max-w-[90dvw] shadow-lg p-3">
                     {animeData ? (
@@ -231,6 +240,14 @@ export default function AnimeDetails() {
     // Desktop layout
     return (
         <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[--background] text-[--text-color] p-5 mt-10">
+            <Helmet>
+                <title>{animeData ? `${animeData.name} - Animotion` : 'Loading... - Animotion'}</title>
+                <meta name="description" content={animeData ? animeData.description : 'Loading...'} />
+                <meta property="og:title" content={animeData ? `${animeData.name} - Animotion` : 'Loading... - Animotion'} />
+                <meta property="og:description" content={animeData ? animeData.description : 'Loading...'} />
+                <meta property="og:image" content={animeData ? animeData.poster : 'https://via.placeholder.com/150x190'} />
+            </Helmet>
+            
             {/* Anime Details Section */}
             <Card className="w-full max-w-[90dvw] shadow-lg p-5">
                 {animeData ? (

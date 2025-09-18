@@ -4,6 +4,7 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { supabase } from "../hooks/supabaseClient";
+import { Helmet } from "react-helmet-async";
 
 type WatchlistItem = {
   animeTitle: string;
@@ -108,6 +109,10 @@ const Chatbot: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Hiro AI - Animotion</title>
+        <meta name="description" content="Chat with Hiro, your AI assistant on Animotion. Get anime recommendations and answers to your questions." />
+      </Helmet>
       <div className="w-full flex flex-col items-center justify-center min-h-screen">
         <Card className="w-full max-w-[90dvw] p-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Hiro</h1>
@@ -116,7 +121,7 @@ const Chatbot: React.FC = () => {
           </p>
           <Separator className="my-4" />
           <div className="relative bg-black text-white h-[70dvh] w-full">
-            <MainContainer>
+            <MainContainer style={{ border: "1px solid var(--bgColor3)" }}>
               <ChatContainer>
                 <MessageList
                   style={{ backgroundColor: "var(--bgColor2)" }}
@@ -124,7 +129,7 @@ const Chatbot: React.FC = () => {
                   typingIndicator={isTyping ? <TypingIndicator content="Hiro is typing..." /> : null}
                 >
                   {messages.map((message, i) => (
-                    <Message key={i}  model={{ message: message.message, sender: message.sender, position: message.position, direction: message.direction || "incoming" }} />
+                    <Message key={i} style={{}}  model={{ message: message.message, sender: message.sender, position: message.position, direction: message.direction || "incoming" }} />
                   ))}
                 </MessageList>
                 <MessageInput style={{ backgroundColor: "var(--bgColor2)" }} placeholder="Type message here" onSend={handleSend} />

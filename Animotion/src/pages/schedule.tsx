@@ -7,6 +7,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import "../styling/globals.css";
+import { Helmet } from "react-helmet-async";
 
 interface ScheduleItem {
   id: string;
@@ -61,6 +62,11 @@ const Schedule: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Anime Schedule - Animotion</title>
+        <meta name="description" content="Check out the weekly anime schedule on Animotion. Stay updated with the latest airing times and episodes." />
+      </Helmet>
+
       <div className="min-h-screen ml-5 text-white mt-10">
         <div className="max-w-10xl mx-auto px-4 py-6">
           <h1 className="text-3xl font-bold text-center">Anime Schedule</h1>

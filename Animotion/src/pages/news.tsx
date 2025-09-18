@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Newspaper, Clock, Filter, Search, SortAsc, SortDesc } from "lucide-react";
 import NewsCard from "@/components/cards/news-card";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Helmet } from "react-helmet-async";
 
 interface Article {
   id: string;
@@ -127,6 +128,11 @@ const News: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Anime News - Animotion</title>
+        <meta name="description" content="Stay updated with the latest anime news, announcements, and industry updates on Animotion." />
+      </Helmet>
+
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 border-b border-border/50">
         <div className="container mx-auto px-4 pt-24 pb-12">
