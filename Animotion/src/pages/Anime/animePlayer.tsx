@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Rewind, FastForward, Mic, Captions, Server, Info, Search, FilterX } from "lucide-react";
+import { Rewind, FastForward, Mic, Captions, Server, Info, Search, FilterX, Maximize } from "lucide-react";
 import VideoPlayer from "../../components/video-player";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
@@ -65,20 +65,24 @@ const AnimePlayer: React.FC = () => {
   // NEW: Manage server & format in state
   const [server, setServer] = useState<"hd-1" | "hd-2">("hd-2");
   const [format, setFormat] = useState<"sub" | "dub">("sub");
+  const [autoFullscreen, setAutoFullscreen] = useState<boolean>(false);
 
   // One-time effect to read server & format preferences from localStorage
   useEffect(() => {
     const storedServer = localStorage.getItem("server");
     const storedFormat = localStorage.getItem("format");
+    const storedAutoFullscreen = localStorage.getItem("autoFullscreen");
     if (storedServer === "hd-2") setServer("hd-2");
     if (storedFormat === "dub") setFormat("dub");
+    if (storedAutoFullscreen === "true") setAutoFullscreen(true);
   }, []);
 
   // Effect to store server & format changes in localStorage
   useEffect(() => {
     localStorage.setItem("server", server);
     localStorage.setItem("format", format);
-  }, [server, format]);
+    localStorage.setItem("autoFullscreen", autoFullscreen.toString());
+  }, [server, format, autoFullscreen]);
 
   // Filter episodes based on search term and filter settings
   useEffect(() => {
@@ -342,6 +346,7 @@ const AnimePlayer: React.FC = () => {
               onNextEpisode={handleNextEp}
               hasNextEpisode={checkHasNextEpisode()}
               nextEpisodeInfo={getNextEpisodeInfo()}
+              autoFullscreen={autoFullscreen}
             />
 
             <Card className="flex flex-col items-start gap-3 p-2 mt-3">
@@ -440,6 +445,26 @@ const AnimePlayer: React.FC = () => {
                         <Mic size={14} className="mr-1" /> Dub
                       </Button>
                     )}
+                  </div>
+                </div>
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-light text-neutral-500">
+                    Auto Fullscreen:
+                  </span>
+                  <div className="flex flex-row items-center gap-2 mt-1">
+                    <Button
+                      variant="outline"
+                      onClick={() => setAutoFullscreen(!autoFullscreen)}
+                      className={`${
+                        autoFullscreen
+                          ? "bg-[--primary-color] text-white"
+                          : ""
+                      } text-xs px-2 py-1 h-8`}
+                      size="sm"
+                    >
+                      <Maximize size={14} className="mr-1" />
+                      {autoFullscreen ? "ON" : "OFF"}
+                    </Button>
                   </div>
                 </div>
               </Card>
@@ -591,6 +616,7 @@ const AnimePlayer: React.FC = () => {
             onNextEpisode={handleNextEp}
             hasNextEpisode={checkHasNextEpisode()}
             nextEpisodeInfo={getNextEpisodeInfo()}
+            autoFullscreen={autoFullscreen}
           />
           <Card className="flex flex-row items-center justify-between p-2 mt-3">
             {/* Current Episode */}
@@ -667,8 +693,27 @@ const AnimePlayer: React.FC = () => {
                     </Button>
                   </div>
                 </div>
+                <div className="flex flex-col items-start">
+                  <span className="text-xs font-light text-neutral-500">
+                    Auto Fullscreen:
+                  </span>
+                  <div className="flex flex-row items-center gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => setAutoFullscreen(!autoFullscreen)}
+                      className={`${
+                        autoFullscreen
+                          ? "bg-[--primary-color] text-white"
+                          : ""
+                      }`}
+                    >
+                      <Maximize size={16} />
+                      {autoFullscreen ? "ON" : "OFF"}
+                    </Button>
+                  </div>
+                </div>
               </Card>
-              <Card className="flex flex-col w-80 gap-10 p-2 bg-[--bgColor3]">
+              <Card className="flex flex-col w-60 gap-10 p-2 bg-[--bgColor3]">
                 <div className="flex flex-row w-full h-full gap-2 items-center justify-center">
                   <span className="text-[--text-color3]"><Info /></span>
                   <span className="text-xs text-[--text-color3] font-light">

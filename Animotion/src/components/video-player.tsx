@@ -1,6 +1,6 @@
 // video-player.tsx
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import {
   MediaPlayer,
   MediaProvider,
@@ -37,6 +37,7 @@ interface VideoPlayerProps {
     duration?: string;
     thumbnail?: string;
   };
+  autoFullscreen?: boolean;
 }
 
 // Next Episode Countdown Card Component
@@ -412,11 +413,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   onNextEpisode,
   hasNextEpisode,
   nextEpisodeInfo,
+  autoFullscreen = false,
 }) => {
   const [key, setKey] = useState<number>(Date.now());
   const [loading, setLoading] = useState<boolean>(false);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
-  const [chapters, setChapters] = useState<string>("");
   const playerRef = useRef<MediaPlayerInstance>(null);
 
   useEffect(() => {
@@ -424,23 +425,20 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     import("@vidstack/react/player/styles/default/layouts/video.css");
   }, []);
 
-  // Generate chapters when intro/outro data changes
-  useEffect(() => {
-    if (serverLink) {
-      // Create chapters after a short delay to ensure duration is available
-      const timer = setTimeout(() => {
-        if (playerRef.current) {
-          const duration = playerRef.current.duration;
-          if (duration) {
-            const chaptersText = createChapters(intro, outro, duration);
-            setChapters(chaptersText);
-          }
-        }
-      }, 1000);
-      
-      return () => clearTimeout(timer);
+  // Generate chapters immediately when intro/outro data is available
+  const chaptersVTT = useMemo(() => {
+    if (!intro && !outro) return null;
+    
+    // Create a reasonable default duration if we have intro/outro data
+    // We'll use the outro end time as a fallback, or intro end + 20 minutes
+    const estimatedDuration = outro?.end || (intro ? intro.end + 1200 : 1500);
+    const chaptersText = createChapters(intro, outro, estimatedDuration);
+    
+    if (chaptersText) {
+      return `data:text/vtt;charset=utf-8,${encodeURIComponent(`WEBVTT\n\n${chaptersText}`)}`;
     }
-  }, [serverLink, intro, outro]);
+    return null;
+  }, [intro, outro]);
 
   // Auto-refresh player when serverLink or trackSrc changes (episode switching)
   useEffect(() => {
@@ -455,24 +453,27 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     if (serverLink) {
       setKey(Date.now());
       
-      // Delay fullscreen request to allow player to initialize
-      const fullscreenTimeout = setTimeout(() => {
-        if (playerRef.current) {
-          // Use the MediaPlayer's remoteControl to enter fullscreen
-          try {
-            const remote = playerRef.current.remoteControl;
-            if (remote) {
-              remote.enterFullscreen();
+      // Only enter fullscreen if autoFullscreen is enabled
+      if (autoFullscreen) {
+        // Delay fullscreen request to allow player to initialize
+        const fullscreenTimeout = setTimeout(() => {
+          if (playerRef.current) {
+            // Use the MediaPlayer's remoteControl to enter fullscreen
+            try {
+              const remote = playerRef.current.remoteControl;
+              if (remote) {
+                remote.enterFullscreen();
+              }
+            } catch (error) {
+              console.log('Fullscreen request failed:', error);
             }
-          } catch (error) {
-            console.log('Fullscreen request failed:', error);
           }
-        }
-      }, 1000); // Wait 1 second for player to fully initialize
+        }, 1000); // Wait 1 second for player to fully initialize
 
-      return () => clearTimeout(fullscreenTimeout);
+        return () => clearTimeout(fullscreenTimeout);
+      }
     }
-  }, [serverLink, trackSrc, isFirstLoad]);
+  }, [serverLink, trackSrc, isFirstLoad, autoFullscreen]);
 
   // Handle refresh function
   const handleRefresh = useCallback(() => {
@@ -553,10 +554,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                 default
               />
             )}
-            {chapters && (
+            {chaptersVTT && (
               <track
                 kind="chapters"
-                src={`data:text/vtt;base64,${btoa(`WEBVTT ${chapters}`)}`}
+                src={chaptersVTT}
                 default
               />
             )}
