@@ -1,5 +1,4 @@
 // video-player.tsx
-// This file is part of the Animotion Website.
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
@@ -8,6 +7,7 @@ import {
   PlayButton,
   useMediaState,
   useMediaRemote,
+  type MediaPlayerInstance,
 } from "@vidstack/react";
 import {
   defaultLayoutIcons,
@@ -223,6 +223,52 @@ const NextEpisodeCard: React.FC<{
   );
 };
 
+// Create chapters from intro/outro data
+const createChapters = (intro?: { start: number; end: number }, outro?: { start: number; end: number }, duration?: number) => {
+  if (!duration || typeof duration !== "number") return "";
+
+  const chapters = [];
+
+  // Pre-intro content (if intro doesn't start at 0)
+  if (intro && intro.start > 0) {
+    chapters.push(`00:00:00.000 --> ${formatTime(intro.start)}`);
+    chapters.push("Opening\n");
+  }
+
+  // Intro section
+  if (intro) {
+    chapters.push(`${formatTime(intro.start)} --> ${formatTime(intro.end)}`);
+    chapters.push("Intro\n");
+  }
+
+  // Main content section
+  const mainStart = intro ? intro.end : 0;
+  const mainEnd = outro ? outro.start : duration;
+  
+  if (mainStart < mainEnd) {
+    chapters.push(`${formatTime(mainStart)} --> ${formatTime(mainEnd)}`);
+    chapters.push("Episode Content\n");
+  }
+
+  // Outro section
+  if (outro && outro.start < duration) {
+    chapters.push(`${formatTime(outro.start)} --> ${formatTime(duration)}`);
+    chapters.push("Credits\n");
+  }
+
+  return chapters.join('\n');
+};
+
+// Helper function to format time in WebVTT format
+const formatTime = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+  const ms = Math.floor((seconds % 1) * 1000);
+  
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`;
+};
+
 // Custom Skip Intro/Outro Button Component
 const SkipControls: React.FC<{
   intro?: { start: number; end: number };
@@ -369,29 +415,102 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 }) => {
   const [key, setKey] = useState<number>(Date.now());
   const [loading, setLoading] = useState<boolean>(false);
+  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
+  const [chapters, setChapters] = useState<string>("");
+  const playerRef = useRef<MediaPlayerInstance>(null);
 
   useEffect(() => {
     import("@vidstack/react/player/styles/default/theme.css");
     import("@vidstack/react/player/styles/default/layouts/video.css");
   }, []);
 
-  // Handle refresh button click
-  const handleRefresh = () => {
+  // Generate chapters when intro/outro data changes
+  useEffect(() => {
+    if (serverLink) {
+      // Create chapters after a short delay to ensure duration is available
+      const timer = setTimeout(() => {
+        if (playerRef.current) {
+          const duration = playerRef.current.duration;
+          if (duration) {
+            const chaptersText = createChapters(intro, outro, duration);
+            setChapters(chaptersText);
+          }
+        }
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [serverLink, intro, outro]);
+
+  // Auto-refresh player when serverLink or trackSrc changes (episode switching)
+  useEffect(() => {
+    // Skip fullscreen for the initial load
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+      setKey(Date.now());
+      return;
+    }
+
+    // Only trigger fullscreen for episode changes, not initial load
+    if (serverLink) {
+      setKey(Date.now());
+      
+      // Delay fullscreen request to allow player to initialize
+      const fullscreenTimeout = setTimeout(() => {
+        if (playerRef.current) {
+          // Use the MediaPlayer's remoteControl to enter fullscreen
+          try {
+            const remote = playerRef.current.remoteControl;
+            if (remote) {
+              remote.enterFullscreen();
+            }
+          } catch (error) {
+            console.log('Fullscreen request failed:', error);
+          }
+        }
+      }, 1000); // Wait 1 second for player to fully initialize
+
+      return () => clearTimeout(fullscreenTimeout);
+    }
+  }, [serverLink, trackSrc, isFirstLoad]);
+
+  // Handle refresh function
+  const handleRefresh = useCallback(() => {
     setLoading(true);
     setKey(Date.now());
 
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  };
+  }, []);
+
+  // Keyboard event handler for refresh
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Use Ctrl+Shift+R for video player refresh (won't conflict with browser refresh)
+      if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'r') {
+        event.preventDefault(); // Prevent any default behavior
+        handleRefresh();
+      }
+    };
+
+    // Add event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleRefresh]);
+
+
 
   // Filter and get English track
   const trackSource = trackSrc.filter((track) => track.lang === "English");
   const track = trackSource.length > 0 ? trackSource[0].url : "";
 
   // Placeholder image
-  const placeholderImage =
-    "https://placehold.jp/000000/ffffff/1920x1080.png?text=Loading...&css=%7B%22font-weight%22%3A%22%20700%22%7D";
+  const placeholderImage = "https://placehold.jp/000000/ffffff/1920x1080.png?text=Loading...&css=%7B%22font-weight%22%3A%22%20700%22%7D";
 
   return (
     <div className="relative">
@@ -402,6 +521,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           className="bg-black/60 hover:bg-black/80 text-white border-white/20"
           onClick={handleRefresh}
           disabled={loading}
+          title="Refresh Player (Ctrl+Shift+R)"
         >
           <RefreshCw
             size={16}
@@ -413,10 +533,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
       {serverLink ? (
         <MediaPlayer
+          ref={playerRef}
           key={key}
           className="VideoPlayer"
           src={serverLink}
-          autoplay
+          // autoplay
           crossorigin="anonymous"
           playsInline
           volume={0.5}
@@ -432,12 +553,19 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                 default
               />
             )}
+            {chapters && (
+              <track
+                kind="chapters"
+                src={`data:text/vtt;base64,${btoa(`WEBVTT ${chapters}`)}`}
+                default
+              />
+            )}
           </MediaProvider>
           <DefaultVideoLayout
             icons={defaultLayoutIcons}
             thumbnails={thumbnails}
           />
-
+          
           <SkipControls
             intro={intro}
             outro={outro}
