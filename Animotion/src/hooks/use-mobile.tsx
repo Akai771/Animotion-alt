@@ -1,7 +1,8 @@
 import * as React from "react"
 
 // Configure this breakpoint based on your design needs
-const MOBILE_BREAKPOINT = 768
+// Set to 1025px so devices with 1024px width (tablets) show mobile view
+const MOBILE_BREAKPOINT = 1025
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)

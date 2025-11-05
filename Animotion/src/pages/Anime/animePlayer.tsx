@@ -550,10 +550,10 @@ const AnimePlayer: React.FC = () => {
                 <img
                   src={animeData.poster}
                   alt="Anime Cover"
-                  className="w-full h-auto object-cover rounded-lg transition-all duration-100 ease-in-out hover:scale-95"
+                  className="max-w-xs h-auto object-cover rounded-lg transition-all duration-100 ease-in-out hover:scale-95"
                 />
               </Link>
-              <div className="flex flex-col justify-start">
+              <div className="px-2 flex flex-col justify-start">
                 <h2 className="text-2xl font-bold">{animeData.name}</h2>
                 <div className="flex flex-wrap gap-2 mt-2 mb-3">
                   <Badge className="bg-red-500 text-white">
@@ -604,8 +604,8 @@ const AnimePlayer: React.FC = () => {
         </Helmet>
         
       {/* Video Player Section */}
-      <div className="w-full flex sm:!flex-col md:!flex-row items-start justify-start pt-10 gap-5 !important">
-        <Card className="w-full p-5">
+      <div className="w-full flex flex-col lg:flex-row items-start justify-start pt-10 gap-5">
+        <Card className="w-full lg:flex-1 p-5">
           <VideoPlayer
             serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
             mal={serverLink ? serverLink.malID : null}
@@ -744,7 +744,7 @@ const AnimePlayer: React.FC = () => {
         </Card>
 
         {/* Episodes List */}
-        <Card className="w-full h-full max-w-md shadow-lg p-5">
+        <Card className="w-full lg:w-96 lg:flex-shrink-0 h-full shadow-lg p-5">
           <span className="text-xl font-bold mb-3 flex flex-row items-center justify-between w-full">
             Episodes List:
             <Card className="text-neutral-500 text-xs font-semibold p-2">
@@ -823,10 +823,10 @@ const AnimePlayer: React.FC = () => {
               <img
                 src={animeData.poster}
                 alt="Anime Cover"
-                className="max-w-4xl object-cover rounded-lg transition-all duration-100 ease-in-out hover:scale-95"
+                className="max-w-xs object-cover rounded-lg transition-all duration-100 ease-in-out hover:scale-95"
               />
             </Link>
-            <div className="flex flex-col justify-start">
+            <div className="w-3/4 flex flex-col justify-start">
               <h2 className="text-5xl font-bold">{animeData.name}</h2>
               <div className="flex flex-row gap-2 mt-2 mb-5">
                 <Badge className="bg-red-500 text-white">

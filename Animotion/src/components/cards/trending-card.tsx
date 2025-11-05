@@ -5,7 +5,6 @@ import axios from "axios";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Play, Star, Mic, Captions } from "lucide-react";
-import "../../styling/cards.css";
 import Tooltip from "@mui/material/Tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -99,21 +98,25 @@ const TrendingCard: React.FC<TrendingCardProps> = ({ id, title, coverImage, type
         </div>
       </div>
     } placement="right" arrow disableInteractive>
-      <div className="trendingCardDiv">
-        <Link to={`/details/${id}`} className="trendingLink">
-          <Card className="trendingCard">
-            <CardContent className="trendingCard-Info">
-              <div className="trendingTitleAlign">
-                <span className="trendingTitle">{title}</span>
+      <div className="mb-3 px-2">
+        <Link to={`/details/${id}`} className="block w-full line-clamp-1 truncate">
+          <Card className="group relative flex flex-row w-60 md:w-60 lg:w-80 xl:w-84 h-80 md:h-80 lg:h-96 bg-[--card-bg] hover:cursor-pointer">
+            <CardContent className="flex flex-col justify-end items-center pt-3 pb-2 w-12 md:w-12 lg:w-16">
+              <div className="rotate-180 whitespace-nowrap overflow-hidden text-ellipsis [writing-mode:vertical-rl]">
+                <span className="montserrat text-base md:text-lg lg:text-xl font-extrabold">{title}</span>
               </div>
-              <div className="trendingCardRankDiv">
-                <span className="trendingCardRank">{type}</span>
+              <div className="mt-2">
+                <span className="montserrat text-3xl md:text-4xl lg:text-5xl font-extrabold text-[--secondary-color]">{type}</span>
               </div>
             </CardContent>
-            <div className="trendingCardImage">
-              <img className="trendingImage" src={coverImage} alt={title} />
-              <div className="playIcon">
-                <Play size={35} fill="white" />
+            <div className="relative w-full object-cover">
+              <img 
+                className="w-full h-full object-cover rounded-e-md transition-all duration-500 ease-in-out group-hover:opacity-50 group-hover:saturate-50" 
+                src={coverImage} 
+                alt={title} 
+              />
+              <div className="absolute inset-0 left-4 md:left-6 lg:left-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10 pointer-events-none">
+                <Play size={35} fill="white" className="text-white" />
               </div>
             </div>
           </Card>
