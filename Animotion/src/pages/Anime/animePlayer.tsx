@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import {
   useParams,
   useSearchParams,
@@ -66,6 +66,31 @@ const AnimePlayer: React.FC = () => {
   const [server, setServer] = useState<"hd-1" | "hd-2">("hd-2");
   const [format, setFormat] = useState<"sub" | "dub">("sub");
   const [autoFullscreen, setAutoFullscreen] = useState<boolean>(false);
+
+  // Get proxy URL and fix 0.0.0.0 issue
+  const getProxyUrl = () => {
+    let proxyUrl = import.meta.env.VITE_PROXY_URL || "http://localhost:3000";
+    // Fix 0.0.0.0 by replacing with localhost for local development
+    if (proxyUrl.includes("0.0.0.0")) {
+      proxyUrl = proxyUrl.replace("0.0.0.0", "localhost");
+    }
+    console.log("[Player] Using proxy URL:", proxyUrl);
+    return proxyUrl;
+  };
+  const PROXY_URL = getProxyUrl();
+
+  // Helper function to construct proxied URL with proper encoding
+  const getProxiedUrl = useCallback((url: string, referer?: string) => {
+    if (!url) return "";
+    
+    let proxiedUrl = `${PROXY_URL}/m3u8-proxy?url=${encodeURIComponent(url)}`;
+    
+    if (referer) {
+      proxiedUrl += `&referer=${encodeURIComponent(referer)}`;
+    }
+    
+    return proxiedUrl;
+  }, [PROXY_URL]);
 
   // One-time effect to read server & format preferences from localStorage
   useEffect(() => {
@@ -167,7 +192,7 @@ const AnimePlayer: React.FC = () => {
         }/api/v2/hianime/episode/servers?animeEpisodeId=${selectedEpisode}`
       )
       .then((res) => setServerInfo(res.data.data))
-      .catch((err) => console.error("Error fetching server data:", err));
+      .catch((err) => console.error("[Player] Error fetching server data:", err.message));
 
     axios
       .get(`${import.meta.env.VITE_API}/api/v2/hianime/episode/sources?animeEpisodeId=${selectedEpisode}&server=${server}&category=${format}`,{
@@ -176,10 +201,17 @@ const AnimePlayer: React.FC = () => {
         }
       })
       .then((res) => {
+        console.log(`[Player] Loaded episode sources for ${selectedEpisode}`);
         setServerUrl(res.data.data.sources[0].url);
         setServerLink(res.data.data);
       })
-      .catch((err) => console.error("Error fetching server URL:", err));
+      .catch((err) => {
+        console.error("[Player] Error fetching episode sources:", {
+          message: err.message,
+          status: err.response?.status,
+          episodeId: selectedEpisode
+        });
+      });
 
     updateEpisodeHistory(id as string, selectedEpisode);
   }, [selectedEpisode, server, format, id]);
@@ -230,14 +262,21 @@ const AnimePlayer: React.FC = () => {
   const hasDub = serverInfo?.dub && serverInfo.dub.length > 0;
   const hasFillers = episodeList.some(ep => ep.isFiller);
 
-  const getProxiedTracks = (tracks: any[]) => {
-  if (!tracks || !serverLink?.headers?.Referer) return tracks;
-  
-  return tracks.map(track => ({
-    ...track,
-    url: `${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${encodeURIComponent(track.url)}&referer=${encodeURIComponent(serverLink.headers.Referer)}`
-  }));
-};
+  // Memoize the proxied video URL so it only changes when serverUrl or referer actually changes
+  const proxiedServerLink = useMemo(() => {
+    return getProxiedUrl(serverUrl, serverLink?.headers?.Referer);
+  }, [serverUrl, serverLink?.headers?.Referer, getProxiedUrl]);
+
+  // Memoize the proxied tracks so they only change when tracks data actually changes
+  const proxiedTracks = useMemo(() => {
+    const tracks = serverLink?.tracks;
+    if (!tracks || tracks.length === 0) return [];
+    
+    return tracks.map((track: any) => ({
+      ...track,
+      url: getProxiedUrl(track.url, serverLink?.headers?.Referer)
+    }));
+  }, [serverLink?.tracks, serverLink?.headers?.Referer, getProxiedUrl]);
 
   // Episode List Search Box Component
   const EpisodeSearchBox = () => (
@@ -337,9 +376,9 @@ const AnimePlayer: React.FC = () => {
         <div className="w-full flex flex-col items-start justify-start pt-14 gap-3">
           <Card className="w-full p-3">
             <VideoPlayer
-              serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
+              serverLink={proxiedServerLink}
               mal={serverLink ? serverLink.malID : null}
-              trackSrc={getProxiedTracks(serverLink?.tracks || [])}
+              trackSrc={proxiedTracks}
               thumbnails={serverLink?.tracks?.[1]?.file || ""}
               intro={serverLink?.intro}
               outro={serverLink?.outro}
@@ -607,9 +646,9 @@ const AnimePlayer: React.FC = () => {
       <div className="w-full flex flex-col lg:flex-row items-start justify-start pt-10 gap-5">
         <Card className="w-full lg:flex-1 p-5">
           <VideoPlayer
-            serverLink={`${import.meta.env.VITE_PROXY_URL}/m3u8-proxy?url=${serverUrl}`}
+            serverLink={proxiedServerLink}
             mal={serverLink ? serverLink.malID : null}
-            trackSrc={getProxiedTracks(serverLink?.tracks || [])}
+            trackSrc={proxiedTracks}
             thumbnails={serverLink?.tracks?.[1]?.file || ""}
             intro={serverLink?.intro}
             outro={serverLink?.outro}

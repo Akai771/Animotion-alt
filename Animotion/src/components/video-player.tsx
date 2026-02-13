@@ -537,9 +537,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           ref={playerRef}
           key={key}
           className="VideoPlayer"
-          src={serverLink}
+          src={{
+            src: serverLink,
+            type: 'application/x-mpegurl',
+          }}
           // autoplay
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
           playsInline
           volume={0.5}
         >
