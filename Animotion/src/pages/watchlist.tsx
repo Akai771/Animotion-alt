@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { supabase } from "../hooks/supabaseClient";
 import DisplayCard from "@/components/cards/display-card";
@@ -12,7 +12,7 @@ interface WatchlistItem {
   animeImage: string;
 }
 
-const Watchlist: React.FC = () => {
+const Watchlist = () => {
   const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
   const [loading, setLoading] = useState(true);
 

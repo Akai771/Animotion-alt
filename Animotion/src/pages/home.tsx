@@ -18,11 +18,14 @@ export default function Home(){
     id: string;
     name: string;
     poster: string;
-    rank: string;
-    episodes?: { sub: any; };
+    rank: string | number;
+    episodes?: { sub: any; dub?: any; };
     type?: string;
     duration?: string;
     currentText?: string;
+    description?: string;
+    jname?: string;
+    otherInfo?: string[];
   }
 
   interface History{
@@ -35,6 +38,7 @@ export default function Home(){
   const [recentEp, setRecentEp] = useState<Anime[]>([]);
   const [upcoming, setUpcoming] = useState<Anime[]>([]);
   const [trending, setTrending] = useState<Anime[]>([]);
+  const [spotlightAnime, setSpotlightAnime] = useState<Anime[]>([]);
   const [top, setTop] = useState<Anime[]>([]);
   const [topAiring, setTopAiring] = useState<Anime[]>([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -77,6 +81,7 @@ export default function Home(){
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API}/api/v2/hianime/home`)
       .then((res) => {
+          setSpotlightAnime(res.data.data.spotlightAnimes);
           setRecentEp(res.data.data.latestEpisodeAnimes)
           setTrending(res.data.data.trendingAnimes)
           setTopAiring(res.data.data.topAiringAnimes)
@@ -122,6 +127,8 @@ export default function Home(){
   const settings = getSliderSettings(true);
   const settings2 = getSliderSettings(false);
 
+  console.log(spotlightAnime)
+
   return (<>
       {loading ? (
         <div className="flex flex-col items-center justify-center w-full h-full gap-10 mt-16">
@@ -134,7 +141,7 @@ export default function Home(){
       ) : (
       <div className="flex flex-col items-center justify-center w-full h-full gap-10 mt-16">
         <section className={isMobile ? "w-full" : ""}>
-          <CarouselMain />
+          <CarouselMain spotlightAnime={spotlightAnime} />
         </section>
         <section className="flex flex-col items-start justify-center w-[90dvw] h-full gap-10 mb-10">
           <div id="Trending" className="flex-col items-center justify-start w-full h-full">
@@ -145,7 +152,7 @@ export default function Home(){
             <div className="mt-5">
               <Slider {...settings2}>
                 {trending.map((trend) => (
-                  <TrendingCard key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={trend.rank} />
+                  <TrendingCard key={trend.id} id={trend.id} title={trend.name} coverImage={trend.poster} type={String(trend.rank)} />
                 ))}
               </Slider>
             </div>
@@ -232,7 +239,7 @@ export default function Home(){
             </div>
           </div>
           <Separator />
-          <div id="Top-Airing" className="flex-col items-center justify-start w-full h-full">
+          <div id="Popular-Anime" className="flex-col items-center justify-start w-full h-full">
             <div className="flex gap-5 items-center justify-start">
               <div className="border border-l-4 border-[--primary-color] h-10" />
               <span className={`font-bold ${isMobile ? "text-2xl" : "text-4xl"} text-[--text-color]`}>Popular Anime This Month</span>
@@ -246,11 +253,11 @@ export default function Home(){
             </div>
           </div>
           <Separator />
-          <div id="Advertisement" className="flex flex-col items-center justify-center w-full h-full">
+          <div id="Advertisement2" className="flex flex-col items-center justify-center w-full h-full">
             <AdvCard imageUrl="https://i.postimg.cc/9fMs7Zvk/One-Piece-Ad.png" link="/details/one-piece-100"/>
           </div>
           <Separator />
-          <div id="Top-Airing" className="flex-col items-center justify-start w-full h-full">
+          <div id="Upcoming-Anime" className="flex-col items-center justify-start w-full h-full">
             <div className="flex gap-5 items-center justify-start">
               <div className="border border-l-4 border-[--primary-color] h-10" />
               <span className={`font-bold ${isMobile ? "text-2xl" : "text-4xl"} text-[--text-color]`}>Upcoming Anime</span>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../hooks/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +30,7 @@ export default function Signup() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try {
-      const { data } = await supabase.auth.signUp({
+      await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -41,7 +41,6 @@ export default function Signup() {
           },
         },
       });
-      console.error(data)
       alert("Check your email for verification");
     } 
     catch (error) {

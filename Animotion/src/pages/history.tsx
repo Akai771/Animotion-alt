@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
@@ -14,7 +14,7 @@ interface HistoryItem {
   animeEpisodeId?: string;
 }
 
-const History: React.FC = () => {
+const History = () => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
   // Retrieve history from localStorage

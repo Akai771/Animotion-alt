@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import ScheduleCard from "../components/cards/schedule-card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -17,7 +17,7 @@ interface ScheduleItem {
   episode: number;
 }
 
-const Schedule: React.FC = () => {
+const Schedule = () => {
   const [schedule, setSchedule] = useState<ScheduleItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [day, setDay] = useState<string>("");

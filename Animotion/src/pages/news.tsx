@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,7 @@ interface Article {
   uploadedAt?: string;
 }
 
-const News: React.FC = () => {
+const News = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedTopic, setSelectedTopic] = useState<string>("All");

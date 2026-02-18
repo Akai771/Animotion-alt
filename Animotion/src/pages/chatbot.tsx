@@ -11,6 +11,10 @@ type WatchlistItem = {
   userID: string;
 };
 
+type HistoryItem = {
+  animeTitle: string;
+};
+
 type MessageType = {
   message: string;
   sender: "user" | "ChatGPT";
@@ -18,9 +22,9 @@ type MessageType = {
   position: "normal" | "last" | "single" | "first";
 };
 
-const Chatbot: React.FC = () => {
+const Chatbot = () => {
   const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
-  const [history, setHistory] = useState<WatchlistItem[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [messages, setMessages] = useState<MessageType[]>([
     {
         message: "Hello, I'm Hiro!",

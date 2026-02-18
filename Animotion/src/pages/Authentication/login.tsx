@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../hooks/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { FaGoogle, FaDiscord, FaFacebook } from "react-icons/fa";
-import { Eye, EyeOff, Mail, KeyRound  } from "lucide-react";
+import { Eye, EyeOff, Mail, KeyRound } from "lucide-react";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function Login({ setToken }: { setToken: (data: any) => void }) {
@@ -39,13 +39,6 @@ export default function Login({ setToken }: { setToken: (data: any) => void }) {
   function handlePasswordToggle() {
     setPassType((prev) => (prev === "password" ? "text" : "password"));
   }
-
-//   async function handleOAuthLogin(provider: "google" | "facebook" | "discord") {
-//     const { data, error } = await supabase.auth.signInWithOAuth({ provider });
-//     if (error) {
-//       alert(error.message);
-//     }
-//   }
 
   return (
     <div className="flex flex-col items-center justify-center fixed inset-0 bg-[--background] overflow-hidden">

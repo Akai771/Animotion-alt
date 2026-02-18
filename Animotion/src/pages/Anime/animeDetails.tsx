@@ -25,8 +25,6 @@ export default function AnimeDetails() {
     const [episode, setEpisode] = useState<any>(null);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const isMobile = useIsMobile();
-    const playerWidth = 400;
-    const playerHeight = 225;
     
     const { id } = useParams();
     const navigate = useNavigate();
@@ -297,7 +295,7 @@ export default function AnimeDetails() {
                         </div>
                         <div>
                             {trailerData && (
-                                <ReactPlayer width={playerWidth} height={playerHeight} url={trailerData.source} />
+                                <ReactPlayer width={400} height={225} url={trailerData.source} />
                             )}
                         </div>
                     </CardHeader>

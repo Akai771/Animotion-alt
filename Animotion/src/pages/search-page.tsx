@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -16,16 +16,21 @@ type Anime = {
 
 type Genre = string;
 
-const SearchPage: React.FC = () => {
+const SearchPage = () => {
   const [browse, setBrowse] = useState<Anime[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [page, setPage] = useState<number>(1);
   const [genreState, setGenreState] = useState<boolean>(true);
   const { searchId } = useParams<{ searchId: string }>();
+  const navigate = useNavigate();
 
   const handleGenre = () => setGenreState((prev) => !prev);
   const handleNextPage = () => setPage((prev) => prev + 1);
   const handlePrevPage = () => setPage((prev) => (prev > 1 ? prev - 1 : prev));
+  const handleGenreRedirect = (genre: string) => {
+    const newGenre = genre.split(" ").join("-").toLowerCase();
+    navigate(`/genre/${newGenre}`);
+  };
 
   useEffect(() => {
     axios
@@ -84,7 +89,7 @@ const SearchPage: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Genres</h2>
           <div className="flex flex-wrap gap-3">
             {genres.slice(0, genreState ? 21 : genres.length).map((genre) => (
-                <Button key={genre} id={genre} title={genre} variant="outline">
+                <Button key={genre} id={genre} title={genre} variant="outline" onClick={() => handleGenreRedirect(genre)}>
                     {genre}
                 </Button>
             ))}

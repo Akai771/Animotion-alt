@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ type Anime = {
 
 type Genre = string;
 
-const GenrePage: React.FC = () => {
+const GenrePage = () => {
   const [browse, setBrowse] = useState<Anime[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [page, setPage] = useState<number>(1);
